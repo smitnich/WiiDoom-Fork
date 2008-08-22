@@ -1,0 +1,115 @@
+i_system.o i_system.o: i_system.c \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/stdio.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/_ansi.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/newlib.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/config.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/machine/ieeefp.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/include/stddef.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/include/stdarg.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/reent.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/_ansi.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/_types.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/machine/_types.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/machine/_default_types.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/include/limits.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/lock.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/types.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/machine/types.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/features.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/stdio.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/stdlib.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/machine/stdlib.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/alloca.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/unistd.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/unistd.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/time.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/ctype.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/signal.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/signal.h \
+  ../../src/doomtype.h ../../src/m_fixed.h ../../src/../config.h \
+  ../../src/doomtype.h ../../src/i_system.h ../../src/doomdef.h \
+  ../../config.h ../../src/z_zone.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/string.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/string.h \
+  /home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/assert.h \
+  ../../src/m_swap.h ../../src/version.h
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/stdio.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/_ansi.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/newlib.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/config.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/machine/ieeefp.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/include/stddef.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/include/stdarg.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/reent.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/_ansi.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/_types.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/machine/_types.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/machine/_default_types.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/include/limits.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/lock.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/types.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/machine/types.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/features.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/stdio.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/stdlib.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/machine/stdlib.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/alloca.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/unistd.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/unistd.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/time.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/ctype.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/signal.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/signal.h:
+
+../../src/doomtype.h:
+
+../../src/m_fixed.h:
+
+../../src/../config.h:
+
+../../src/doomtype.h:
+
+../../src/i_system.h:
+
+../../src/doomdef.h:
+
+../../config.h:
+
+../../src/z_zone.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/string.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/sys/string.h:
+
+/home/steve/wiidev/devkitPro/devkitPPC/bin/../lib/gcc/powerpc-gekko/4.2.3/../../../../powerpc-gekko/include/assert.h:
+
+../../src/m_swap.h:
+
+../../src/version.h:
