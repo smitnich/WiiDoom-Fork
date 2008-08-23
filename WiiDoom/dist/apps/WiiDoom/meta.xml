@@ -2,8 +2,8 @@
   <app version="1">
     <name>WiiDoom</name>
     <coder>lnuxguy</coder>
-    <version>0.1</version>
-    <release_date>20080822010000</release_date>
+    <version>0.1.1</version>
+    <release_date>20080823010000</release_date>
     <short_description>DOOM for the Wii</short_description>
     <long_description></long_description>
   </app>
