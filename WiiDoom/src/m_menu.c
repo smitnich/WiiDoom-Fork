@@ -615,7 +615,7 @@ void M_DrawNewGame(void)
 /* cph - make `New Game' restart the level in a netgame */
 static void M_RestartLevelResponse(int ch)
 {
-  if (ch != 'y')
+  if (ch != ' ')
     return;
 
   if (demorecording)
@@ -652,7 +652,7 @@ void M_NewGame(int choice)
 // CPhipps - static
 static void M_VerifyNightmare(int ch)
 {
-  if (ch != 'y')
+  if (ch != ' ')
     return;
 
   //jff 3/24/98 remember last skill selected
@@ -1044,8 +1044,9 @@ int quitsounds2[8] =
 
 static void M_QuitResponse(int ch)
 {
-  if (ch != 'y')
+  if (ch != ' ')
     return;
+
   if ((!netgame || demoplayback) // killough 12/98
       && !nosfxparm && snd_card) // avoid delay if no sound card
   {
@@ -1351,7 +1352,7 @@ void M_QuickLoad(void)
 
 static void M_EndGameResponse(int ch)
 {
-  if (ch != 'y')
+  if (ch != ' ')
     return;
 
   // killough 5/26/98: make endgame quit if recording or playing back demo
