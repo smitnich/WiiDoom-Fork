@@ -744,8 +744,6 @@ static void NormalizeSlashes(char *str)
 static char *FindIWADFile(void)
 {
   int   i;
-  // TODO - fix this hard coded IWAD
-  //char *iwad = "/prboom/doom2.wad";
  	char  * iwad  = NULL;
 
   for (i=0; !iwad && i<nstandard_iwads; i++)
@@ -1327,12 +1325,6 @@ static void D_DoomMainSetup(void)
     int nosound = M_CheckParm("-nosound");
     nomusicparm = nosound || M_CheckParm("-nomusic");
     nosfxparm   = nosound || M_CheckParm("-nosfx");
-
-// TODO uncomment this and fix sound crash
-/*	nosound = 1;
-	nomusicparm = 1;
-	nosfxparm = 1;
-*/
   }
   //jff end of sound/music command line parms
 
@@ -1675,7 +1667,9 @@ void wii_init()
 //  WPAD_Shutdown();
   PAD_Init();
   WPAD_Init();
-//  WPAD_SetVRes(0, 640, 480);
+  WPAD_SetDataFormat(0, WPAD_FMT_BTNS_ACC_IR);
+  WPAD_SetVRes(WPAD_CHAN_ALL, SCREENWIDTH, SCREENHEIGHT);
+
   while (found == false)
   {
     WPAD_ReadPending(WPAD_CHAN_ALL, 0);
@@ -1696,8 +1690,6 @@ void wii_init()
 		break;
     }
   }
-  WPAD_SetDataFormat(0, WPAD_FMT_BTNS_ACC_IR);
-  WPAD_SetVRes(WPAD_CHAN_ALL, SCREENWIDTH, SCREENHEIGHT);
 }
 
 //
