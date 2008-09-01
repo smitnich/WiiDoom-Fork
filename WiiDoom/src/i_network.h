@@ -30,7 +30,7 @@
  *  Low level network interface.
  *-----------------------------------------------------------------------------*/
 
-#include "../config.h"
+#include "config.h"
 //#include "protocol.h"
 #include <stddef.h>
 

@@ -30,7 +30,7 @@
  *  Doom Network protocol packet definitions.
  *-----------------------------------------------------------------------------*/
 
-#include "../config.h"
+#include "config.h"
 #include "doomtype.h"
 #include "d_ticcmd.h"
 #include "m_swap.h"
