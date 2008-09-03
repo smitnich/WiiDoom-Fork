@@ -181,10 +181,10 @@ static void updateSoundParams(int handle, int volume, int seperation, int pitch)
   // to global samplerate for mixing purposes.
   // Patched to shift left *then* divide, to minimize roundoff errors
   // as well as to use SAMPLERATE as defined above, not to assume 11025 Hz
-    if (pitched_sounds)
-    channelinfo[slot].step = step + (((channelinfo[slot].samplerate<<16)/snd_samplerate)-65536);
-    else
-    channelinfo[slot].step = ((channelinfo[slot].samplerate<<16)/snd_samplerate);
+//    if (pitched_sounds)
+//    channelinfo[slot].step = step + (((channelinfo[slot].samplerate<<16)/snd_samplerate)-65536);
+//    else
+    channelinfo[slot].step = snd_samplerate; //((channelinfo[slot].samplerate<<16)/snd_samplerate); // Hack to fix chipmunk audio
 
     // Separation, that is, orientation/stereo.
     //  range is: 1 - 256

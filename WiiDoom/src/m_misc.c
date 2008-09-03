@@ -256,13 +256,13 @@ default_t defaults[] =
    def_bool,ss_stat},
   {"sts_pct_always_gray",{&sts_pct_always_gray},{0},0,1, // 2/23/98 chg default
    def_bool,ss_stat}, // makes percent signs on status bar always gray
-  {"sts_traditional_keys",{&sts_traditional_keys},{0},0,1,  // killough 2/28/98
+  {"sts_traditional_keys",{&sts_traditional_keys},{1},0,1,  // killough 2/28/98
    def_bool,ss_stat}, // disables doubled card and skull key display on status bar
   {"traditional_menu",{&traditional_menu},{1},0,1,
    def_bool,ss_none}, // force use of Doom's main menu ordering // killough 4/17/98
   {"show_messages",{&showMessages},{1},0,1,
    def_bool,ss_none}, // enables message display
-  {"autorun",{&autorun},{0},0,1,  // killough 3/6/98: preserve autorun across games
+  {"autorun",{&autorun},{1},0,1,  // killough 3/6/98: preserve autorun across games
    def_bool,ss_none},
 
   {"Compatibility settings",{NULL},{0},UL,UL,def_none,ss_none},
@@ -333,9 +333,9 @@ default_t defaults[] =
    def_int,ss_none}, // set percentage of foreground/background translucency mix
   {"screenblocks",{&screenblocks},{10},3,11,  // killough 2/21/98: default to 10
    def_int,ss_none},
-  {"usegamma",{&usegamma},{3},0,4, //jff 3/6/98 fix erroneous upper limit in range
+  {"usegamma",{&usegamma},{0},0,4, //jff 3/6/98 fix erroneous upper limit in range
    def_int,ss_none}, // gamma correction level // killough 1/18/98
-  {"uncapped_framerate", {&movement_smooth},  {0},0,1,
+  {"uncapped_framerate", {&movement_smooth},  {1},0,1,
    def_bool,ss_stat},
   {"filter_wall",{(int*)&drawvars.filterwall},{RDRAW_FILTER_POINT},
    RDRAW_FILTER_POINT, RDRAW_FILTER_ROUNDED, def_int,ss_none},
@@ -541,7 +541,7 @@ default_t defaults[] =
    0,MAX_KEY,def_key,ss_keys}, // key to take a screenshot
 
   {"Joystick settings",{NULL},{0},UL,UL,def_none,ss_none},
-  {"use_joystick",{&usejoystick},{0},0,2,
+  {"use_joystick",{&usejoystick},{1},0,2,
    def_int,ss_none}, // number of joystick to use (0 for none)
   {"joy_left",{&joyleft},{0},  UL,UL,def_int,ss_none},
   {"joy_right",{&joyright},{0},UL,UL,def_int,ss_none},

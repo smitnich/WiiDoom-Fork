@@ -720,16 +720,17 @@ void I_UpdateVideoMode(void)
 void WiiMote_Check()
 {
 //  printf("Wiimote_Callback started!\n");
-  SDL_keysym keysym;
 
   WPADData *data = WPAD_Data(0);
   ir_t ir;
   WPAD_IR(0, &ir);
-  Uint8 *keystate = SDL_GetKeyState(NULL);
-  
   float ang, mag;
   int nun_x, nun_y;
   double val;
+
+  SDL_keysym keysym;
+
+  Uint8 *keystate = SDL_GetKeyState(NULL);
 
 //printf("%f   %f\n", ir.x, ir.y);
 // Pointer handling
@@ -777,29 +778,7 @@ void WiiMote_Check()
     }
   }
 
-// Do Nunchuk stuff
-  mag = data->exp.nunchuk.js.mag;
-  ang = data->exp.nunchuk.js.ang;
-
-  if (mag > 1.0) mag = 1.0;
-  else if (mag < -1.0) mag = -1.0;
-
-  // calculate Nunchuk X value (angle needs to be converted into radians) 
-  val = mag * sin(PI * ang/180.0f);
-  nun_x = (int)(val * 128);
-
-  // calculate Nunchuk Y value (angle need to be converted into radian) 
-  val = mag * cos(PI * ang/180.0f);
-  nun_y = (int)(val * 128);
-
-  // dead zone adjustment
-  if ((nun_x < 10) && (nun_x > -10))
-    nun_x = 0;
-  if ((nun_y < 10) && (nun_y > -10))
-    nun_y = 0;
-
-
-  if (nun_y < 0)   //(data->btns_h & WPAD_BUTTON_DOWN)
+  if (data->btns_h & WPAD_BUTTON_DOWN)
   {
     if (!keystate[SDLK_DOWN])
     { 
@@ -811,7 +790,7 @@ void WiiMote_Check()
     }
   }
   else 
-  if (nun_y > 0)   //(data->btns_h & WPAD_BUTTON_UP)
+  if (data->btns_h & WPAD_BUTTON_UP)
   {
     if (!keystate[SDLK_UP])
     {
@@ -842,48 +821,23 @@ void WiiMote_Check()
     }
   }
 
-  if (nun_x < 0)   // Strafe left
+ if (keystate[SDLK_COMMA])
   {
-    if (!keystate[SDLK_COMMA])
-    {
-      memset(&keysym, 0, sizeof(keysym));
-      keysym.mod = KMOD_NONE;
-      keysym.unicode = 0;
-      keysym.sym = SDLK_COMMA;
-      SDL_PrivateKeyboard(SDL_PRESSED, &keysym);
-    }
+    memset(&keysym, 0, sizeof(keysym));
+    keysym.mod = KMOD_NONE;
+    keysym.unicode = 0;
+    keysym.sym = SDLK_COMMA;
+    SDL_PrivateKeyboard(SDL_RELEASED, &keysym);
   }
-  else
-  if (nun_x > 0)   // Strafe right
+  if (keystate[SDLK_PERIOD])
   {
-    if (!keystate[SDLK_PERIOD])
-    {
-      memset(&keysym, 0, sizeof(keysym));
-      keysym.mod = KMOD_NONE;
-      keysym.unicode = 0;
-      keysym.sym = SDLK_PERIOD;
-      SDL_PrivateKeyboard(SDL_PRESSED, &keysym);
-    }
+    memset(&keysym, 0, sizeof(keysym));
+    keysym.mod = KMOD_NONE;
+    keysym.unicode = 0;
+    keysym.sym = SDLK_PERIOD;
+    SDL_PrivateKeyboard(SDL_RELEASED, &keysym);
   }
-  else
-  {
-    if (keystate[SDLK_COMMA])
-    {
-      memset(&keysym, 0, sizeof(keysym));
-      keysym.mod = KMOD_NONE;
-      keysym.unicode = 0;
-      keysym.sym = SDLK_COMMA;
-      SDL_PrivateKeyboard(SDL_RELEASED, &keysym);
-    }
-    if (keystate[SDLK_PERIOD])
-    {
-      memset(&keysym, 0, sizeof(keysym));
-      keysym.mod = KMOD_NONE;
-      keysym.unicode = 0;
-      keysym.sym = SDLK_PERIOD;
-      SDL_PrivateKeyboard(SDL_RELEASED, &keysym);
-    }
-  }
+ 
 
   if (data->btns_h & WPAD_BUTTON_LEFT)
   {
@@ -931,19 +885,7 @@ void WiiMote_Check()
     }
   }
 
-  if (data->btns_h & WPAD_BUTTON_A)	//		BUTTON A
-  {
-    if (!keystate[SDLK_SPACE])
-    {
-      memset(&keysym, 0, sizeof(keysym));
-      keysym.mod = KMOD_NONE;
-      keysym.unicode = 0;
-      keysym.sym = SDLK_SPACE;
-      SDL_PrivateKeyboard(SDL_PRESSED, &keysym);
-    }
-  }
-  else
-    if (keystate[SDLK_SPACE])
+  if (keystate[SDLK_SPACE])
     {
       memset(&keysym, 0, sizeof(keysym));
       keysym.mod = KMOD_NONE;
@@ -952,19 +894,7 @@ void WiiMote_Check()
       SDL_PrivateKeyboard(SDL_RELEASED, &keysym);
     }
 
-  if (data->btns_h & WPAD_BUTTON_B)	//		BUTTON B
-  {
-    if (!keystate[SDLK_RCTRL])
-    {
-      memset(&keysym, 0, sizeof(keysym));
-      keysym.mod = KMOD_NONE;
-      keysym.unicode = 0;
-      keysym.sym = SDLK_RCTRL;
-      SDL_PrivateKeyboard(SDL_PRESSED, &keysym);
-    }
-  }
-  else
-    if (keystate[SDLK_RCTRL])
+  if (keystate[SDLK_RCTRL])
     {
       memset(&keysym, 0, sizeof(keysym));
       keysym.mod = KMOD_NONE;

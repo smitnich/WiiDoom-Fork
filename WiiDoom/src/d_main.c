@@ -354,7 +354,7 @@ static void D_DoomLoop(void)
       if (ffmap == gamemap) ffmap = 0;
 
 //        WPAD_ReadPending(WPAD_CHAN_ALL, Wiimote_Callback);
-	WiiMote_Check();
+//	WiiMote_Check();
 
       // process one or more tics
       if (singletics)

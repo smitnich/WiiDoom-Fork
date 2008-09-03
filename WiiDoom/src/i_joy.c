@@ -46,6 +46,11 @@
 #include "i_joy.h"
 #include "lprintf.h"
 
+#include <wiiuse/wpad.h>
+#include <math.h>
+
+#define PI 3.14159265
+
 int joyleft;
 int joyright;
 int joyup;
@@ -64,26 +69,114 @@ static void I_EndJoystick(void)
 
 void I_PollJoystick(void)
 {
-#ifdef HAVE_SDL_JOYSTICKGETAXIS
+  WPADData *data = WPAD_Data(0);
+  ir_t ir;
+  WPAD_IR(0, &ir);
+  int nun_x, nun_y, center, min, max, btn_a, btn_b, btn_c, btn_z, btn_1, btn_2, btn_l, btn_r, btn_d, btn_u, btn_p, btn_m;
   event_t ev;
-  Sint16 axis_value;
+  Sint16 axis_x, axis_y;
 
-  if (!usejoystick || (!joystick)) return;
+  nun_x = data->exp.nunchuk.js.pos.x;
+  nun_y = data->exp.nunchuk.js.pos.y;
+
+  center = data->exp.nunchuk.js.center.x;
+  min = data->exp.nunchuk.js.min.x;
+  max = data->exp.nunchuk.js.max.x;
+
+  if (nun_x < center - ((center - min) * 0.1f))
+    axis_x = (1.0f * center - nun_x) / (center - min) * -50.0f;
+  else if (nun_x > center + ((max - center) * 0.1f))
+    axis_x = (1.0f * nun_x - center) / (max - center) * 50.0f;
+  else
+    axis_x = 0;
+
+  center = data->exp.nunchuk.js.center.y;
+  min = data->exp.nunchuk.js.min.y;
+  max = data->exp.nunchuk.js.max.y;
+
+  if (nun_y < center - ((center - min) * 0.1f))
+    axis_y = (1.0f * center - nun_y) / (center - min) * -50.0f;
+  else if (nun_y > center + ((max - center) * 0.1f))
+    axis_y = (1.0f * nun_y - center) / (max - center) * 50.0f;
+  else
+    axis_y = 0;
+
+  // doom_printf("\n\n\n  axis_x: %d\n  axis_y: %d", axis_x, axis_y);
+
+  // For some strange reason, the home button is detected as a keypress and mapped to the esc key.
+  // I suspect it's SDL-Port at work here but since it's not a dealbreaker, I'm not terribly
+  // interested in tracking it down. It does pretty much what I would have it do anyway.
+
+  btn_a = 0;
+  btn_b = 0;
+  btn_c = 0;
+  btn_z = 0;
+  btn_1 = 0;
+  btn_2 = 0;
+  btn_l = 0;
+  btn_d = 0;
+  btn_r = 0;
+  btn_u = 0;
+  btn_p = 0;
+  btn_m = 0;
+
+  if (data->btns_h & WPAD_BUTTON_A)
+    btn_a = 1;
+  if (data->btns_h & WPAD_BUTTON_B)
+    btn_b = 1;
+  if (data->btns_h & WPAD_NUNCHUK_BUTTON_C)
+    btn_c = 1;
+  if (data->btns_h & WPAD_NUNCHUK_BUTTON_Z)
+    btn_z = 1;
+  if (data->btns_h & WPAD_BUTTON_1)
+    btn_1 = 1;
+  if (data->btns_h & WPAD_BUTTON_2)
+    btn_2 = 1;
+  if (data->btns_h & WPAD_BUTTON_LEFT)
+    btn_l = 1;
+  if (data->btns_h & WPAD_BUTTON_DOWN)
+    btn_d = 1;
+  if (data->btns_h & WPAD_BUTTON_RIGHT)
+    btn_r = 1;
+  if (data->btns_h & WPAD_BUTTON_UP)
+    btn_u = 1;
+  if (data->btns_h & WPAD_BUTTON_PLUS)
+    btn_p = 1;
+  if (data->btns_h & WPAD_BUTTON_MINUS)
+    btn_m = 1;
+
   ev.type = ev_joystick;
   ev.data1 =
-    (SDL_JoystickGetButton(joystick, 0)<<0) |
-    (SDL_JoystickGetButton(joystick, 1)<<1) |
-    (SDL_JoystickGetButton(joystick, 2)<<2) |
-    (SDL_JoystickGetButton(joystick, 3)<<3);
-  axis_value = SDL_JoystickGetAxis(joystick, 0) / 3000;
-  if (abs(axis_value)<10) axis_value=0;
-  ev.data2 = axis_value;
-  axis_value = SDL_JoystickGetAxis(joystick, 1) / 3000;
-  if (abs(axis_value)<10) axis_value=0;
-  ev.data3 = axis_value;
+    ((btn_b)<<0) |
+    ((btn_c)<<1) |
+    ((btn_z)<<2) |
+    ((btn_a)<<3) |
+    ((btn_1)<<4) |
+    ((btn_2)<<5) |
+    ((btn_l)<<6) |
+    ((btn_d)<<7) |
+    ((btn_r)<<8) |
+    ((btn_u)<<9) |
+    ((btn_p)<<10) |
+    ((btn_m)<<11);
+  ev.data2 = axis_x; // nunchuk x axis
+  ev.data3 = axis_y; // nunchuk y axis
+
+//  if (ir.valid)
+//    {
+      axis_x = ir.x - 160;  // x virtual res appears to be around 320
+      axis_y = ir.y - 100;  // y virtual res appears to be around 200
+//    }
+//  else
+//    {
+//      axis_x = 0;
+//      axis_y = 0;
+//    }
+
+  ev.data4 = axis_x;
+  ev.data5 = axis_y;
 
   D_PostEvent(&ev);
-#endif
 }
 
 void I_InitJoystick(void)

@@ -195,6 +195,7 @@ extern int joybfire;
 extern int joybstrafe;
 extern int joybuse;
 extern int joybspeed;
+
 int mapcolor_me;    // cph
 
 extern int map_point_coordinates; // killough 10/98
@@ -615,8 +616,9 @@ void M_DrawNewGame(void)
 /* cph - make `New Game' restart the level in a netgame */
 static void M_RestartLevelResponse(int ch)
 {
-  if (ch != ' ')
-    return;
+  if (ch != 'y')
+    if (ch != key_menu_enter)
+      return;
 
   if (demorecording)
     exit(0);
@@ -652,8 +654,9 @@ void M_NewGame(int choice)
 // CPhipps - static
 static void M_VerifyNightmare(int ch)
 {
-  if (ch != ' ')
-    return;
+  if (ch != 'y')
+    if (ch != key_menu_enter)
+      return;
 
   //jff 3/24/98 remember last skill selected
   // killough 10/98 moved to here
@@ -1044,8 +1047,9 @@ int quitsounds2[8] =
 
 static void M_QuitResponse(int ch)
 {
-  if (ch != ' ')
-    return;
+  if (ch != 'y')
+    if (ch != key_menu_enter) // add enter to catch joystick button
+      return;
 
   if ((!netgame || demoplayback) // killough 12/98
       && !nosfxparm && snd_card) // avoid delay if no sound card
@@ -1352,8 +1356,9 @@ void M_QuickLoad(void)
 
 static void M_EndGameResponse(int ch)
 {
-  if (ch != ' ')
-    return;
+  if ( ch != 'y')
+    if (ch != key_menu_enter)
+      return;
 
   // killough 5/26/98: make endgame quit if recording or playing back demo
   if (demorecording || singledemo)
@@ -4092,50 +4097,82 @@ boolean M_Responder (event_t* ev) {
   // Process joystick input
 
   if (ev->type == ev_joystick && joywait < I_GetTime())  {
-    if (ev->data3 == -1)
+    if (ev->data3 > 0)
       {
   ch = key_menu_up;                                // phares 3/7/98
   joywait = I_GetTime() + 5;
       }
-    else if (ev->data3 == 1)
+    else if (ev->data3 < 0)
       {
   ch = key_menu_down;                              // phares 3/7/98
   joywait = I_GetTime() + 5;
       }
 
-    if (ev->data2 == -1)
+    if (ev->data2 < 0)
       {
   ch = key_menu_left;                              // phares 3/7/98
   joywait = I_GetTime() + 2;
       }
-    else if (ev->data2 == 1)
+    else if (ev->data2 > 0)
       {
   ch = key_menu_right;                             // phares 3/7/98
   joywait = I_GetTime() + 2;
       }
 
-    if (ev->data1&1)
+    if (ev->data1&8)                               // Wii A button
       {
   ch = key_menu_enter;                             // phares 3/7/98
   joywait = I_GetTime() + 5;
       }
 
-    if (ev->data1&2)
+    if (ev->data1&1)                               // Wii B button
       {
   ch = key_menu_backspace;                         // phares 3/7/98
   joywait = I_GetTime() + 5;
       }
 
     // phares 4/4/98:
-    // Handle joystick buttons 3 and 4, and allow them to pass down
+    // Handle remaining joystick buttons and allow them to pass down
     // to where key binding can eat them.
 
     if (setup_active && set_keybnd_active) {
+      if (ev->data1&2) {
+  ch = 0; // meaningless, just to get you past the check for -1
+  joywait = I_GetTime() + 5;
+      }
       if (ev->data1&4) {
   ch = 0; // meaningless, just to get you past the check for -1
   joywait = I_GetTime() + 5;
       }
-      if (ev->data1&8) {
+      if (ev->data1&16) {
+  ch = 0; // meaningless, just to get you past the check for -1
+  joywait = I_GetTime() + 5;
+      }
+      if (ev->data1&32) {
+  ch = 0; // meaningless, just to get you past the check for -1
+  joywait = I_GetTime() + 5;
+      }
+      if (ev->data1&64) {
+  ch = 0; // meaningless, just to get you past the check for -1
+  joywait = I_GetTime() + 5;
+      }
+      if (ev->data1&128) {
+  ch = 0; // meaningless, just to get you past the check for -1
+  joywait = I_GetTime() + 5;
+      }
+      if (ev->data1&256) {
+  ch = 0; // meaningless, just to get you past the check for -1
+  joywait = I_GetTime() + 5;
+      }
+      if (ev->data1&512) {
+  ch = 0; // meaningless, just to get you past the check for -1
+  joywait = I_GetTime() + 5;
+      }
+      if (ev->data1&1024) {
+  ch = 0; // meaningless, just to get you past the check for -1
+  joywait = I_GetTime() + 5;
+      }
+      if (ev->data1&2048) {
   ch = 0; // meaningless, just to get you past the check for -1
   joywait = I_GetTime() + 5;
       }
@@ -4257,7 +4294,7 @@ boolean M_Responder (event_t* ev) {
 
   if (messageToPrint) {
     if (messageNeedsInput == true &&
-  !(ch == ' ' || ch == 'n' || ch == 'y' || ch == key_escape)) // phares
+  !(ch == ' ' || ch == 'n' || ch == 'y' || ch == key_escape || ch == key_menu_enter)) // phares -- added enter to catch wii button
       return false;
 
     menuactive = messageLastMenuActive;
@@ -4680,6 +4717,22 @@ boolean M_Responder (event_t* ev) {
       ch = 2;
     else if (ev->data1 & 8)
       ch = 3;
+    else if (ev->data1 & 16)
+      ch = 4;
+    else if (ev->data1 & 32)
+      ch = 5;
+    else if (ev->data1 & 64)
+      ch = 6;
+    else if (ev->data1 & 128)
+      ch = 7;
+    else if (ev->data1 & 256)
+      ch = 8;
+    else if (ev->data1 & 512)
+      ch = 9;
+    else if (ev->data1 & 1024)
+      ch = 10;
+    else if (ev->data1 & 2048)
+      ch = 11;
     else
       return true;
     for (i = 0 ; keys_settings[i] && search ; i++)

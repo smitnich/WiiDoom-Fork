@@ -246,7 +246,9 @@ static int   dclicks2;
 // joystick values are repeated
 static int   joyxmove;
 static int   joyymove;
-static boolean joyarray[5];
+static int   joyirx;
+static int   joyiry;
+static boolean joyarray[13]; // added elements for for wii remote and nunchuck buttons
 static boolean *joybuttons = &joyarray[1];    // allow [-1]
 
 // Game events info
@@ -330,6 +332,7 @@ void G_BuildTiccmd(ticcmd_t* cmd)
     }                                                             // phares
 
   // let movement keys cancel each other out
+  // I've swizzled joystick handling for strafe since adding Wii IR
 
   if (strafe)
     {
@@ -337,10 +340,12 @@ void G_BuildTiccmd(ticcmd_t* cmd)
         side += sidemove[speed];
       if (gamekeydown[key_left])
         side -= sidemove[speed];
-      if (joyxmove > 0)
-        side += sidemove[speed];
       if (joyxmove < 0)
-        side -= sidemove[speed];
+        cmd->angleturn += angleturn[tspeed];
+      if (joyirx > 0)     // calculate wii IR curve based on input
+        cmd->angleturn -= 0.05f * (joyirx * joyirx);
+      if (joyirx < 0)     // calculate wii IR curve based on input
+        cmd->angleturn += 0.05f * (joyirx * joyirx);
     }
   else
     {
@@ -348,20 +353,20 @@ void G_BuildTiccmd(ticcmd_t* cmd)
         cmd->angleturn -= angleturn[tspeed];
       if (gamekeydown[key_left])
         cmd->angleturn += angleturn[tspeed];
-      if (joyxmove > 0)
-        cmd->angleturn -= angleturn[tspeed];
-      if (joyxmove < 0)
-        cmd->angleturn += angleturn[tspeed];
+      if (joyxmove != 0)
+        side += joyxmove;
+      if (joyirx > 0)     // calculate wii IR curve based on input
+        cmd->angleturn -= 0.05f * (joyirx * joyirx);
+      if (joyirx < 0)     // calculate wii IR curve based on input
+        cmd->angleturn += 0.05f * (joyirx * joyirx);
     }
 
   if (gamekeydown[key_up])
     forward += forwardmove[speed];
   if (gamekeydown[key_down])
     forward -= forwardmove[speed];
-  if (joyymove < 0)
-    forward += forwardmove[speed];
-  if (joyymove > 0)
-    forward -= forwardmove[speed];
+  if (joyymove != 0)
+    forward += joyymove;
 
   if (gamekeydown[key_straferight])
     side += sidemove[speed];
@@ -395,7 +400,15 @@ void G_BuildTiccmd(ticcmd_t* cmd)
 
   if ((!demo_compatibility && players[consoleplayer].attackdown && // killough
        !P_CheckAmmo(&players[consoleplayer])) || gamekeydown[key_weapontoggle])
-    newweapon = P_SwitchWeapon(&players[consoleplayer]);           // phares
+    newweapon = P_SwitchWeapon(&players[consoleplayer]);
+  else if (joybuttons[5] && (players[consoleplayer].readyweapon > wp_fist))
+    {
+      newweapon = players[consoleplayer].readyweapon - 1;
+    }
+  else if (joybuttons[4] && (players[consoleplayer].readyweapon < wp_bfg))
+    {
+      newweapon = players[consoleplayer].readyweapon + 1;
+    }
   else
    {		                                // phares 02/26/98: Added gamemode checks
       newweapon =
@@ -626,7 +639,7 @@ static void G_DoLoadLevel (void)
 
   // clear cmd building stuff
   memset (gamekeydown, 0, sizeof(gamekeydown));
-  joyxmove = joyymove = 0;
+  joyxmove = joyymove = joyirx = joyiry = 0;
   mousex = mousey = 0;
   special_event = 0; paused = false;
   memset (mousebuttons, 0, sizeof(mousebuttons));
@@ -759,8 +772,18 @@ boolean G_Responder (event_t* ev)
       joybuttons[1] = ev->data1 & 2;
       joybuttons[2] = ev->data1 & 4;
       joybuttons[3] = ev->data1 & 8;
+      joybuttons[4] = ev->data1 & 16;
+      joybuttons[5] = ev->data1 & 32;
+      joybuttons[6] = ev->data1 & 64;
+      joybuttons[7] = ev->data1 & 128;
+      joybuttons[8] = ev->data1 & 256;
+      joybuttons[9] = ev->data1 & 512;
+      joybuttons[10] = ev->data1 & 1024;
+      joybuttons[11] = ev->data1 & 2048;
       joyxmove = ev->data2;
       joyymove = ev->data3;
+      joyirx = ev->data4;
+      joyiry = ev->data5;
       return true;    // eat events
 
     default:
