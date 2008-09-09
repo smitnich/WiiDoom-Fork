@@ -64,6 +64,7 @@
 #include "i_sound.h"
 #include "r_demo.h"
 #include "r_fps.h"
+#include <wiiuse/wpad.h>
 
 extern patchnum_t hu_font[HU_FONTSIZE];
 extern boolean  message_dontfuckwithme;
@@ -4095,41 +4096,49 @@ boolean M_Responder (event_t* ev) {
   ch = -1; // will be changed to a legit char if we're going to use it here
 
   // Process joystick input
+  // For some reason, polling ev.data for joystick input here in the menu code doesn't work when
+  // using the twilight hack to launch wiidoom. At the same time, it works fine if you're using the
+  // homebrew channel. I don't know why this is so for the meantime I'm polling the wii remote directly.
 
-  if (ev->type == ev_joystick && joywait < I_GetTime())  {
-    if (ev->data3 > 0)
-      {
-  ch = key_menu_up;                                // phares 3/7/98
-  joywait = I_GetTime() + 5;
-      }
-    else if (ev->data3 < 0)
-      {
-  ch = key_menu_down;                              // phares 3/7/98
-  joywait = I_GetTime() + 5;
-      }
+  WPADData *data = WPAD_Data(0);
 
-    if (ev->data2 < 0)
+    if (data->btns_h & WPAD_BUTTON_UP)
       {
-  ch = key_menu_left;                              // phares 3/7/98
-  joywait = I_GetTime() + 2;
-      }
-    else if (ev->data2 > 0)
-      {
-  ch = key_menu_right;                             // phares 3/7/98
-  joywait = I_GetTime() + 2;
+        ch = key_menu_up;                                // phares 3/7/98
+        joywait = I_GetTime() + 5;
       }
 
-    if (ev->data1&8)                               // Wii A button
+    if (data->btns_h & WPAD_BUTTON_DOWN)
       {
-  ch = key_menu_enter;                             // phares 3/7/98
-  joywait = I_GetTime() + 5;
+        ch = key_menu_down;                              // phares 3/7/98
+        joywait = I_GetTime() + 5;
       }
 
-    if (ev->data1&1)                               // Wii B button
+    if (data->btns_h & WPAD_BUTTON_LEFT)
       {
-  ch = key_menu_backspace;                         // phares 3/7/98
-  joywait = I_GetTime() + 5;
+        ch = key_menu_left;                              // phares 3/7/98
+        joywait = I_GetTime() + 2;
       }
+
+    if (data->btns_h & WPAD_BUTTON_RIGHT)
+      {
+        ch = key_menu_right;                             // phares 3/7/98
+        joywait = I_GetTime() + 2;
+      }
+
+    if (data->btns_h & WPAD_BUTTON_A)                               // Wii A button
+      {
+        ch = key_menu_enter;                             // phares 3/7/98
+        joywait = I_GetTime() + 5;
+      }
+
+    if (data->btns_h & WPAD_BUTTON_B)                               // Wii B button
+      {
+        ch = key_menu_backspace;                         // phares 3/7/98
+        joywait = I_GetTime() + 5;
+      }
+
+  if ((ev->type == ev_joystick) && (joywait < I_GetTime()))  {
 
     // phares 4/4/98:
     // Handle remaining joystick buttons and allow them to pass down
@@ -4137,44 +4146,44 @@ boolean M_Responder (event_t* ev) {
 
     if (setup_active && set_keybnd_active) {
       if (ev->data1&2) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+        ch = 0; // meaningless, just to get you past the check for -1
+        joywait = I_GetTime() + 5;
       }
       if (ev->data1&4) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+        ch = 0; // meaningless, just to get you past the check for -1
+        joywait = I_GetTime() + 5;
       }
       if (ev->data1&16) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+        ch = 0; // meaningless, just to get you past the check for -1
+        joywait = I_GetTime() + 5;
       }
       if (ev->data1&32) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+        ch = 0; // meaningless, just to get you past the check for -1
+        joywait = I_GetTime() + 5;
       }
       if (ev->data1&64) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+        ch = 0; // meaningless, just to get you past the check for -1
+        joywait = I_GetTime() + 5;
       }
       if (ev->data1&128) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+        ch = 0; // meaningless, just to get you past the check for -1
+        joywait = I_GetTime() + 5;
       }
       if (ev->data1&256) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+        ch = 0; // meaningless, just to get you past the check for -1
+        joywait = I_GetTime() + 5;
       }
       if (ev->data1&512) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+        ch = 0; // meaningless, just to get you past the check for -1
+        joywait = I_GetTime() + 5;
       }
       if (ev->data1&1024) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+        ch = 0; // meaningless, just to get you past the check for -1
+        joywait = I_GetTime() + 5;
       }
       if (ev->data1&2048) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+        ch = 0; // meaningless, just to get you past the check for -1
+        joywait = I_GetTime() + 5;
       }
     }
 
