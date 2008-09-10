@@ -343,9 +343,9 @@ void G_BuildTiccmd(ticcmd_t* cmd)
       if (joyxmove < 0)
         cmd->angleturn += angleturn[tspeed];
       if (joyirx > 0)     // calculate wii IR curve based on input
-        cmd->angleturn -= 0.005f * (joyirx * joyirx);
+        cmd->angleturn -= 5.0f * joyirx;
       if (joyirx < 0)     // calculate wii IR curve based on input
-        cmd->angleturn += 0.005f * (joyirx * joyirx);
+        cmd->angleturn -= 5.0f * joyirx;
     }
   else
     {
@@ -356,9 +356,9 @@ void G_BuildTiccmd(ticcmd_t* cmd)
       if (joyxmove != 0)
         side += joyxmove;
       if (joyirx > 0)     // calculate wii IR curve based on input (max speed ~2560)
-        cmd->angleturn -= 0.01f * (joyirx * joyirx);
+        cmd->angleturn -= 5.0f * joyirx;
       if (joyirx < 0)     // calculate wii IR curve based on input
-        cmd->angleturn += 0.01f * (joyirx * joyirx);
+        cmd->angleturn -= 5.0f * joyirx;
     }
 
   if (gamekeydown[key_up])
