@@ -162,16 +162,18 @@ void I_PollJoystick(void)
   ev.data2 = axis_x; // nunchuk x axis
   ev.data3 = axis_y; // nunchuk y axis
 
-//  if (ir.valid)
-//    {
-      axis_x = ir.x - 160;  // x virtual res appears to be around 320
-      axis_y = ir.y - 100;  // y virtual res appears to be around 200
-//    }
-//  else
-//    {
-//      axis_x = 0;
-//      axis_y = 0;
-//    }
+  if (ir.raw_valid)
+    {
+      axis_x = ir.ax - 500;  // x virtual res appears to be around 1000
+      axis_y = ir.ay - 375;  // y virtual res appears to be around 750
+    }
+  else
+    {
+      axis_x = 0;
+      axis_y = 0;
+    }
+
+  // doom_printf("\n\n\n\tax: %d\n\tay: %d", axis_x, axis_y);
 
   ev.data4 = axis_x;
   ev.data5 = axis_y;

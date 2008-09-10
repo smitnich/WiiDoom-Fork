@@ -343,9 +343,9 @@ void G_BuildTiccmd(ticcmd_t* cmd)
       if (joyxmove < 0)
         cmd->angleturn += angleturn[tspeed];
       if (joyirx > 0)     // calculate wii IR curve based on input
-        cmd->angleturn -= 0.05f * (joyirx * joyirx);
+        cmd->angleturn -= 0.005f * (joyirx * joyirx);
       if (joyirx < 0)     // calculate wii IR curve based on input
-        cmd->angleturn += 0.05f * (joyirx * joyirx);
+        cmd->angleturn += 0.005f * (joyirx * joyirx);
     }
   else
     {
@@ -355,10 +355,10 @@ void G_BuildTiccmd(ticcmd_t* cmd)
         cmd->angleturn += angleturn[tspeed];
       if (joyxmove != 0)
         side += joyxmove;
-      if (joyirx > 0)     // calculate wii IR curve based on input
-        cmd->angleturn -= 0.05f * (joyirx * joyirx);
+      if (joyirx > 0)     // calculate wii IR curve based on input (max speed ~2560)
+        cmd->angleturn -= 0.01f * (joyirx * joyirx);
       if (joyirx < 0)     // calculate wii IR curve based on input
-        cmd->angleturn += 0.05f * (joyirx * joyirx);
+        cmd->angleturn += 0.01f * (joyirx * joyirx);
     }
 
   if (gamekeydown[key_up])
@@ -401,14 +401,6 @@ void G_BuildTiccmd(ticcmd_t* cmd)
   if ((!demo_compatibility && players[consoleplayer].attackdown && // killough
        !P_CheckAmmo(&players[consoleplayer])) || gamekeydown[key_weapontoggle])
     newweapon = P_SwitchWeapon(&players[consoleplayer]);
-  else if (joybuttons[5] && (players[consoleplayer].readyweapon > wp_fist))
-    {
-      newweapon = players[consoleplayer].readyweapon - 1;
-    }
-  else if (joybuttons[4] && (players[consoleplayer].readyweapon < wp_bfg))
-    {
-      newweapon = players[consoleplayer].readyweapon + 1;
-    }
   else
    {		                                // phares 02/26/98: Added gamemode checks
       newweapon =
@@ -464,6 +456,51 @@ void G_BuildTiccmd(ticcmd_t* cmd)
             newweapon = wp_supershotgun;
         }
       // killough 2/8/98, 3/22/98 -- end of weapon selection changes
+    }
+
+  boolean availweapons[8];
+
+  availweapons[0] = players[consoleplayer].weaponowned[wp_chainsaw];
+  availweapons[1] = players[consoleplayer].weaponowned[wp_fist];
+  availweapons[2] = players[consoleplayer].weaponowned[wp_pistol] && players[consoleplayer].ammo[am_clip];
+  availweapons[3] = players[consoleplayer].weaponowned[wp_shotgun] && players[consoleplayer].ammo[am_shell];
+  availweapons[4] = players[consoleplayer].weaponowned[wp_supershotgun] && players[consoleplayer].ammo[am_shell] >= 2;
+  availweapons[5] = players[consoleplayer].weaponowned[wp_chaingun] && players[consoleplayer].ammo[am_clip];
+  availweapons[6] = players[consoleplayer].weaponowned[wp_missile] && players[consoleplayer].ammo[am_misl];
+  availweapons[7] = players[consoleplayer].weaponowned[wp_plasma] && players[consoleplayer].ammo[am_cell] && gamemode != shareware;
+  availweapons[8] = players[consoleplayer].weaponowned[wp_bfg] && gamemode != shareware && players[consoleplayer].ammo[am_cell] >= 40;
+
+  int weaponenum[] = {wp_chainsaw, wp_fist, wp_pistol, wp_shotgun, wp_supershotgun, wp_chaingun, wp_missile, wp_plasma, wp_bfg};
+  int weaponcycle;
+
+  if (joybuttons[5])
+    {
+       weaponcycle = 8;
+       while (weaponenum[weaponcycle % 8] != players[consoleplayer].readyweapon)
+       {
+         weaponcycle--;
+       }
+       weaponcycle--;
+       while (!availweapons[weaponcycle % 8])
+       {
+         weaponcycle--;
+       }
+       newweapon = weaponenum[weaponcycle % 8];
+    }
+
+  if (joybuttons[4])
+    {
+       weaponcycle = 0;
+       while (weaponenum[weaponcycle % 8] != players[consoleplayer].readyweapon)
+       {
+         weaponcycle++;
+       }
+       weaponcycle++;
+       while (!availweapons[weaponcycle % 8])
+       {
+         weaponcycle++;
+       }
+       newweapon = weaponenum[weaponcycle % 8];
     }
 
   if (newweapon != wp_nochange)

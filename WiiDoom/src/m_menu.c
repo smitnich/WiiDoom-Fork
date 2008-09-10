@@ -4102,39 +4102,61 @@ boolean M_Responder (event_t* ev) {
 
   WPADData *data = WPAD_Data(0);
 
-    if (data->btns_h & WPAD_BUTTON_UP)
+    if ((data->btns_h & WPAD_BUTTON_UP) && (joywait < I_GetTime()))
       {
         ch = key_menu_up;                                // phares 3/7/98
         joywait = I_GetTime() + 5;
       }
 
-    if (data->btns_h & WPAD_BUTTON_DOWN)
+    if ((data->btns_h & WPAD_BUTTON_DOWN) && (joywait < I_GetTime()))
       {
         ch = key_menu_down;                              // phares 3/7/98
         joywait = I_GetTime() + 5;
       }
 
-    if (data->btns_h & WPAD_BUTTON_LEFT)
+    if ((data->btns_h & WPAD_BUTTON_LEFT) && (joywait < I_GetTime()))
       {
         ch = key_menu_left;                              // phares 3/7/98
-        joywait = I_GetTime() + 2;
+        joywait = I_GetTime() + 10;
       }
 
-    if (data->btns_h & WPAD_BUTTON_RIGHT)
+    if ((data->btns_h & WPAD_BUTTON_RIGHT) && (joywait < I_GetTime()))
       {
         ch = key_menu_right;                             // phares 3/7/98
-        joywait = I_GetTime() + 2;
+        joywait = I_GetTime() + 10;
       }
 
-    if (data->btns_h & WPAD_BUTTON_A)                               // Wii A button
+    if ((data->btns_h & WPAD_BUTTON_A) && (joywait < I_GetTime()))
       {
         ch = key_menu_enter;                             // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+
+    if ((data->btns_h & WPAD_BUTTON_B) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_backspace;                         // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+
+    if ((data->exp.nunchuk.js.pos.y > (data->exp.nunchuk.js.center.y + 50)) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_up;
+        joywait = I_GetTime() + 5;
+      }
+    else if ((data->exp.nunchuk.js.pos.y < (data->exp.nunchuk.js.center.y - 50)) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_down;
         joywait = I_GetTime() + 5;
       }
 
-    if (data->btns_h & WPAD_BUTTON_B)                               // Wii B button
+    if ((data->exp.nunchuk.js.pos.x > (data->exp.nunchuk.js.center.x + 50)) && (joywait < I_GetTime()))
       {
-        ch = key_menu_backspace;                         // phares 3/7/98
+        ch = key_menu_right;
+        joywait = I_GetTime() + 5;
+      }
+    else if ((data->exp.nunchuk.js.pos.x < (data->exp.nunchuk.js.center.x - 50)) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_left;
         joywait = I_GetTime() + 5;
       }
 
