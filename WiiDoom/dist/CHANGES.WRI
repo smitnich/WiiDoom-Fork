@@ -1,3 +1,15 @@
+-- Version 0.2 --
+  [NEW] Remapped Wii controls to joystick handling code
+  [FIXED] Control stick no longer stalls
+  [NEW] Joystick code extended to handle nearly all currently supported device inputs
+  [NEW] IR controls partly implemented
+  [FIXED] Menu navigation made consistent with Wii titles
+  [FIXED] Audio now plays at correct pitch
+  [FIXED] Brightness/Gamma set to low value
+  [NEW] Framerate uncapped
+  [NEW] Weapon switching via Left/Right on D-pad
+  [CHANGED] IR is now linear
+
 -- Version 0.1.1 --
-	Fixed "Quit" bug, and other places where "Y" was required to continue
-	Changed WiiDoom icon to Funkamatic's
+	[FIXED] "Quit" bug, and other places where "Y" was required to continue
+	[CHANGED] WiiDoom icon to Funkamatic's

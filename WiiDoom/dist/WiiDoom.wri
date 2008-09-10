@@ -1,4 +1,4 @@
-WiiDoom 0.1 alpha release
+WiiDoom 0.2
 by lnuxguy (Steve Corey)
 
 Source Code: http://code.google.com/p/wiidoom
@@ -6,12 +6,13 @@ Project Blog: http://wiidevelopment.blogspot.com
 
 -- Introduction --
 WiiDoom is a DOOM port based on PrBoom. It is compatible with all versions of DOOM, DOOM II, 
-Final DOOM, and FreeDOOM.
+Final DOOM. There is an issue with using FreeDoom, so for now, only the official Doom releases are
+supported.
 
 
 -- IMPORTANT INFO --
-This is an ALPHA. That means there may be bugs in it. Please report them via this site:
-http://code.google.com/p/wiidoom
+This is an BETA. That means there may be bugs in it. Please report them via this site:
+http://wiidoom.googlecode.com
 
 
 -- Requirements --
@@ -19,35 +20,32 @@ http://code.google.com/p/wiidoom
 * Wii remote and Nunchuk
 * This package
 * Some method of booting Wii homebrew (Twilight Princess hack or Homebrew Channel)
+* Doom 1/2/Final WAD file (shareware or commercial)
 
 
 -- Instructions --
-Twilight Hack method: Copy the prboom folder and boot.elf into the root directory of your SD card. Launch via Twilight Hack.
+Twilight Hack method: Copy the prboom folder and boot.elf into the root directory of your SD card. 
 
-Homebrew Channel: Copy the WiiDoom directory (inside the apps directory) into the "apps" folder of your SD card. Copy the prboom folder to the root directory of your SD Card. Launch the Homebrew Channel.
+Homebrew Channel: Copy the WiiDoom directory (inside the apps directory) into the "apps" folder of your SD card. Copy the prboom folder to the root directory of your SD Card.
 
-Inside the prboom folder, you'll see prboom.wad and freedoom.wad. If you want to play "normal" 
-DOOM (i.e. DOOM/DOOM II/Final DOOM), move freedoom.wad to another directory and copy the 
-version you want into this folder (doom.wad, doom2.wad, etc..).
+Copy the Doom WAD file (doom.wad, doom2.wad, etc..) into the "prboom" directory. If you don't have a commercial version of Doom, go to the Source Code site to download the shareware
+version. Leave the prboom.wad file in the directory.
 
 Once Doom comes up, you'll need to disconnect and reconnect the Nunchuk. This is a temporary bug, but seems
 to be common with Wii homebrew.
 
 -- Controls --
 Move around   - Nunchuk Stick
-Turn left     - Left on Wiimote D-pad
-Turn right    - Right on Wiimote D-pad
+Menu Nav      - Nunchuk Stick or D-pad
+Switch Weapon - Left or Right D-pad
+Turn left     - Point Wiimote left
+Turn right    - Point Wiimote right
 Fire          - B
 Use/Open      - A
 Run           - Z
-Menu Activate - 1
-Menu Select   - 2
+Menu Select   - A
 
 
--- Todo --
-Select weapon via (-) and (+)
-Point Wiimote Left/Right to turn
-
-
--- Special Thanks --
-Thanks to Funkamatic for the awesome WiiDoom icon
+-- Contributors --
+Richard L. Bartlett
+Funkamatic

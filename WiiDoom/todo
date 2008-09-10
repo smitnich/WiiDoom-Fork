@@ -1,4 +1,0 @@
-- Reenable any needed code in i_main:main()
-- Find out if all STlib_updateMultIcon() calls NEED to be disabled
-- Fix Doom2.wad hardcode
-- Add exit function to go back to (HB loader??)

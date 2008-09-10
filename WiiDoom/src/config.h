@@ -124,7 +124,7 @@
 #define PACKAGE_TARNAME "wiidoom"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.1.1"
+#define PACKAGE_VERSION "0.2"
 
 /* Set to the attribute to apply to struct definitions to make them packed */
 #define PACKEDATTR __attribute__((packed))

@@ -38,7 +38,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#ifdef _MSC_VER 
+#ifdef _MSC_VER
 #define    F_OK    0    /* Check for file existence */
 #define    W_OK    2    /* Check for write permission */
 #define    R_OK    4    /* Check for read permission */
@@ -414,7 +414,7 @@ void G_BuildTiccmd(ticcmd_t* cmd)
         gamekeydown[key_weapon8] ? wp_chainsaw :
         (!demo_compatibility && gamekeydown[key_weapon9] && gamemode == commercial) ? wp_supershotgun :
         wp_nochange;
-  
+
       // killough 3/22/98: For network and demo consistency with the
       // new weapons preferences, we must do the weapons switches here
       // instead of in p_user.c. But for old demos we must do it in
@@ -473,7 +473,7 @@ void G_BuildTiccmd(ticcmd_t* cmd)
   int weaponenum[] = {wp_chainsaw, wp_fist, wp_pistol, wp_shotgun, wp_supershotgun, wp_chaingun, wp_missile, wp_plasma, wp_bfg};
   int weaponcycle;
 
-  if (joybuttons[5])
+  if (joybuttons[6])
     {
        weaponcycle = 8;
        while (weaponenum[weaponcycle % 8] != players[consoleplayer].readyweapon)
@@ -488,7 +488,7 @@ void G_BuildTiccmd(ticcmd_t* cmd)
        newweapon = weaponenum[weaponcycle % 8];
     }
 
-  if (joybuttons[4])
+  if (joybuttons[8])
     {
        weaponcycle = 0;
        while (weaponenum[weaponcycle % 8] != players[consoleplayer].readyweapon)
@@ -805,18 +805,18 @@ boolean G_Responder (event_t* ev)
       return true;    // eat events
 
     case ev_joystick:
-      joybuttons[0] = ev->data1 & 1;
-      joybuttons[1] = ev->data1 & 2;
-      joybuttons[2] = ev->data1 & 4;
-      joybuttons[3] = ev->data1 & 8;
-      joybuttons[4] = ev->data1 & 16;
-      joybuttons[5] = ev->data1 & 32;
-      joybuttons[6] = ev->data1 & 64;
-      joybuttons[7] = ev->data1 & 128;
-      joybuttons[8] = ev->data1 & 256;
-      joybuttons[9] = ev->data1 & 512;
-      joybuttons[10] = ev->data1 & 1024;
-      joybuttons[11] = ev->data1 & 2048;
+      joybuttons[0] = (ev->data1 & 1) > 0;
+      joybuttons[1] = (ev->data1 & 2) > 0;
+      joybuttons[2] = (ev->data1 & 4) > 0;
+      joybuttons[3] = (ev->data1 & 8) > 0;
+      joybuttons[4] = (ev->data1 & 16) > 0;
+      joybuttons[5] = (ev->data1 & 32) > 0;
+      joybuttons[6] = (ev->data1 & 64) > 0;
+      joybuttons[7] = (ev->data1 & 128) > 0;
+      joybuttons[8] = (ev->data1 & 256) > 0;
+      joybuttons[9] = (ev->data1 & 512) > 0;
+      joybuttons[10] = (ev->data1 & 1024) > 0;
+      joybuttons[11] = (ev->data1 & 2048) > 0;
       joyxmove = ev->data2;
       joyymove = ev->data3;
       joyirx = ev->data4;
@@ -2338,7 +2338,7 @@ void G_RecordDemo (const char* name)
         byte buf[200];
         size_t len;
         fread(buf, 1, sizeof(buf), demofp);
-      
+
         len = G_ReadDemoHeader(buf) - buf;
         fseek(demofp, len, SEEK_SET);
       }
@@ -2346,7 +2346,7 @@ void G_RecordDemo (const char* name)
       /* Now read the demo to find the last save slot */ /*
       do {
         byte buf[5];
-      
+
         rc = fread(buf, 1, bytes_per_tic, demofp);
         if (buf[0] == DEMOMARKER) break;
         if (buf[bytes_per_tic-1] & BT_SPECIAL)
@@ -2549,7 +2549,7 @@ void G_BeginRecording (void)
         case prboom_4_compatibility: v = 212; break;
         case prboom_5_compatibility: v = 213; break;
         case prboom_6_compatibility:
-				     v = 214; 
+				     v = 214;
 				     longtics = 1;
 				     break;
       }
