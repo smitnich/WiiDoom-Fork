@@ -910,18 +910,37 @@ static void M_DoSave(int slot)
 }
 
 //
-// User wants to save. Start string input for M_Responder
+// User wants to save. Auto-determine name and trigger save.
 //
 void M_SaveSelect(int choice)
 {
-  // we are going to be intercepting all chars
-  saveStringEnter = 1;
-
+  char cChoice[1];
+  int x=0;
+  for (x=0; x<24; x++)
+	  savegamestrings[choice][x] = 0;
+  sprintf(cChoice, "%i", choice + 1);
+  strncpy(savegamestrings[choice], "SAVE GAME ", 10);
+  strncat(savegamestrings[choice], cChoice, 1);
+  switch (gamemission)
+  {
+	  case doom:
+		  strncat(savegamestrings[choice], " (DOOM 1)", 9);
+		  break;
+	  case doom2:
+		  strncat(savegamestrings[choice], " (DOOM 2)", 9);
+		  break;
+	  case pack_tnt:
+		  strncat(savegamestrings[choice], " (DOOM TNT)", 11);
+		  break;
+	  case pack_plut:
+		  strncat(savegamestrings[choice], " (DOOM PLUT)", 12);
+		  break;
+	  default:
+		  strncat(savegamestrings[choice], " (Unknown)", 10);
+		  break;
+  }
   saveSlot = choice;
-  strcpy(saveOldString,savegamestrings[choice]);
-  if (!strcmp(savegamestrings[choice],s_EMPTYSTRING)) // Ty 03/27/98 - externalized
-    savegamestrings[choice][0] = 0;
-  saveCharIndex = strlen(savegamestrings[choice]);
+  M_DoSave(saveSlot);
 }
 
 //
@@ -2091,7 +2110,7 @@ static void M_DrawInstructions(void)
     case S_FILE:
       M_DrawStringCentered(160, 20, CR_SELECT, "Type/edit filename and Press ENTER");
       break;
-    case S_CHOICE: 
+    case S_CHOICE:
       M_DrawStringCentered(160, 20, CR_SELECT, "Press left or right to choose");
       break;
     case S_RESET:
@@ -4642,7 +4661,7 @@ boolean M_Responder (event_t* ev) {
     if (ch == key_menu_left) {
       if (ptr1->var.def->type == def_int) {
         int value = *ptr1->var.def->location.pi;
-      
+
         value = value - 1;
         if ((ptr1->var.def->minvalue != UL &&
              value < ptr1->var.def->minvalue))
@@ -4670,7 +4689,7 @@ boolean M_Responder (event_t* ev) {
     if (ch == key_menu_right) {
       if (ptr1->var.def->type == def_int) {
         int value = *ptr1->var.def->location.pi;
-      
+
         value = value + 1;
         if ((ptr1->var.def->minvalue != UL &&
              value < ptr1->var.def->minvalue))
