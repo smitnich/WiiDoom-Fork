@@ -15,11 +15,13 @@ include $(DEVKITPPC)/wii_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	$(notdir $(CURDIR))
+TARGET		:=	boot
 BUILD		:=	build
 SOURCES		:=	src
 DATA		:=	 
 INCLUDES	:=	$(DEVKITPRO)/SDL-Port/include
+DIST_TW		:=	dist
+DIST_HBC	:=	dist/apps/WiiDoom
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -97,6 +99,8 @@ export OUTPUT	:=	$(CURDIR)/$(TARGET)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@cp $(OUTPUT).dol $(CURDIR)/$(DIST_HBC)/$(TARGET).dol
+	@cp $(OUTPUT).dol $(CURDIR)/$(DIST_TW)/$(TARGET).dol
 
 #---------------------------------------------------------------------------------
 clean:
@@ -116,7 +120,7 @@ DEPENDS	:=	$(OFILES:.o=.d)
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-# $(OUTPUT).dol: $(OUTPUT).elf
+$(OUTPUT).dol: $(OUTPUT).elf
 $(OUTPUT).elf: $(OFILES)
 
 #---------------------------------------------------------------------------------
