@@ -691,6 +691,15 @@ boolean AM_Responder
 		  }
 		  else
 			  m_paninc.x = 0;
+  		  
+  		  if (ev->data1 & 16)				// Follow
+  		  {
+  			  joyWait = I_GetTime() + 7;
+  			  automapmode ^= am_follow;     // CPhipps - put all automap mode stuff into one enum
+  			  f_oldloc.x = INT_MAX;
+  			  plr->message = (automapmode & am_follow) ? s_AMSTR_FOLLOWON : s_AMSTR_FOLLOWOFF;
+  			  rc = true;
+  		  }
 	  }
   }
   else if (ev->type == ev_keydown)
