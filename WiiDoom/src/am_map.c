@@ -49,6 +49,7 @@
 #include "d_deh.h"    // Ty 03/27/98 - externalizations
 #include "lprintf.h"  // jff 08/03/98 - declaration of lprintf
 #include "g_game.h"
+#include "i_main.h"
 
 //jff 1/7/98 default automap colors added
 int mapcolor_back;    // map background
@@ -248,6 +249,8 @@ int markpointnum = 0; // next point to be assigned (also number of points now)
 int markpointnum_max = 0;       // killough 2/22/98
 
 static boolean stopped = true;
+
+int joyWait = 0;
 
 //
 // AM_activateNewScale()
@@ -601,7 +604,7 @@ boolean AM_Responder
   int ch;                                                       // phares
 
   rc = false;
-
+  
   if (!(automapmode & am_active))
   {
     if (ev->type == ev_keydown && ev->data1 == key_map)         // phares
@@ -609,6 +612,86 @@ boolean AM_Responder
       AM_Start ();
       rc = true;
     }
+    else if (ev->type == ev_joystick && (ev->data1 & 2) && (joyWait < I_GetTime()))         // phares
+    {
+      joyWait = I_GetTime() + 7;
+      AM_Start ();
+      rc = true;
+    }
+  }
+  else if (ev->type == ev_joystick)		// Map is up, so check for Wiimote generated events
+  {
+	  rc = false;
+	  
+	  if (joyWait < I_GetTime())
+	  {
+		  if (ev->data1 & 2)		// Hide map
+		  {
+			  joyWait = I_GetTime() + 7;
+			  bigstate = 0;
+			  AM_Stop ();
+			  rc = true;
+		  }
+		  
+		  if (ev->data1 & 1024)		// Zoom in
+		  {
+			  joyWait = I_GetTime() + 7;
+			  mtof_zoommul = M_ZOOMIN;
+			  ftom_zoommul = M_ZOOMOUT;
+			  rc = true;
+		  }
+		  else
+		  if (ev->data1 & 2048)		// Zoom out
+		  {
+			  joyWait = I_GetTime() + 7;
+			  mtof_zoommul = M_ZOOMOUT;
+			  ftom_zoommul = M_ZOOMIN;
+			  rc = true;
+		  }
+		  else						// Reset Zoom
+		  {
+			  mtof_zoommul = FRACUNIT;
+			  ftom_zoommul = FRACUNIT;
+		  }
+		  
+		  if (ev->data1 & 512)				// Up
+  		  {		 
+  			  if (!(automapmode & am_follow))
+  			  {
+  				  m_paninc.y = FTOM(F_PANINC);
+  				  rc = true;
+  			  }
+  		  }
+		  else if (ev->data1 & 128)			// Down
+  		  {
+  			  if (!(automapmode & am_follow))
+			  {
+  				  m_paninc.y = -FTOM(F_PANINC);
+  				  rc = true;
+			  }
+  		  }
+  		  else
+  			  m_paninc.y = 0;
+  		  
+  		  if (ev->data1 & 64)				// Left
+		  {
+			  if (!(automapmode & am_follow))
+			  {
+				  m_paninc.x = -FTOM(F_PANINC);
+				  rc = true;
+			  }
+		  }
+  		  else if (ev->data1 & 256)			// Right
+		  {
+			  if (!(automapmode & am_follow))
+			  {
+				  m_paninc.x = FTOM(F_PANINC);
+				  rc = true;
+			  }
+		  }
+		  else
+			  m_paninc.x = 0;
+	  }
   }
   else if (ev->type == ev_keydown)
   {

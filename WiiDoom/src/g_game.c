@@ -473,42 +473,44 @@ void G_BuildTiccmd(ticcmd_t* cmd)
   int weaponenum[] = {wp_chainsaw, wp_fist, wp_pistol, wp_shotgun, wp_supershotgun, wp_chaingun, wp_missile, wp_plasma, wp_bfg};
   int weaponcycle;
 
-  if (joybuttons[6])
-    {
-       weaponcycle = 8;
-       while (weaponenum[weaponcycle % 8] != players[consoleplayer].readyweapon)
-       {
-         weaponcycle--;
-       }
-       weaponcycle--;
-       while (!availweapons[weaponcycle % 8])
-       {
-         weaponcycle--;
-       }
-       newweapon = weaponenum[weaponcycle % 8];
-    }
-
-  if (joybuttons[8])
-    {
-       weaponcycle = 0;
-       while (weaponenum[weaponcycle % 8] != players[consoleplayer].readyweapon)
-       {
-         weaponcycle++;
-       }
-       weaponcycle++;
-       while (!availweapons[weaponcycle % 8])
-       {
-         weaponcycle++;
-       }
-       newweapon = weaponenum[weaponcycle % 8];
-    }
-
-  if (newweapon != wp_nochange)
-    {
-      cmd->buttons |= BT_CHANGE;
-      cmd->buttons |= newweapon<<BT_WEAPONSHIFT;
-    }
-
+  if (!(automapmode & am_active))
+  {
+	  if (joybuttons[6])
+	    {
+	       weaponcycle = 8;
+	       while (weaponenum[weaponcycle % 8] != players[consoleplayer].readyweapon)
+	       {
+	         weaponcycle--;
+	       }
+	       weaponcycle--;
+	       while (!availweapons[weaponcycle % 8])
+	       {
+	         weaponcycle--;
+	       }
+	       newweapon = weaponenum[weaponcycle % 8];
+	    }
+	
+	  if (joybuttons[8])
+	    {
+	       weaponcycle = 0;
+	       while (weaponenum[weaponcycle % 8] != players[consoleplayer].readyweapon)
+	       {
+	         weaponcycle++;
+	       }
+	       weaponcycle++;
+	       while (!availweapons[weaponcycle % 8])
+	       {
+	         weaponcycle++;
+	       }
+	       newweapon = weaponenum[weaponcycle % 8];
+	    }
+	
+	  if (newweapon != wp_nochange)
+	    {
+	      cmd->buttons |= BT_CHANGE;
+	      cmd->buttons |= newweapon<<BT_WEAPONSHIFT;
+	    }
+  }
   // mouse
   if (mousebuttons[mousebforward])
     forward += forwardmove[speed];
