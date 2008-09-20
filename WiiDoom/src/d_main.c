@@ -1026,6 +1026,7 @@ static void DoLooseFiles(void)
   // Now, if we didn't find any loose files, we can just leave.
   if (wadcount+lmpcount+dehcount == 0) return;  // ******* early return ****
 
+  
   if ((p = M_CheckParm ("-file")))
   {
     skip[p] = true;    // nuke the entry
@@ -1467,6 +1468,7 @@ static void D_DoomMainSetup(void)
 
   // killough 1/31/98, 5/2/98: reload hack removed, -wart same as -warp now.
 
+/*  
   if ((p = M_CheckParm ("-file")))
     {
       // the parms after p are wadfile/lump names,
@@ -1475,7 +1477,16 @@ static void D_DoomMainSetup(void)
       while (++p != myargc && *myargv[p] != '-')
         D_AddFile(myargv[p],source_pwad);
     }
-
+*/
+  
+  FILE* fp;									// Temporary method of loading a PWAD
+  if ((fp = fopen("/prboom/pwad.wad", "rb")))
+  {
+	  fclose(fp);
+	  modifiedgame = true;
+	  D_AddFile("/prboom/pwad.wad", source_pwad);
+  }
+  
   if (!(p = M_CheckParm("-playdemo")) || p >= myargc-1) {   /* killough */
     if ((p = M_CheckParm ("-fastdemo")) && p < myargc-1)    /* killough */
       fastdemo = true;             // run at fastest speed possible
