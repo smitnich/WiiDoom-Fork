@@ -1,4 +1,4 @@
-WiiDoom 0.2
+WiiDoom 0.3
 by lnuxguy (Steve Corey)
 
 Source Code: http://code.google.com/p/wiidoom
@@ -34,18 +34,29 @@ version. Leave the prboom.wad file in the directory.
 Once Doom comes up, you'll need to disconnect and reconnect the Nunchuk. This is a temporary bug, but seems
 to be common with Wii homebrew.
 
+
+-- PWAD usage --
+One a single PWAD file is supported for now. Copy the PWAD into the "prboom" directory, and it MUST be renamed to "pwad.wad". Fire
+up Doom, and it's loaded. To deactivate, name the file something else.
+
+
 -- Controls --
-Move around   - Nunchuk Stick
-Menu Nav      - Nunchuk Stick or D-pad
-Switch Weapon - Left or Right D-pad
-Turn left     - Point Wiimote left
-Turn right    - Point Wiimote right
-Fire          - B
-Use/Open      - A
-Run           - Z
-Menu Select   - A
+Move around   	- Nunchuk Stick
+Menu Nav      	- Nunchuk Stick or D-pad
+Switch Weapon 	- Left or Right D-pad
+Turn left     	- Point Wiimote left
+Turn right    	- Point Wiimote right
+Fire          	- B
+Use/Open      	- A
+Run           	- Z
+Menu Select   	- A
+Automap		  	- C
+Automap Pan	  	- Dpad
+Automap Zoom  	- + and -
+Automap Follow	- 1 
 
 
 -- Contributors --
 Richard L. Bartlett
+David Hudson
 Funkamatic

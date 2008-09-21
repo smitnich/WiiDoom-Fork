@@ -1,3 +1,10 @@
+-- Version 0.3 --
+  [NEW] Saving/Loading working via Nintendo-style save slots
+  [FIXED] Messages display on screen
+  [NEW] Boot.dol is now distributed instead of boot.elf (smaller size)
+  [NEW] Automap implemented
+  [NEW] Preliminary PWAD support
+
 -- Version 0.2 --
   [NEW] Remapped Wii controls to joystick handling code
   [FIXED] Control stick no longer stalls
