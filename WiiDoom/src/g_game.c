@@ -331,6 +331,19 @@ void G_BuildTiccmd(ticcmd_t* cmd)
       gamekeydown[key_reverse] = false;                           //    |
     }                                                             // phares
 
+  //idkfa cheat on button 1
+
+/*
+  if (joybuttons[4])
+    {
+      M_FindCheats('i');
+      M_FindCheats('d');
+      M_FindCheats('k');
+      M_FindCheats('f');
+      M_FindCheats('a');
+    }
+*/
+
   // let movement keys cancel each other out
   // I've swizzled joystick handling for strafe since adding Wii IR
 
@@ -470,41 +483,40 @@ void G_BuildTiccmd(ticcmd_t* cmd)
   availweapons[7] = players[consoleplayer].weaponowned[wp_plasma] && players[consoleplayer].ammo[am_cell] && gamemode != shareware;
   availweapons[8] = players[consoleplayer].weaponowned[wp_bfg] && gamemode != shareware && players[consoleplayer].ammo[am_cell] >= 40;
 
+  //debug availweapons
+  //doom_printf("chainsaw: %d\nfist: %d\npistol: %d\nshotgun: %d\nsupershotgun: %d\nchaingun: %d\nmissle: %d\nplasma: %d\nbfg: %d", availweapons[0],availweapons[1],availweapons[2],availweapons[3],availweapons[4],availweapons[5],availweapons[6],availweapons[7],availweapons[8]);
+
   int weaponenum[] = {wp_chainsaw, wp_fist, wp_pistol, wp_shotgun, wp_supershotgun, wp_chaingun, wp_missile, wp_plasma, wp_bfg};
-  int weaponcycle;
+  int weaponcycle, weaponoffset;
 
   if (!(automapmode & am_active))
   {
 	  if (joybuttons[6])
-	    {
-	       weaponcycle = 8;
-	       while (weaponenum[weaponcycle % 8] != players[consoleplayer].readyweapon)
-	       {
-	         weaponcycle--;
-	       }
-	       weaponcycle--;
-	       while (!availweapons[weaponcycle % 8])
-	       {
-	         weaponcycle--;
-	       }
-	       newweapon = weaponenum[weaponcycle % 8];
-	    }
-	
+          {
+            for (weaponcycle=8; weaponcycle>0; weaponcycle--)
+            {
+              if (weaponenum[weaponcycle] == players[consoleplayer].readyweapon) break;
+            }
+            for (weaponoffset=8; weaponoffset>1; weaponoffset--)
+            {
+              if (availweapons[(weaponcycle + weaponoffset) % 9]) break; // keep value positive so modulus works correctly
+            }
+            newweapon = weaponenum[(weaponcycle + weaponoffset) % 9];
+          }
+
 	  if (joybuttons[8])
-	    {
-	       weaponcycle = 0;
-	       while (weaponenum[weaponcycle % 8] != players[consoleplayer].readyweapon)
-	       {
-	         weaponcycle++;
-	       }
-	       weaponcycle++;
-	       while (!availweapons[weaponcycle % 8])
-	       {
-	         weaponcycle++;
-	       }
-	       newweapon = weaponenum[weaponcycle % 8];
-	    }
-	
+          {
+            for (weaponcycle=8; weaponcycle>0; weaponcycle--)
+            {
+              if (weaponenum[weaponcycle] == players[consoleplayer].readyweapon) break;
+            }
+            for (weaponoffset=1; weaponoffset<8; weaponoffset++)
+            {
+              if (availweapons[(weaponcycle + weaponoffset) % 9]) break;
+            }
+            newweapon = weaponenum[(weaponcycle + weaponoffset) % 9];
+          }
+
 	  if (newweapon != wp_nochange)
 	    {
 	      cmd->buttons |= BT_CHANGE;
