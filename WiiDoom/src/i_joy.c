@@ -173,8 +173,6 @@ void I_PollJoystick(void)
       axis_y = 0;
     }
 
-  // doom_printf("\n\n\n\tax: %d\n\tay: %d", axis_x, axis_y);
-
   ev.data4 = axis_x;
   ev.data5 = axis_y;
 
