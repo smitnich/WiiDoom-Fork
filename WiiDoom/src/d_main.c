@@ -129,6 +129,9 @@ char    mapdir[PATH_MAX+1];        // directory of development maps
 char    baseiwad[PATH_MAX+1];      // jff 3/23/98: iwad directory
 char    basesavegame[PATH_MAX+1];  // killough 2/16/98: savegame directory
 
+// Wii ir variables
+static int   joyirx;
+static int   joyiry;
 
 //jff 4/19/98 list of standard IWAD names
 const char *const standard_iwads[]=
@@ -166,6 +169,10 @@ void D_PostEvent(event_t *ev)
 				     )
 	  ) ||
 	G_Responder(ev);
+
+// Set wii ir variables
+  joyirx = ev->data4 + 320;
+  joyiry = ev->data5 + 240;
 }
 
 //
@@ -292,6 +299,10 @@ void D_Display (void)
 
     if (V_GetMode() != VID_MODEGL)
       R_DrawViewBorder();
+
+// Draw wii ir
+    if (joyiry < 398 && joyiry > 0)
+      V_DrawNamePatch(joyirx, joyiry, 0, "STCFN088", CR_DEFAULT, VPT_NONE); // TEST IR INDICATOR
 
     HU_Drawer();
   }
