@@ -1,12 +1,11 @@
-WiiDoom 0.3
+WiiDoom 0.3.1
 by lnuxguy (Steve Corey)
 
 Source Code: http://code.google.com/p/wiidoom
 Project Blog: http://wiidevelopment.blogspot.com
 
 -- Introduction --
-WiiDoom is a DOOM port based on PrBoom. It is compatible with all versions of DOOM, DOOM II, 
-Final DOOM. There is an issue with using FreeDoom, so for now, only the official Doom releases are
+WiiDoom is a DOOM port based on PrBoom. It is compatible with all versions of DOOM, DOOM II, and Final DOOM. There is an issue with using FreeDoom, so for now, only the official Doom releases are
 supported.
 
 
