@@ -535,7 +535,9 @@ void I_CalculateRes(unsigned int width, unsigned int height)
     SCREENWIDTH = width;
     SCREENHEIGHT = height;
     SCREENPITCH = SCREENWIDTH;
-  } else {
+  }
+  // swc - disabled this, because it didn't compute the screenwidth correctly on the wii
+  /* else {
     SCREENWIDTH = (width+15) & ~15;
     SCREENHEIGHT = height;
     if (!(SCREENWIDTH % 1024)) {
@@ -543,7 +545,7 @@ void I_CalculateRes(unsigned int width, unsigned int height)
     } else {
       SCREENPITCH = SCREENWIDTH;
     }
-  }
+  }*/
 }
 
 // CPhipps -
