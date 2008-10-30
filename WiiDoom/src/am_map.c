@@ -603,6 +603,9 @@ boolean AM_Responder
   static int bigstate=0;
   int ch;                                                       // phares
 
+	// Required for Twilight Hack input bug
+	if (joyWait == 0) joyWait = I_GetTime();
+
   rc = false;
   
   if (!(automapmode & am_active))
