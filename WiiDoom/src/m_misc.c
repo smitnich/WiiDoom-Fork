@@ -166,6 +166,7 @@ extern int gl_sprite_offset;
 
 extern int realtic_clock_rate;         // killough 4/13/98: adjustable timer
 extern int tran_filter_pct;            // killough 2/21/98
+extern int ir_crosshair;
 
 extern int screenblocks;
 extern int showMessages;
@@ -264,11 +265,12 @@ default_t defaults[] =
    def_bool,ss_none}, // enables message display
   {"autorun",{&autorun},{1},0,1,  // killough 3/6/98: preserve autorun across games
    def_bool,ss_none},
+  {"ir_crosshair", {&ir_crosshair}, {0},0,1, def_bool,ss_none},
 
   {"Compatibility settings",{NULL},{0},UL,UL,def_none,ss_none},
   {"comp_zombie",{&default_comp[comp_zombie]},{0},0,1,def_bool,ss_comp,&comp[comp_zombie]},
   {"comp_infcheat",{&default_comp[comp_infcheat]},{0},0,1,def_bool,ss_comp,&comp[comp_infcheat]},
-  {"comp_stairs",{&default_comp[comp_stairs]},{0},0,1,def_bool,ss_comp,&comp[comp_stairs]},
+  {"comp_stairs",{&default_comp[comp_stairs]},{1},0,1,def_bool,ss_comp,&comp[comp_stairs]},
   {"comp_telefrag",{&default_comp[comp_telefrag]},{0},0,1,def_bool,ss_comp,&comp[comp_telefrag]},
   {"comp_dropoff",{&default_comp[comp_dropoff]},{0},0,1,def_bool,ss_comp,&comp[comp_dropoff]},
   {"comp_falloff",{&default_comp[comp_falloff]},{0},0,1,def_bool,ss_comp,&comp[comp_falloff]},
@@ -856,8 +858,8 @@ void M_SaveDefaults (void)
 
   f = fopen (defaultfile, "w");
   if (!f)
-    return; // can't write the file, but don't complain
-
+  	return; // can't write the file, but don't complain
+  	  
   // 3/3/98 explain format of file
 
   fprintf(f,"# Doom config file\n");
@@ -934,6 +936,9 @@ void M_LoadDefaults (void)
 
   // check for a custom default file
 
+defaultfile = "/prboom/prboom.cfg";
+
+/*
   i = M_CheckParm ("-config");
   if (i && i < myargc-1)
     defaultfile = myargv[i+1];
@@ -941,7 +946,6 @@ void M_LoadDefaults (void)
 
     const char* exedir = I_DoomExeDir();
     defaultfile = malloc(PATH_MAX+1);
-    /* get config file from same directory as executable */
 
 #ifdef HAVE_SNPRINTF
     snprintf((char *)defaultfile, PATH_MAX,
@@ -956,6 +960,7 @@ void M_LoadDefaults (void)
 #endif
             );
   }
+*/
 
   lprintf (LO_CONFIRM, " default file: %s\n",defaultfile);
 
