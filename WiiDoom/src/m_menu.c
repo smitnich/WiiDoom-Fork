@@ -196,6 +196,7 @@ extern int joybfire;
 extern int joybstrafe;
 extern int joybuse;
 extern int joybspeed;
+extern int ir_crosshair;
 
 int mapcolor_me;    // cph
 
@@ -2057,7 +2058,7 @@ static void M_DrawDefVerify(void)
   // cursor skull.
 
   if (whichSkull) { // blink the text
-    strcpy(menu_buffer,"Reset to defaults? (Y or N)");
+    strcpy(menu_buffer,"(A to confirm, B to cancel)");
     M_DrawMenuString(VERIFYBOXXORG+8,VERIFYBOXYORG+8,CR_RED);
   }
 }
@@ -2874,6 +2875,7 @@ enum {
 //  general_pcx,
 //  general_diskicon,
   general_uncapped,
+  general_ir,
 };
 
 enum {
@@ -2923,6 +2925,10 @@ setup_menu_t gen_settings1[] = { // General Settings screen1
 
   {"Uncapped Framerate", S_YESNO, m_null, G_X,
   G_YA + general_uncapped*8, {"uncapped_framerate"}},
+
+  {"IR Crosshair", S_YESNO, m_null, G_X,
+   G_YA + general_ir*8, {"ir_crosshair"}},
+
 
 #ifdef GL_DOOM
   {"OpenGL", S_SKIP|S_TITLE, m_null, G_X, G_YA2 - 12},
@@ -4056,10 +4062,11 @@ enum {
 setup_menu_t cred_settings[]={
 
   {"Programmers",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X, CR_Y + CR_S*prog + CR_SH*cr_prog},
-  {"Florian 'Proff' Schulze",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*(prog+1) + CR_SH*cr_prog},
-  {"Colin Phipps",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*(prog+2) + CR_SH*cr_prog},
-  {"Neil Stevens",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*(prog+3) + CR_SH*cr_prog},
-  {"Andrey Budko",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*(prog+4) + CR_SH*cr_prog},
+  {"Steve 'lnuxguy' Corey",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*(prog+1) + CR_SH*cr_prog},
+  {"Florian 'Proff' Schulze",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*(prog+2) + CR_SH*cr_prog},
+  {"Colin Phipps",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*(prog+3) + CR_SH*cr_prog},
+  {"Neil Stevens",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*(prog+4) + CR_SH*cr_prog},
+  {"Andrey Budko",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*(prog+5) + CR_SH*cr_prog},
 
   {"Additional Credit To",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X, CR_Y + CR_S*adcr + CR_SH*cr_adcr},
   {"id Software for DOOM",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*(adcr+1)+CR_SH*cr_adcr},
@@ -4112,6 +4119,9 @@ boolean M_Responder (event_t* ev) {
   static int mousex    = 0;
   static int lastx     = 0;
 
+	// Required for Twilight Hack input bug 
+	if (joywait == 0) joywait = I_GetTime();
+	
   ch = -1; // will be changed to a legit char if we're going to use it here
 
   // Process joystick input
@@ -4534,13 +4544,13 @@ boolean M_Responder (event_t* ev) {
     // screen
 
     if (default_verify)
-      {
-  if (toupper(ch) == 'Y') {
+      {    	    
+  if (toupper(ch) == key_menu_enter) {			// Added check for wiimote buttons
     M_ResetDefaults();
     default_verify = false;
     M_SelectDone(ptr1);
   }
-  else if (toupper(ch) == 'N') {
+  else if (toupper(ch) == key_menu_backspace) {
     default_verify = false;
     M_SelectDone(ptr1);
   }
