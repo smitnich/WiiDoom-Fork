@@ -839,14 +839,8 @@ void ST_Drawer(boolean statusbaron, boolean refresh)
   ST_doPaletteStuff();  // Do red-/gold-shifts from damage/items
 
   if (statusbaron) {
-    if (st_firsttime || (V_GetMode() == VID_MODEGL))
-    {
+  		// swc - always do a refresh, to erase remnants of the ir crosshair
       ST_doRefresh();     /* If just after ST_Start(), refresh all */
-    }
-    else
-    {
-      ST_diffDraw();      /* Otherwise, update as little as possible */
-    }
   }
 
 }
