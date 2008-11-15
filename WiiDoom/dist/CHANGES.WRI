@@ -1,3 +1,15 @@
+-- Version 0.4 --
+  [NEW]    Added WAD loader
+  [FIXED]  Finale cast can now be advanced through
+  [FIXED]  Config file saving/loading works
+  [CHANGE] Classis stairbuilding enabled by default
+  [NEW]    Added IR crosshair option in general settings menu
+  [CHANGE] Disabled IR crosshair by default
+  [FIXED]  Fixed vertical resolution to fit on the screen better
+  [FIXED]  Fixed Twilight Hack Input bug
+  [CHANGE] Moved messages output location to original spot
+  [FIXED]  "Reset to defaults" now works
+
 -- Version 0.3.1 --
   [CHANGE] IR input based on raw values now
   [FIXED]  Switching from BFG no longer causes lockup
