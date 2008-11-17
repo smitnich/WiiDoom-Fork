@@ -37,7 +37,7 @@ to be common with Wii homebrew.
 
 
 -- PWAD usage --
-Multiple pwads are supported, using the same logic as the original Doom engine. The order you select them in the Wad Loader will be the exact order they're sent to the engine. Check the add-on level's instructions to determine if any special order is needed.
+Multiple pwads are supported, using the same logic as the original Doom engine. The order you select them in the Wad Loader will be the exact order they're sent to the engine. Check the add-on level's instructions to determine if any special order is needed. WiiDoom only looks at the .wad files in the pwads directory, so you can store the .txt files that accompany the PWADs in the same directory.
 
 
 -- WAD Loader Controls --
