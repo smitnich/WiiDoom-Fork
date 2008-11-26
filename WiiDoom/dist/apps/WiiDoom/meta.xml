@@ -5,5 +5,7 @@
     <version>0.4</version>
     <release_date>20081119010000</release_date>
     <short_description>DOOM for the Wii</short_description>
-    <long_description></long_description>
+    <long_description>
+	WiiDoom is a DOOM port based on PrBoom. 
+    </long_description>
   </app>
