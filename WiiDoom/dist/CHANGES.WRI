@@ -1,3 +1,6 @@
+-- Version 0.4.1 --
+  [FIXED]  Fixed crash when loading the shareware wad
+
 -- Version 0.4 --
   [NEW]    Added WAD loader
   [FIXED]  Finale cast can now be advanced through

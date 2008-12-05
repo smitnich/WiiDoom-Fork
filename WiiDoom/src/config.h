@@ -118,13 +118,13 @@
 #define PACKAGE_NAME "wiidoom"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "wiidoom 0.4"
+#define PACKAGE_STRING "wiidoom 0.4.1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "wiidoom"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.4"
+#define PACKAGE_VERSION "0.4.1"
 
 /* Set to the attribute to apply to struct definitions to make them packed */
 #define PACKEDATTR __attribute__((packed))
@@ -157,7 +157,7 @@
 #undef USE_SDL_NET
 
 /* Version number of package */
-#define VERSION "0.4"
+#define VERSION "0.4.1"
 
 /* Define if using the dmalloc debugging malloc package */
 /* #undef WITH_DMALLOC */
