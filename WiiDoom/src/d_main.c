@@ -1981,10 +1981,14 @@ void WADPicker()
 			sprintf(selectedPWADFiles[numSelectedPWADFiles++], "%s%s.wad", p, foundPwads[selectedPWADs[selectedPWADIndex]]);
 			
 		}
-		
+		 
 	// Blank screen and start Doom
  	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
  	SDL_Flip(screen);
+ 
+ 	if (strncmp(foundIwads[selectedIWAD], "doom1", 5) == 0)
+		return;
+		
   SDL_FreeSurface(sCursor);
   SDL_FreeSurface (logo);
   SDL_FreeSurface(startButton);
@@ -1992,7 +1996,6 @@ void WADPicker()
   //TTF_CloseFont(doomfnt18);
 	TTF_Quit();
 	SDL_FreeSurface (screen);
-	
 }
 
 //
