@@ -20,8 +20,7 @@ BUILD		:=	build
 SOURCES		:=	src
 DATA		:=	 
 INCLUDES	:=	
-DIST_TW		:=	dist
-DIST_HBC	:=	dist/apps/WiiDoom
+DIST		:=	dist/apps/WiiDoom
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -99,8 +98,7 @@ export OUTPUT	:=	$(CURDIR)/$(TARGET)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	@cp $(OUTPUT).dol $(CURDIR)/$(DIST_HBC)/$(TARGET).dol
-	@cp $(OUTPUT).dol $(CURDIR)/$(DIST_TW)/$(TARGET).dol
+	@cp $(OUTPUT).dol $(CURDIR)/$(DIST)/$(TARGET).dol
 
 #---------------------------------------------------------------------------------
 clean:
