@@ -43,13 +43,13 @@
 #include <unistd.h>
 #endif
 
-#include "SDL.h"
-#include "SDL_audio.h"
-#include "SDL_mutex.h"
-#include "SDL_byteorder.h"
-#include "SDL_version.h"
+#include "SDL/SDL.h"
+#include "SDL/SDL_audio.h"
+#include "SDL/SDL_mutex.h"
+#include "SDL/SDL_byteorder.h"
+#include "SDL/SDL_version.h"
 #ifdef HAVE_MIXER
-#include "SDL_mixer.h"
+#include "SDL/SDL_mixer.h"
 #endif
 
 #include "z_zone.h"

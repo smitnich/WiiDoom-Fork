@@ -88,11 +88,13 @@
 #include "am_map.h"
 
 #include <wiiuse/wpad.h>
-#include <SDL_ttf.h>
-#include <SDL_image.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
+#include <SDL/SDL_image.h>
 #include <ogcsys.h>
 #include <gccore.h>
 #include <sys/dir.h>
+#include <fat.h>
 
 Mtx GXmodelView2D;
 

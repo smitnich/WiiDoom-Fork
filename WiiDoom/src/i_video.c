@@ -43,7 +43,7 @@
 #include <unistd.h>
 #endif
 
-#include "SDL.h"
+#include "SDL/SDL.h"
 
 #include "m_argv.h"
 #include "doomstat.h"

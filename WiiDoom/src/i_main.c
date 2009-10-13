@@ -59,7 +59,7 @@
 #include "r_fps.h"
 #include "lprintf.h"
 //#ifdef USE_SDL
-#include <SDL.h>
+#include <SDL/SDL.h>
 //#endif
 
 #include <signal.h>

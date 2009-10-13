@@ -15,11 +15,11 @@ include $(DEVKITPPC)/wii_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	boot
+TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	src
 DATA		:=	 
-INCLUDES	:=	$(DEVKITPRO)/SDL-Port/include
+INCLUDES	:=	
 DIST_TW		:=	dist
 DIST_HBC	:=	dist/apps/WiiDoom
 
@@ -35,13 +35,13 @@ LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:= -lSDL_image -lSDL_ttf -lSDL -ljpeg -lfreetype -lwiiuse -lm -lbte -lfat -logc
+LIBS	:= -lSDL_image -lSDL_ttf -lSDL -lwiikeyboard -lpng -ljpeg -lfreetype -lwiiuse -lbte -lz -lfat -logc -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:=	$(DEVKITPRO)/SDL-Port
+LIBDIRS	:=	
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional

@@ -50,7 +50,7 @@
 #endif
 #include <sys/stat.h>
 
-#include "SDL.h"
+#include "SDL/SDL.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
