@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <app version="1">
     <name>WiiDoom</name>
-    <coder>lnuxguy</coder>
-    <version>0.4.1</version>
+    <coder>lnuxguy and David Hudson</coder>
+    <version>0.4.2</version>
     <release_date>20081119010000</release_date>
     <short_description>DOOM for the Wii</short_description>
     <long_description>

@@ -1,13 +1,11 @@
-WiiDoom 0.4.1
-by lnuxguy (Steve Corey)
+WiiDoom 0.4.2
+by jendave (David Hudson)
 
 Source Code: http://code.google.com/p/wiidoom
-Project Blog: http://wiidevelopment.blogspot.com
-
 
 -- Introduction --
-WiiDoom is a DOOM port based on PrBoom. It is compatible with all versions of DOOM, DOOM II, and Final DOOM. There is an issue with using FreeDoom, so for now, only the official Doom releases are
-supported.
+WiiDoom is a DOOM port based on PrBoom. It is compatible with all versions of DOOM, DOOM II, and Final DOOM. 
+There is an issue with using FreeDoom, so for now, only the official Doom releases are supported.
 
 
 -- IMPORTANT INFO --
@@ -16,34 +14,43 @@ http://wiidoom.googlecode.com
 
 
 -- Requirements --
-* A Wii (duh)
+* A Wii
 * Wii remote and Nunchuk
 * This package
-* Some method of booting Wii homebrew (Twilight Princess hack or Homebrew Channel)
+* Some method of booting Wii homebrew (i.e. Homebrew Channel)
 * Doom 1/2/Final WAD file (shareware or commercial)
 
 
 -- Instructions --
-Twilight Hack method: Copy the prboom folder and boot.elf into the root directory of your SD card. 
+Homebrew Browser is the preferred method of installing WiiDoom.
 
-Homebrew Channel: Copy the WiiDoom directory (inside the apps directory) into the "apps" folder of your SD card. Copy the prboom folder to the root directory of your SD Card.
+Homebrew Channel: Copy the WiiDoom directory (inside the apps directory) into the "apps" folder of your SD card. 
+Copy the prboom folder to the root directory of your SD Card.
 
-Copy any Doom WAD files (doom.wad, doom2.wad, etc..) into the "prboom" directory. If you don't have a commercial version of Doom, go to the Source Code site to download the shareware version. Leave the prboom.wad file in the directory.Copy any pwads (add-on levels) into the pwads directory, which is inside the prboom directory.
+Copy any Doom WAD files (doom.wad, doom2.wad, etc..) into the "prboom" directory. 
+If you don't have a commercial version of Doom, go to the Source Code site to download the shareware version. 
+Leave the prboom.wad file in the directory.
+Copy any pwads (add-on levels) into the pwads directory, which is inside the prboom directory.
 
-The Wad Loader runs first, allowing you to select the version of doom (IWAD) and any (optional) add-on levels (PWads). Select at least the IWAD and the start button will appear. Select Start and Doom loads up.
+The Wad Loader runs first, allowing you to select the version of doom (IWAD) and any (optional) add-on levels (PWads). 
+Select at least the IWAD and the start button will appear. Select Start and Doom loads up.
 
-Once Doom comes up, you'll need to disconnect and reconnect the Nunchuk. This is a temporary bug, but seems
-to be common with Wii homebrew.
+Once Doom comes up, you'll need to disconnect and reconnect the Nunchuk. 
+This is a temporary bug, but seems to be common with Wii homebrew.
 
 
 -- PWAD usage --
-Multiple pwads are supported, using the same logic as the original Doom engine. The order you select them in the Wad Loader will be the exact order they're sent to the engine. Check the add-on level's instructions to determine if any special order is needed. WiiDoom only looks at the .wad files in the pwads directory, so you can store the .txt files that accompany the PWADs in the same directory.
+Multiple pwads are supported, using the same logic as the original Doom engine. 
+The order you select them in the Wad Loader will be the exact order they're sent to the engine. 
+Check the add-on level's instructions to determine if any special order is needed. 
+WiiDoom only looks at the .wad files in the pwads directory, so you can store the .txt files that accompany the PWADs in the same directory.
 
 
 -- WAD Loader Controls --
 Exit to Wii		- B
 Select			- A
 Scroll PWAD list 	- Left/Right on D-pad
+
 
 -- Game Controls --
 Move around   	- Nunchuk Stick
@@ -66,6 +73,10 @@ Richard L. Bartlett
 David Hudson
 Funkamatic
 
+
+-- Version 0.4.2 --
+  [FIXED]  Recompiled with devkitPro r18 and latest version of SDL-wii
+  
 -- Version 0.4.1 --
   [FIXED]  Fixed crash when loading the shareware wad
 
@@ -106,5 +117,5 @@ Funkamatic
   [CHANGED] IR is now linear
 
 -- Version 0.1.1 --
-	[FIXED] "Quit" bug, and other places where "Y" was required to continue
-	[CHANGED] WiiDoom icon to Funkamatic's
+  [FIXED] "Quit" bug, and other places where "Y" was required to continue
+  [CHANGED] WiiDoom icon to Funkamatic's
