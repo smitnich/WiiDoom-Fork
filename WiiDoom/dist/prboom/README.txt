@@ -78,44 +78,44 @@ Funkamatic
   [FIXED]  Recompiled with devkitPro r18 and latest version of SDL-wii
   
 -- Version 0.4.1 --
-  [FIXED]  Fixed crash when loading the shareware wad
+  [FIXED]   Fixed crash when loading the shareware wad
 
 -- Version 0.4 --
-  [NEW]    Added WAD loader
-  [FIXED]  Finale cast can now be advanced through
-  [FIXED]  Config file saving/loading works
-  [CHANGE] Classis stairbuilding enabled by default
-  [NEW]    Added IR crosshair option in general settings menu
-  [CHANGE] Disabled IR crosshair by default
-  [FIXED]  Fixed vertical resolution to fit on the screen better
-  [FIXED]  Fixed Twilight Hack Input bug
-  [CHANGE] Moved messages output location to original spot
-  [FIXED]  "Reset to defaults" now works
+  [NEW]     Added WAD loader
+  [FIXED]   Finale cast can now be advanced through
+  [FIXED]   Config file saving/loading works
+  [CHANGED] Classis stairbuilding enabled by default
+  [NEW]     Added IR crosshair option in general settings menu
+  [CHANGED] Disabled IR crosshair by default
+  [FIXED]   Fixed vertical resolution to fit on the screen better
+  [FIXED]   Fixed Twilight Hack Input bug
+  [CHANGED] Moved messages output location to original spot
+  [FIXED]   "Reset to defaults" now works
 
 -- Version 0.3.1 --
-  [CHANGE] IR input based on raw values now
-  [FIXED]  Switching from BFG no longer causes lockup
-  [NEW]    Aiming crosshair (eyecandy only)
+  [CHANGED] IR input based on raw values now
+  [FIXED]   Switching from BFG no longer causes lockup
+  [NEW]     Aiming crosshair (eyecandy only)
 
 -- Version 0.3 --
-  [NEW] Saving/Loading working via Nintendo-style save slots
-  [FIXED] Messages display on screen
-  [NEW] Boot.dol is now distributed instead of boot.elf (smaller size)
-  [NEW] Automap implemented
-  [NEW] Preliminary PWAD support
+  [NEW]     Saving/Loading working via Nintendo-style save slots
+  [FIXED]   Messages display on screen
+  [NEW]     Boot.dol is now distributed instead of boot.elf (smaller size)
+  [NEW]     Automap implemented
+  [NEW]     Preliminary PWAD support
 
 -- Version 0.2 --
-  [NEW] Remapped Wii controls to joystick handling code
-  [FIXED] Control stick no longer stalls
-  [NEW] Joystick code extended to handle nearly all currently supported device inputs
-  [NEW] IR controls partly implemented
-  [FIXED] Menu navigation made consistent with Wii titles
-  [FIXED] Audio now plays at correct pitch
-  [FIXED] Brightness/Gamma set to low value
-  [NEW] Framerate uncapped
-  [NEW] Weapon switching via Left/Right on D-pad
+  [NEW]     Remapped Wii controls to joystick handling code
+  [FIXED]   Control stick no longer stalls
+  [NEW]     Joystick code extended to handle nearly all currently supported device inputs
+  [NEW]     IR controls partly implemented
+  [FIXED]   Menu navigation made consistent with Wii titles
+  [FIXED]   Audio now plays at correct pitch
+  [FIXED]   Brightness/Gamma set to low value
+  [NEW]     Framerate uncapped
+  [NEW]     Weapon switching via Left/Right on D-pad
   [CHANGED] IR is now linear
 
 -- Version 0.1.1 --
-  [FIXED] "Quit" bug, and other places where "Y" was required to continue
+  [FIXED]   "Quit" bug, and other places where "Y" was required to continue
   [CHANGED] WiiDoom icon to Funkamatic's
