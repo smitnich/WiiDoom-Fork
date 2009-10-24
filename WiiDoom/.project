@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>WiiDoom</name>
+	<name>wiidoom</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -59,7 +59,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.environment</key>
-					<value>DEVKITPPC=/home/steve/wiidev/devkitPro/devkitPPC|DEVKITPRO=/home/steve/wiidev/devkitPro|</value>
+					<value>DEVKITPRO=/Applications/devkitpro|DEVKITPPC=/Applications/devkitpro/devkitPPC|</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.stopOnError</key>

@@ -74,7 +74,7 @@ else
 	export LD	:=	$(CXX)
 endif
 
-export OFILES	:=	mmus2mid.o $(addsuffix .o,$(BINFILES)) \
+export OFILES	:=	$(addsuffix .o,$(BINFILES)) \
 					$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) \
 					$(sFILES:.s=.o) $(SFILES:.S=.o)
 

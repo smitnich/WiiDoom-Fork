@@ -936,7 +936,7 @@ void M_LoadDefaults (void)
 
   // check for a custom default file
 
-defaultfile = "/prboom/prboom.cfg";
+defaultfile = "sd:/prboom/prboom.cfg";
 
 /*
   i = M_CheckParm ("-config");

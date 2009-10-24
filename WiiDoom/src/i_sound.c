@@ -599,7 +599,7 @@ void I_InitMusic(void)
 #ifdef HAVE_MIXER
   if (!music_tmp) {
 #ifndef _WIN32
-    music_tmp = strdup("/tmp/prboom-music-XXXXXX");
+    music_tmp = strdup("sd:/prboom/prboom-music-XXXXXX");
     {
       int fd = mkstemp(music_tmp);
       if (fd<0) {

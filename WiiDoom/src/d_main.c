@@ -808,8 +808,8 @@ static void IdentifyVersion (void)
 
   // set save path to -save parm or current dir
 
-   // SWC - use /prboom directory for saves
-   char* p = "/prboom";
+   // SWC - use sd:/prboom directory for saves
+   char* p = "sd:/prboom";
    if (p != NULL)
      if (strlen(p) > PATH_MAX-12) p = NULL;
        strcpy(basesavegame,(p == NULL) ? I_DoomExeDir() : p);
@@ -1719,14 +1719,14 @@ void WADPicker()
 	
 	// Load font
 	TTF_Init();
-	TTF_Font *doomfnt24 = TTF_OpenFont( "/prboom/fonts/DooM.ttf", 24 );
-	TTF_Font *doomfnt18 = TTF_OpenFont( "/prboom/fonts/DooM.ttf", 18 );
+	TTF_Font *doomfnt24 = TTF_OpenFont( "sd:/prboom/fonts/DooM.ttf", 24 );
+	TTF_Font *doomfnt18 = TTF_OpenFont( "sd:/prboom/fonts/DooM.ttf", 18 );
 	SDL_Color clrFg = {0,0,255};
 	SDL_Color clrFgSelected = {255,0,0};
 	SDL_Color clrStartText = {255,255,255};
 	
 	// Load logo
-	SDL_Surface *logo = IMG_Load("/prboom/images/doom.bmp"); 	
+	SDL_Surface *logo = IMG_Load("sd:/prboom/images/doom.bmp");
  	SDL_Rect rlogo = {LOGOX, LOGOY, 0, 0}; 
   
   // Start button
@@ -1776,7 +1776,7 @@ void WADPicker()
 	struct stat st;
 	char filename[MAXPATHLEN]; // always guaranteed to be enough to hold a filename
 	DIR_ITER* dir;		
-	dir = diropen ("/prboom/pwads"); 
+	dir = diropen ("sd:/prboom/pwads");
 	if (dir != NULL) {
 		// Get a count of the files
 		while (dirnext(dir, filename, &st) == 0) {
@@ -1967,14 +1967,14 @@ void WADPicker()
   }
 
   // Set IWAD
-  selectedIWADFile = malloc(strlen("/prboom/") + strlen(foundIwads[selectedIWAD])+4);
-	sprintf(selectedIWADFile, "%s%s.wad", "/prboom/", foundIwads[selectedIWAD]);
+  selectedIWADFile = malloc(strlen("sd:/prboom/") + strlen(foundIwads[selectedIWAD])+4);
+	sprintf(selectedIWADFile, "%s%s.wad", "sd:/prboom/", foundIwads[selectedIWAD]);
 	
 	// Load PWADs
 	for (selectedPWADIndex = 0; selectedPWADIndex < MAX_PWADS; selectedPWADIndex++)
 		if (selectedPWADs[selectedPWADIndex] != -1)
 		{
-  		char *p = "/prboom/pwads/";
+  		char *p = "sd:/prboom/pwads/";
 			char *f;
 			f = malloc(strlen(p) + strlen(foundPwads[selectedPWADs[selectedPWADIndex]]) + 4);
 			sprintf(f, "%s%s.wad", p, foundPwads[selectedPWADs[selectedPWADIndex]]);

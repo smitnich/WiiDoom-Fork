@@ -235,7 +235,7 @@ int I_Filelength(int handle)
 
 // cph - V.Aguilar (5/30/99) suggested return ~/.lxdoom/, creating
 //  if non-existant
-static const char prboom_dir[] = {"/prboom"}; // Mead rem extra slash 8/21/03
+static const char prboom_dir[] = {"sd:/prboom"}; // Mead rem extra slash 8/21/03
 
 const char *I_DoomExeDir(void)
 {
@@ -282,7 +282,7 @@ char* I_FindFile(const char* wfname, const char* ext)
 {
   //size_t  pl = strlen(wfname) + strlen(ext) + 4;
 
-	char *p = "/prboom/";
+	char *p = "sd:/prboom/";
 	char *f;
 	f = malloc(strlen(p) + strlen(wfname) + 4);
 	sprintf(f, "%s%s", p, wfname);
