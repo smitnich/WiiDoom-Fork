@@ -311,6 +311,7 @@
 <storageModule moduleId="org.eclipse.cdt.core.pathentry">
 <pathentry include="/Applications/devkitpro/libogc/include" kind="inc" path="" system="true"/>
 <pathentry include="/Applications/devkitpro/libogc/include/SDL" kind="inc" path="" system="true"/>
+<pathentry include="/Applications/devitpro/devkitPPC/powerpc-eabi/include" kind="inc" path="" system="true"/>
 <pathentry kind="src" path=""/>
 <pathentry kind="out" path="dist"/>
 <pathentry kind="con" path="org.eclipse.cdt.make.core.DISCOVERED_SCANNER_INFO"/>
