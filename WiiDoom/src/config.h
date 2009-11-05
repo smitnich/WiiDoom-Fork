@@ -23,13 +23,13 @@
 #define HAVE_GETOPT 1
 
 /* Define to 1 if you have the `inet_aton' function. */
-/* #undef HAVE_INET_ATON */
+#define HAVE_INET_ATON 1
 
 /* Define to 1 if you have the `inet_ntop' function. */
-/* #undef HAVE_INET_NTOP */
+#define HAVE_INET_NTOP 1
 
 /* Define to 1 if you have the `inet_pton' function. */
-/* #undef HAVE_INET_PTON */
+#define HAVE_INET_PTON 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -41,25 +41,25 @@
 #define HAVE_LIBM 1
 
 /* Define to 1 if you have the `png' library (-lpng). */
-/* #undef HAVE_LIBPNG */
+#define HAVE_LIBPNG 1
 
 /* Define if you have the SDL mixer library -lSDL_mixer */
-#define HAVE_LIBSDL_MIXER 1
+/*#define HAVE_LIBSDL_MIXER 0*/
 
 /* Define if you have the SDL net library -lSDL_net */
-#undef HAVE_LIBSDL_NET
+/*#define HAVE_LIBSDL_NET 0*/
 
 /* Define to 1 if you have the <memory.h> header file. */
-/* #undef HAVE_MEMORY_H */
+#define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `mmap' function. */
-/* #undef HAVE_MMAP */
+#define HAVE_MMAP 1
 
 /* Define if you want network game support */
-#undef HAVE_NET
+/*#define HAVE_NET 0*/
 
 /* Define to 1 if you have the `SDL_JoystickGetAxis' function. */
-#undef HAVE_SDL_JOYSTICKGETAXIS
+/*#define HAVE_SDL_JOYSTICKGETAXIS 1*/
 
 /* Define to 1 if you have the `snprintf' function. */
 #define HAVE_SNPRINTF 1
@@ -155,7 +155,7 @@
 /* #undef USE_GLU_MIPMAP */
 
 /* Define if you want to use the SDL net lib */
-#undef USE_SDL_NET
+/*#define USE_SDL_NET 0 */
 
 /* Version number of package */
 #define VERSION "0.4.2"
@@ -184,7 +184,7 @@
 #endif
 
 /* Define to `unsigned' if <sys/types.h> does not define. */
-#undef size_t
+/*#undef size_t*/
 
 /* Define to strcasecmp, if we have it */
 #define stricmp strcasecmp
