@@ -26,7 +26,7 @@ DIST		:=	dist/apps/WiiDoom
 # options for code generation
 #---------------------------------------------------------------------------------
 
-CFLAGS	= -g -O2 -Wall $(MACHDEP) $(INCLUDE)
+CFLAGS	= -g -O2 -Wall $(MACHDEP) $(INCLUDE) -DHAVE_CONFIG_H
 CXXFLAGS	=	$(CFLAGS)
 
 LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map
@@ -34,7 +34,7 @@ LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:= -lSDL_image -lSDL_ttf -lSDL -lwiikeyboard -lpng -ljpeg -lfreetype -lwiiuse -lbte -lz -lfat -logc -lm
+LIBS	:=  -lSDL_image -lSDL_ttf -lSDL -lwiikeyboard -lpng -ljpeg -lfreetype -lwiiuse -lbte -lz -lfat -logc -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
