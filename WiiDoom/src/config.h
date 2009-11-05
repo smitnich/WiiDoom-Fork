@@ -4,9 +4,10 @@
 /* Uncomment this to exhaustively run memory checks while the game is running
    (this is EXTREMELY slow). */
 /* #undef CHECKHEAP */
+#define HAVE_CONFIG_H 1
 
 /* Define to be the path where Doom WADs are stored */
-#define DOOMWADDIR "/usr/local/share/games/doom"
+#define DOOMWADDIR "sd:/prboom"
 
 /* Define if you are building with OpenGL support */
 /* #undef GL_DOOM */
@@ -118,13 +119,13 @@
 #define PACKAGE_NAME "wiidoom"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "wiidoom 0.4.1"
+#define PACKAGE_STRING "wiidoom 0.4.2"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "wiidoom"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.4.1"
+#define PACKAGE_VERSION "0.4.2"
 
 /* Set to the attribute to apply to struct definitions to make them packed */
 #define PACKEDATTR __attribute__((packed))
@@ -157,7 +158,7 @@
 #undef USE_SDL_NET
 
 /* Version number of package */
-#define VERSION "0.4.1"
+#define VERSION "0.4.2"
 
 /* Define if using the dmalloc debugging malloc package */
 /* #undef WITH_DMALLOC */
