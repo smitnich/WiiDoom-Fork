@@ -71,16 +71,16 @@ static int       remotetic; // Tic expected from the remote
 static int       remotesend; // Tic expected by the remote
 ticcmd_t         netcmds[MAXPLAYERS][BACKUPTICS];
 static ticcmd_t* localcmds;
-static unsigned          numqueuedpackets;
-static packet_header_t** queuedpacket;
+/*static unsigned          numqueuedpackets;*/
+/*static packet_header_t** queuedpacket;*/
 int maketic;
 int ticdup = 1;
-static int xtratics = 0;
+/*static int xtratics = 0;*/
 int              wanted_player_number;
 
 static boolean isExtraDDisplay = false;
 
-static void D_QuitNetGame (void);
+/*static void D_QuitNetGame (void);*/
 
 #ifndef HAVE_NET
 doomcom_t*      doomcom;

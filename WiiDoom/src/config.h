@@ -90,7 +90,7 @@
 
 /* Define to 1 if you have the `usleep' function. */
 /* #undef HAVE_USLEEP */
-#define HAAVE_USLEEP 1
+#define HAVE_USLEEP 1
 
 /* Define to 1 if you have the `vsnprintf' function. */
 #define HAVE_VSNPRINTF 1
