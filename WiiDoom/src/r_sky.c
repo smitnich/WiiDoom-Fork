@@ -48,7 +48,7 @@ int skytexturemid;
 
 // e6y
 // It is necessary for fixing the no-sky problem in the third episode of the Requiem
-boolean isskytexture = false;
+bool isskytexture = false;
 
 //
 // R_InitSkyMap

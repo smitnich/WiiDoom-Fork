@@ -599,7 +599,7 @@ typedef struct
   int count;
   plat_e status;
   plat_e oldstatus;
-  boolean crush;
+  bool crush;
   int tag;
   plattype_e type;
 
@@ -650,7 +650,7 @@ typedef struct
   fixed_t topheight;
   fixed_t speed;
   fixed_t oldspeed;
-  boolean crush;
+  bool crush;
 
   //jff 02/04/98 add these to support ceiling changers
   int newspecial;
@@ -677,7 +677,7 @@ typedef struct
 {
   thinker_t thinker;
   floor_e type;
-  boolean crush;
+  bool crush;
   sector_t* sector;
   int direction;
   int newspecial;
@@ -845,18 +845,18 @@ sector_t* getNextSector
 int P_CheckTag
 (line_t *line); // jff 2/27/98
 
-boolean P_CanUnlockGenDoor
+bool P_CanUnlockGenDoor
 ( line_t* line,
   player_t* player);
 
-boolean PUREFUNC P_SectorActive
+bool PUREFUNC P_SectorActive
 ( special_e t,
   const sector_t* s );
 
-boolean PUREFUNC P_IsSecret
+bool PUREFUNC P_IsSecret
 ( const sector_t *sec );
 
-boolean PUREFUNC P_WasSecret
+bool PUREFUNC P_WasSecret
 ( const sector_t *sec );
 
 void P_ChangeSwitchTexture
@@ -905,7 +905,7 @@ result_e T_MovePlane
 ( sector_t* sector,
   fixed_t speed,
   fixed_t dest,
-  boolean crush,
+  bool crush,
   int floorOrCeiling,
   int direction );
 
@@ -950,7 +950,7 @@ int EV_SilentLineTeleport
 ( line_t* line,
   int side,
   mobj_t* thing,
-  boolean reverse);
+  bool reverse);
 
 // p_floor
 
@@ -1069,7 +1069,7 @@ void P_UpdateSpecials
 ( void );
 
 // when needed
-boolean P_UseSpecialLine
+bool P_UseSpecialLine
 ( mobj_t* thing,
   line_t* line,
   int   side );

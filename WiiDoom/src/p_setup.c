@@ -92,7 +92,7 @@ side_t   *sides;
 
 int     firstglvertex = 0;
 int     nodesVersion  = 0;
-boolean forceOldBsp   = false;
+bool forceOldBsp   = false;
 
 // figgi 08/21/00 -- glSegs
 typedef struct
@@ -167,7 +167,7 @@ mapthing_t playerstarts[MAXPLAYERS];
 // P_CheckForZDoomNodes
 //
 
-static boolean P_CheckForZDoomNodes(int lumpnum, int gl_lumpnum)
+static bool P_CheckForZDoomNodes(int lumpnum, int gl_lumpnum)
 {
   const void *data;
 

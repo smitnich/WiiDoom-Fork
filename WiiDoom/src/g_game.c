@@ -97,7 +97,7 @@
 #define SAVESTRINGSIZE  24
 
 static size_t   savegamesize = SAVEGAMESIZE; // killough
-static boolean  netdemo;
+static bool  netdemo;
 static const byte *demobuffer;   /* cph - only used for playback */
 static FILE    *demofp; /* cph - record straight to file */
 static const byte *demo_p;
@@ -106,34 +106,34 @@ static short    consistancy[MAXPLAYERS][BACKUPTICS];
 gameaction_t    gameaction;
 gamestate_t     gamestate;
 skill_t         gameskill;
-boolean         respawnmonsters;
+bool         respawnmonsters;
 int             gameepisode;
 int             gamemap;
-boolean         paused;
+bool         paused;
 // CPhipps - moved *_loadgame vars here
-static boolean forced_loadgame = false;
-static boolean command_loadgame = false;
+static bool forced_loadgame = false;
+static bool command_loadgame = false;
 
-boolean         usergame;      // ok to save / end game
-boolean         timingdemo;    // if true, exit with report on completion
-boolean         fastdemo;      // if true, run at full speed -- killough
-boolean         nodrawers;     // for comparative timing purposes
-boolean         noblit;        // for comparative timing purposes
+bool         usergame;      // ok to save / end game
+bool         timingdemo;    // if true, exit with report on completion
+bool         fastdemo;      // if true, run at full speed -- killough
+bool         nodrawers;     // for comparative timing purposes
+bool         noblit;        // for comparative timing purposes
 int             starttime;     // for comparative timing purposes
-boolean         deathmatch;    // only if started as net death
-boolean         netgame;       // only true if packets are broadcast
-boolean         playeringame[MAXPLAYERS];
+bool         deathmatch;    // only if started as net death
+bool         netgame;       // only true if packets are broadcast
+bool         playeringame[MAXPLAYERS];
 player_t        players[MAXPLAYERS];
 int             consoleplayer; // player taking events and displaying
 int             displayplayer; // view being displayed
 int             gametic;
 int             basetic;       /* killough 9/29/98: for demo sync */
 int             totalkills, totallive, totalitems, totalsecret;    // for intermission
-boolean         demorecording;
-boolean         demoplayback;
-boolean         singledemo;           // quit after playing a demo from cmdline
+bool         demorecording;
+bool         demoplayback;
+bool         singledemo;           // quit after playing a demo from cmdline
 wbstartstruct_t wminfo;               // parms for world map / intermission
-boolean         haswolflevels = false;// jff 4/18/98 wolf levels present
+bool         haswolflevels = false;// jff 4/18/98 wolf levels present
 static byte     *savebuffer;          // CPhipps - static
 int             autorun = false;      // always running?          // phares
 int             totalleveltimes;      // CPhipps - total time for all completed levels
@@ -227,11 +227,11 @@ fixed_t sidemove[2]    = {0x18, 0x28};
 fixed_t angleturn[3]   = {640, 1280, 320};  // + slow turn
 
 // CPhipps - made lots of key/button state vars static
-static boolean gamekeydown[NUMKEYS];
+static bool gamekeydown[NUMKEYS];
 static int     turnheld;       // for accelerative turning
 
-static boolean mousearray[4];
-static boolean *mousebuttons = &mousearray[1];    // allow [-1]
+static bool mousearray[4];
+static bool *mousebuttons = &mousearray[1];    // allow [-1]
 
 // mouse values are used once
 static int   mousex;
@@ -248,8 +248,8 @@ static int   joyxmove;
 static int   joyymove;
 static int   joyirx;
 static int   joyiry;
-static boolean joyarray[13]; // added elements for for wii remote and nunchuck buttons
-static boolean *joybuttons = &joyarray[1];    // allow [-1]
+static bool joyarray[13]; // added elements for for wii remote and nunchuck buttons
+static bool *joybuttons = &joyarray[1];    // allow [-1]
 
 // Game events info
 static buttoncode_t special_event; // Event triggered by local player, to send
@@ -263,7 +263,7 @@ int defaultskill;               //note 1-based
 int    bodyqueslot, bodyquesize;        // killough 2/8/98
 mobj_t **bodyque = 0;                   // phares 8/10/98
 
-static void G_DoSaveGame (boolean menu);
+static void G_DoSaveGame (bool menu);
 static const byte* G_ReadDemoHeader(const byte* demo_p);
 
 //
@@ -291,8 +291,8 @@ static inline signed short fudgea(signed short b)
 
 void G_BuildTiccmd(ticcmd_t* cmd)
 {
-  boolean strafe;
-  boolean bstrafe;
+  bool strafe;
+  bool bstrafe;
   int speed;
   int tspeed;
   int forward;
@@ -471,7 +471,7 @@ void G_BuildTiccmd(ticcmd_t* cmd)
       // killough 2/8/98, 3/22/98 -- end of weapon selection changes
     }
 
-  boolean availweapons[8];
+  bool availweapons[8];
 
   availweapons[0] = players[consoleplayer].weaponowned[wp_chainsaw];
   availweapons[1] = players[consoleplayer].weaponowned[wp_fist];
@@ -721,7 +721,7 @@ static void G_DoLoadLevel (void)
 // Get info needed to make ticcmd_ts for the players.
 //
 
-boolean G_Responder (event_t* ev)
+bool G_Responder (event_t* ev)
 {
   // allow spy mode changes even during the demo
   // killough 2/22/98: even during DM demo
@@ -1141,7 +1141,7 @@ void G_PlayerReborn (int player)
 // because something is occupying it
 //
 
-static boolean G_CheckSpot(int playernum, mapthing_t *mthing)
+static bool G_CheckSpot(int playernum, mapthing_t *mthing)
 {
   fixed_t     x,y;
   subsector_t *ss;
@@ -1326,7 +1326,7 @@ int cpars[32] = {
   120,30          // 31-32
 };
 
-static boolean secretexit;
+static bool secretexit;
 
 void G_ExitLevel (void)
 {
@@ -1511,7 +1511,7 @@ void G_DoWorldDone (void)
 
 #define MIN_MAXPLAYERS 32
 
-extern boolean setsizeneeded;
+extern bool setsizeneeded;
 
 //CPhipps - savename variable redundant
 
@@ -1540,7 +1540,7 @@ static uint_64_t G_UpdateSignature(uint_64_t s, const char *name)
 static uint_64_t G_Signature(void)
 {
   static uint_64_t s = 0;
-  static boolean computed = false;
+  static bool computed = false;
   char name[9];
   int episode, map;
 
@@ -1572,7 +1572,7 @@ void G_ForcedLoadGame(void)
 
 // killough 3/16/98: add slot info
 // killough 5/15/98: add command-line
-void G_LoadGame(int slot, boolean command)
+void G_LoadGame(int slot, bool command)
 {
   if (!demoplayback && !command) {
     // CPhipps - handle savegame filename in G_DoLoadGame
@@ -1826,7 +1826,7 @@ void (CheckSaveGame)(size_t size, const char* file, int line)
  * cph - Avoid possible buffer overflow problems by passing
  * size to this function and using snprintf */
 
-void G_SaveGameName(char *name, size_t size, int slot, boolean demoplayback)
+void G_SaveGameName(char *name, size_t size, int slot, bool demoplayback)
 {
   const char* sgn = demoplayback ? "demosav" : savegamename;
 #ifdef HAVE_SNPRINTF
@@ -1836,7 +1836,7 @@ void G_SaveGameName(char *name, size_t size, int slot, boolean demoplayback)
 #endif
 }
 
-static void G_DoSaveGame (boolean menu)
+static void G_DoSaveGame (bool menu)
 {
   char name[PATH_MAX+1];
   char name2[VERSIONSIZE];
@@ -2895,7 +2895,7 @@ void G_TimeDemo(const char *name) // CPhipps - const char*
  * Called after a death or level completion to allow demos to be cleaned up
  * Returns true if a new demo loop action will take place
  */
-boolean G_CheckDemoStatus (void)
+bool G_CheckDemoStatus (void)
 {
   P_ChecksumFinal();
 

@@ -79,8 +79,8 @@ int snd_card = 1;
 int mus_card = 1;
 int detect_voices = 0; // God knows
 
-static boolean sound_inited = false;
-static boolean first_sound_init = true;
+static bool sound_inited = false;
+static bool first_sound_init = true;
 
 // Needed for calling the actual sound output.
 static int SAMPLECOUNT=   512;
@@ -341,7 +341,7 @@ void I_StopSound (int handle)
 }
 
 
-boolean I_SoundIsPlaying(int handle)
+bool I_SoundIsPlaying(int handle)
 {
 #ifdef RANGECHECK
   if ((handle < 0) || (handle >= MAX_CHANNELS))
@@ -351,9 +351,9 @@ boolean I_SoundIsPlaying(int handle)
 }
 
 
-boolean I_AnySoundStillPlaying(void)
+bool I_AnySoundStillPlaying(void)
 {
-  boolean result = false;
+  bool result = false;
   int i;
 
   for (i=0; i<MAX_CHANNELS; i++)

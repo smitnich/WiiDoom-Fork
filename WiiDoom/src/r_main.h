@@ -65,7 +65,7 @@ extern int      validcount;
 //
 
 extern int rendered_visplanes, rendered_segs, rendered_vissprites;
-extern boolean rendering_stats;
+extern bool rendering_stats;
 
 //
 // Lighting LUT.

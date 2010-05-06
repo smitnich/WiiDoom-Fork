@@ -83,7 +83,7 @@ int             leds_always_off = 0; // Expected by m_misc, not relevant
 
 // Mouse handling
 extern int     usemouse;        // config file var
-static boolean grabMouse;       // internal var
+static bool grabMouse;       // internal var
 static int mouse_currently_grabbed;
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -271,7 +271,7 @@ static void I_InitInputs(void)
 //
 // Returns true if it thinks we can afford to skip this frame
 
-inline static boolean I_SkipFrame(void)
+inline static bool I_SkipFrame(void)
 {
   static int frameno;
 

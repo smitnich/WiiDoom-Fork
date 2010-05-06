@@ -89,9 +89,9 @@
 
 static unsigned int start_displaytime;
 static unsigned int displaytime;
-static boolean InDisplay = false;
+static bool InDisplay = false;
 
-boolean I_StartDisplay(void)
+bool I_StartDisplay(void)
 {
   if (InDisplay)
     return false;
@@ -257,7 +257,7 @@ const char *I_DoomExeDir(void)
  * cphipps - simple test for trailing slash on dir names
  */
 
-boolean HasTrailingSlash(const char* dn)
+bool HasTrailingSlash(const char* dn)
 {
   return ( (dn[strlen(dn)-1] == '/')
 #if defined(AMIGA)

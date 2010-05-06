@@ -66,7 +66,7 @@ void STlib_initNum
   int y,
   const patchnum_t* pl,
   int* num,
-  boolean* on,
+  bool* on,
   int     width )
 {
   n->x  = x;
@@ -94,7 +94,7 @@ void STlib_initNum
 static void STlib_drawNum
 ( st_number_t*  n,
   int cm,
-  boolean refresh )
+  bool refresh )
 {
   int   numdigits = n->width;
   int   num = *n->num;
@@ -179,7 +179,7 @@ static void STlib_drawNum
 void STlib_updateNum
 ( st_number_t*    n,
   int cm,
-  boolean   refresh )
+  bool   refresh )
 {
   if (*n->on) 
     STlib_drawNum(n, cm, refresh);
@@ -201,7 +201,7 @@ void STlib_initPercent
   int y,
   const patchnum_t* pl,
   int* num,
-  boolean* on,
+  bool* on,
   const patchnum_t* percent )
 {
   STlib_initNum(&p->n, x, y, pl, num, on, 3);
@@ -252,7 +252,7 @@ void STlib_initMultIcon
   int y,
   const patchnum_t* il,
   int* inum,
-  boolean* on )
+  bool* on )
 {
   i->x  = x;
   i->y  = y;
@@ -274,7 +274,7 @@ void STlib_initMultIcon
 //
 void STlib_updateMultIcon
 ( st_multicon_t*  mi,
-  boolean   refresh )
+  bool   refresh )
 {
   int w;
   int h;
@@ -326,8 +326,8 @@ void STlib_initBinIcon
   int x,
   int y,
   const patchnum_t* i,
-  boolean* val,
-  boolean* on )
+  bool* val,
+  bool* on )
 {
   b->x  = x;
   b->y  = y;
@@ -352,7 +352,7 @@ void STlib_initBinIcon
 //
 void STlib_updateBinIcon
 ( st_binicon_t*   bi,
-  boolean   refresh )
+  bool   refresh )
 {
   int     x;
   int     y;

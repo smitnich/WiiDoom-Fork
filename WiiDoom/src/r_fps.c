@@ -76,10 +76,10 @@ static fixed2_t *oldipos;
 static fixed2_t *bakipos;
 static interpolation_t *curipos;
 
-static boolean NoInterpolateView;
-boolean r_NoInterpolate;
-static boolean didInterp;
-boolean WasRenderedInTryRunTics;
+static bool NoInterpolateView;
+bool r_NoInterpolate;
+static bool didInterp;
+bool WasRenderedInTryRunTics;
 
 void R_InterpolateView (player_t *player, fixed_t frac)
 {

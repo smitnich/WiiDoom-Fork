@@ -103,35 +103,35 @@ static void D_PageDrawer(void);
 
 // CPhipps - removed wadfiles[] stuff
 
-boolean devparm;        // started game with -devparm
+bool devparm;        // started game with -devparm
 
 // jff 1/24/98 add new versions of these variables to remember command line
-boolean clnomonsters;   // checkparm of -nomonsters
-boolean clrespawnparm;  // checkparm of -respawn
-boolean clfastparm;     // checkparm of -fast
+bool clnomonsters;   // checkparm of -nomonsters
+bool clrespawnparm;  // checkparm of -respawn
+bool clfastparm;     // checkparm of -fast
 // jff 1/24/98 end definition of command line version of play mode switches
 
-boolean nomonsters;     // working -nomonsters
-boolean respawnparm;    // working -respawn
-boolean fastparm;       // working -fast
+bool nomonsters;     // working -nomonsters
+bool respawnparm;    // working -respawn
+bool fastparm;       // working -fast
 
-boolean singletics = false; // debug flag to cancel adaptiveness
+bool singletics = false; // debug flag to cancel adaptiveness
 
 //jff 1/22/98 parms for disabling music and sound
-boolean nosfxparm;
-boolean nomusicparm;
+bool nosfxparm;
+bool nomusicparm;
 
 //jff 4/18/98
-extern boolean inhelpscreens;
+extern bool inhelpscreens;
 
 skill_t startskill;
 int     startepisode;
 int     startmap;
-boolean autostart;
+bool autostart;
 FILE    *debugfile;
 int ffmap;
 
-boolean advancedemo;
+bool advancedemo;
 
 char    wadfile[PATH_MAX+1];       // primary wad file
 char    mapdir[PATH_MAX+1];        // directory of development maps
@@ -198,7 +198,7 @@ void D_PostEvent(event_t *ev)
 
 static void D_Wipe(void)
 {
-  boolean done;
+  bool done;
   int wipestart = I_GetTime () - 1;
 
   do
@@ -227,17 +227,17 @@ static void D_Wipe(void)
 
 // wipegamestate can be set to -1 to force a wipe on the next draw
 gamestate_t    wipegamestate = GS_DEMOSCREEN;
-extern boolean setsizeneeded;
+extern bool setsizeneeded;
 extern int     showMessages;
 
 void D_Display (void)
 {
-  static boolean inhelpscreensstate   = false;
-  static boolean isborderstate        = false;
-  static boolean borderwillneedredraw = false;
+  static bool inhelpscreensstate   = false;
+  static bool isborderstate        = false;
+  static bool borderwillneedredraw = false;
   static gamestate_t oldgamestate = -1;
-  boolean wipe;
-  boolean viewactive = false, isborder = false;
+  bool wipe;
+  bool viewactive = false, isborder = false;
 
   if (nodrawers)                    // for comparative timing / profiling
     return;
@@ -273,7 +273,7 @@ void D_Display (void)
     }
   } else if (gametic != basetic) { // In a level
 
-    boolean redrawborderstuff;
+    bool redrawborderstuff;
 
     HU_Erase();
 
@@ -648,7 +648,7 @@ static const char *D_dehout(void)
 // jff 4/19/98 Add routine to test IWAD for validity and determine
 // the gamemode from it. Also note if DOOM II, whether secret levels exist
 // CPhipps - const char* for iwadname, made static
-static void CheckIWAD(const char *iwadname,GameMode_t *gmode,boolean *hassec)
+static void CheckIWAD(const char *iwadname,GameMode_t *gmode,bool *hassec)
 {
   //if ( !access (iwadname,R_OK) )
   if (true)
@@ -1027,7 +1027,7 @@ static void DoLooseFiles(void)
   int i,j,p;
   const char **tmyargv;  // use these to recreate the argv array
   int tmyargc;
-  boolean skip[MAXARGVS]; // CPhipps - should these be skipped at the end
+  bool skip[MAXARGVS]; // CPhipps - should these be skipped at the end
 
   for (i=0; i<MAXARGVS; i++)
     skip[i] = false;
@@ -1179,7 +1179,7 @@ static void D_DoomMainSetup(void)
   // proff 04/05/2000: Added support for include response files
   /* proff 2001/7/1 - Moved up, so -config can be in response files */
   {
-    boolean rsp_found;
+    bool rsp_found;
     int i;
 
     do {
@@ -1197,7 +1197,7 @@ static void D_DoomMainSetup(void)
   // figgi 09/18/00-- added switch to force classic bsp nodes
   if (M_CheckParm ("-forceoldbsp"))
   {
-    extern boolean forceOldBsp;
+    extern bool forceOldBsp;
     forceOldBsp = true;
   }
 
@@ -2021,7 +2021,7 @@ void wii_init()
 {
   int res;
   u32 type;
-  boolean found = false;
+  bool found = false;
 
   // Init fat subsystem
   fatInitDefault();
@@ -2064,10 +2064,10 @@ void wii_init()
 void GetFirstMap(int *ep, int *map)
 {
   int i,j; // used to generate map name
-  boolean done = false;  // Ty 09/13/98 - to exit inner loops
+  bool done = false;  // Ty 09/13/98 - to exit inner loops
   char test[6];  // MAPxx or ExMx plus terminator for testing
   char name[6];  // MAPxx or ExMx plus terminator for display
-  boolean newlevel = false;  // Ty 10/04/98 - to test for new level
+  bool newlevel = false;  // Ty 10/04/98 - to test for new level
   int ix;  // index for lookup
 
   strcpy(name,""); // initialize

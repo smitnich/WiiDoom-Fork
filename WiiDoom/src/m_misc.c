@@ -85,7 +85,7 @@ static inline void I_EndRead(void) {}
  * killough 9/98: rewritten to use stdio and to flash disk icon
  */
 
-boolean M_WriteFile(char const *name, void *source, int length)
+bool M_WriteFile(char const *name, void *source, int length)
 {
   FILE *fp;
 
@@ -143,7 +143,7 @@ int M_ReadFile(char const *name, byte **buffer)
 //
 
 int usemouse;
-boolean    precache = true; /* if true, load all graphics at start */
+bool    precache = true; /* if true, load all graphics at start */
 
 extern int mousebfire;
 extern int mousebstrafe;
@@ -921,7 +921,7 @@ void M_LoadDefaults (void)
   char  strparm[100];
   char* newstring = NULL;   // killough
   int   parm;
-  boolean isstring;
+  bool isstring;
 
   // set everything to base values
 
@@ -1036,7 +1036,7 @@ defaultfile = "sd:/prboom/prboom.cfg";
 //
 
 // CPhipps - nasty but better than nothing
-static boolean screenshot_write_error;
+static bool screenshot_write_error;
 
 #ifdef HAVE_LIBPNG
 
@@ -1050,9 +1050,9 @@ static void WritePNGfile(FILE* fp, const byte* data,
 {
   png_structp png_ptr;
   png_infop info_ptr;
-  boolean gl = !palette;
+  bool gl = !palette;
 
-  png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, png_error_ptr_NULL, error_fn, NULL);
+  png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, error_fn, NULL);
   png_set_compression_level(png_ptr, 2);
   if (png_ptr == NULL) { screenshot_write_error = true; return; }
   info_ptr = png_create_info_struct(png_ptr);
@@ -1078,7 +1078,7 @@ static void WritePNGfile(FILE* fp, const byte* data,
 
     png_write_end(png_ptr, info_ptr);
   }
-  png_destroy_write_struct(&png_ptr,  png_infopp_NULL);
+  png_destroy_write_struct(&png_ptr,  NULL);
 }
 
 #else /* HAVE_LIBPNG */

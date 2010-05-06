@@ -40,7 +40,7 @@ LIBS	:=  -lSDL_image -lSDL_ttf -lSDL -lwiikeyboard -lpng -ljpeg -lfreetype -lwii
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:=	
+LIBDIRS	:=	$(PORTLIBS)
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional

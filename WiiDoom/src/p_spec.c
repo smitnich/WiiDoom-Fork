@@ -65,7 +65,7 @@
 //
 typedef struct
 {
-    boolean     istexture;
+    bool     istexture;
     int         picnum;
     int         basepic;
     int         numpics;
@@ -807,7 +807,7 @@ int P_FindMinSurroundingLight
 // jff 02/05/98 routine added to test for unlockability of
 //  generalized locked doors
 //
-boolean P_CanUnlockGenDoor
+bool P_CanUnlockGenDoor
 ( line_t* line,
   player_t* player)
 {
@@ -957,7 +957,7 @@ boolean P_CanUnlockGenDoor
 // jff 2/23/98 added to prevent old demos from
 //  succeeding in starting multiple specials on one sector
 //
-boolean PUREFUNC P_SectorActive(special_e t, const sector_t *sec)
+bool PUREFUNC P_SectorActive(special_e t, const sector_t *sec)
 {
   if (demo_compatibility)  // return whether any thinker is active
     return sec->floordata != NULL || sec->ceilingdata != NULL || sec->lightingdata != NULL;
@@ -1066,7 +1066,7 @@ int P_CheckTag(line_t *line)
 // jff 3/14/98 added to simplify checks for whether sector is secret
 //  in automap and other places
 //
-boolean PUREFUNC P_IsSecret(const sector_t *sec)
+bool PUREFUNC P_IsSecret(const sector_t *sec)
 {
   return (sec->special==9 || (sec->special&SECRET_MASK));
 }
@@ -1081,7 +1081,7 @@ boolean PUREFUNC P_IsSecret(const sector_t *sec)
 // jff 3/14/98 added to simplify checks for whether sector is secret
 //  in automap and other places
 //
-boolean PUREFUNC P_WasSecret(const sector_t *sec)
+bool PUREFUNC P_WasSecret(const sector_t *sec)
 {
   return (sec->oldspecial==9 || (sec->oldspecial&SECRET_MASK));
 }
@@ -2303,9 +2303,9 @@ void P_PlayerInSpecialSector (player_t* player)
 //  levelFragLimit, levelFragLimitCount
 //
 
-static boolean  levelTimer;
+static bool  levelTimer;
 static int      levelTimeCount;
-boolean         levelFragLimit;      // Ty 03/18/98 Added -frags support
+bool         levelFragLimit;      // Ty 03/18/98 Added -frags support
 int             levelFragLimitCount; // Ty 03/18/98 Added -frags support
 
 void P_UpdateSpecials (void)
@@ -3032,7 +3032,7 @@ static void Add_Pusher(int type, int x_mag, int y_mag, mobj_t* source, int affec
 
 pusher_t* tmpusher; // pusher structure for blockmap searches
 
-static boolean PIT_PushThing(mobj_t* thing)
+static bool PIT_PushThing(mobj_t* thing)
 {
   /* killough 10/98: made more general */
   if (!mbf_features ?

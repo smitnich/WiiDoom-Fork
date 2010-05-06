@@ -49,10 +49,10 @@
 // killough 1/6/98: replaced globals with statics where appropriate
 
 // True if any of the segs textures might be visible.
-static boolean  segtextured;
-static boolean  markfloor;      // False if the back side is the same plane.
-static boolean  markceiling;
-static boolean  maskedtexture;
+static bool  segtextured;
+static bool  markfloor;      // False if the back side is the same plane.
+static bool  markceiling;
+static bool  maskedtexture;
 static int      toptexture;
 static int      bottomtexture;
 static int      midtexture;

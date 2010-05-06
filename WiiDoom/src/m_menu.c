@@ -67,9 +67,9 @@
 #include <wiiuse/wpad.h>
 
 extern patchnum_t hu_font[HU_FONTSIZE];
-extern boolean  message_dontfuckwithme;
+extern bool  message_dontfuckwithme;
 
-extern boolean chat_on;          // in heads-up code
+extern bool chat_on;          // in heads-up code
 
 //
 // defaulted values
@@ -102,7 +102,7 @@ int     messx;
 int     messy;
 int     messageLastMenuActive;
 
-boolean messageNeedsInput; // timed message = no input from user
+bool messageNeedsInput; // timed message = no input from user
 
 void (*messageRoutine)(int response);
 
@@ -138,9 +138,9 @@ int saveCharIndex;   // which char we're editing
 // old save description before edit
 char saveOldString[SAVESTRINGSIZE];
 
-boolean inhelpscreens; // indicates we are in or just left a help screen
+bool inhelpscreens; // indicates we are in or just left a help screen
 
-boolean menuactive;    // The menus are up
+bool menuactive;    // The menus are up
 
 #define SKULLXOFF  -32
 #define LINEHEIGHT  16
@@ -264,7 +264,7 @@ void M_DrawSelCell(menu_t *menu,int item);
 void M_WriteText(int x, int y, const char *string);
 int  M_StringWidth(const char *string);
 int  M_StringHeight(const char *string);
-void M_StartMessage(const char *string,void *routine,boolean input);
+void M_StartMessage(const char *string,void *routine,bool input);
 void M_StopMessage(void);
 void M_ClearMenus (void);
 
@@ -1475,25 +1475,25 @@ void M_SizeDisplay(int choice)
 
 /////////////////////////////
 //
-// booleans for setup screens
+// bools for setup screens
 // these tell you what state the setup screens are in, and whether any of
 // the overlay screens (automap colors, reset button message) should be
 // displayed
 
-boolean setup_active      = false; // in one of the setup screens
-boolean set_keybnd_active = false; // in key binding setup screens
-boolean set_weapon_active = false; // in weapons setup screen
-boolean set_status_active = false; // in status bar/hud setup screen
-boolean set_auto_active   = false; // in automap setup screen
-boolean set_enemy_active  = false; // in enemies setup screen
-boolean set_mess_active   = false; // in messages setup screen
-boolean set_chat_active   = false; // in chat string setup screen
-boolean setup_select      = false; // changing an item
-boolean setup_gather      = false; // gathering keys for value
-boolean colorbox_active   = false; // color palette being shown
-boolean default_verify    = false; // verify reset defaults decision
-boolean set_general_active = false;
-boolean set_compat_active = false;
+bool setup_active      = false; // in one of the setup screens
+bool set_keybnd_active = false; // in key binding setup screens
+bool set_weapon_active = false; // in weapons setup screen
+bool set_status_active = false; // in status bar/hud setup screen
+bool set_auto_active   = false; // in automap setup screen
+bool set_enemy_active  = false; // in enemies setup screen
+bool set_mess_active   = false; // in messages setup screen
+bool set_chat_active   = false; // in chat string setup screen
+bool setup_select      = false; // changing an item
+bool setup_gather      = false; // gathering keys for value
+bool colorbox_active   = false; // color palette being shown
+bool default_verify    = false; // verify reset defaults decision
+bool set_general_active = false;
+bool set_compat_active = false;
 
 /////////////////////////////
 //
@@ -3555,7 +3555,7 @@ void M_DrawChatStrings(void)
 // General routines used by the Setup screens.
 //
 
-static boolean shiftdown = false; // phares 4/10/98: SHIFT key down or not
+static bool shiftdown = false; // phares 4/10/98: SHIFT key down or not
 
 // phares 4/17/98:
 // M_SelectDone() gets called when you have finished entering your
@@ -4109,7 +4109,7 @@ static int M_IndexInChoices(const char *str, const char **choices) {
 // action based on the state of the system.
 //
 
-boolean M_Responder (event_t* ev) {
+bool M_Responder (event_t* ev) {
   int    ch;
   int    i;
   static int joywait   = 0;
@@ -4306,7 +4306,7 @@ boolean M_Responder (event_t* ev) {
       else if (ev->type == ev_keyup)  // etc. keys. Keydowns are allowed
         if (ev->data1 == KEYD_RSHIFT) // past this point, but keyups aren't
           shiftdown = false;          // so we need to note the difference
-    }                                 // here using the 'shiftdown' boolean.
+    }                                 // here using the 'shiftdown' bool.
 
   if (ch == -1)
     return false; // we can't use the event here
@@ -4755,7 +4755,7 @@ boolean M_Responder (event_t* ev) {
       if (ev->type == ev_joystick)
         {
     int oldbutton,group;
-    boolean search = true;
+    bool search = true;
 
     if (!ptr1->m_joy)
       return true; // not a legal action here (yet)
@@ -4810,7 +4810,7 @@ boolean M_Responder (event_t* ev) {
       else if (ev->type == ev_mouse)
         {
     int i,oldbutton,group;
-    boolean search = true;
+    bool search = true;
 
     if (!ptr1->m_mouse)
       return true; // not a legal action here (yet)
@@ -4847,7 +4847,7 @@ boolean M_Responder (event_t* ev) {
       else  // keyboard key
         {
     int i,oldkey,group;
-    boolean search = true;
+    bool search = true;
 
     // see if 'ch' is already bound elsewhere. if so, you have
     // to swap bindings so the action where it's currently
@@ -5480,7 +5480,7 @@ void M_Ticker (void)
 // Message Routines
 //
 
-void M_StartMessage (const char* string,void* routine,boolean input)
+void M_StartMessage (const char* string,void* routine,bool input)
 {
   messageLastMenuActive = menuactive;
   messageToPrint = 1;

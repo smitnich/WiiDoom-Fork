@@ -40,7 +40,7 @@
 
 int leveltime;
 
-static boolean newthinkerpresent;
+static bool newthinkerpresent;
 
 //
 // THINKERS

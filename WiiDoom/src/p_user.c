@@ -54,7 +54,7 @@
 
 #define MAXBOB  0x100000
 
-boolean onground; // whether player is on ground or in air
+bool onground; // whether player is on ground or in air
 
 //
 // P_Thrust

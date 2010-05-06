@@ -71,8 +71,8 @@ int ConWidth,ConHeight;
 char szConName[] = "PrBoomConWinClass";
 char Lines[(80+2)*25+1];
 char *Last = NULL;
-boolean console_inited=FALSE;
-static boolean should_exit = 0;
+bool console_inited=FALSE;
+static bool should_exit = 0;
 
 static CALLBACK ConWndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {

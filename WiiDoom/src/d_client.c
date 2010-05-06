@@ -66,7 +66,7 @@
 #include <sys/wait.h>
 #endif
 
-static boolean   server;
+static bool   server;
 static int       remotetic; // Tic expected from the remote
 static int       remotesend; // Tic expected by the remote
 ticcmd_t         netcmds[MAXPLAYERS][BACKUPTICS];
@@ -78,7 +78,7 @@ int ticdup = 1;
 /*static int xtratics = 0;*/
 int              wanted_player_number;
 
-static boolean isExtraDDisplay = false;
+static bool isExtraDDisplay = false;
 
 /*static void D_QuitNetGame (void);*/
 
@@ -196,12 +196,12 @@ void D_CheckNetGame(void)
   Z_Free(packet);
 }
 
-boolean D_NetGetWad(const char* name)
+bool D_NetGetWad(const char* name)
 {
 #if defined(HAVE_WAIT_H)
   size_t psize = sizeof(packet_header_t) + strlen(name) + 500;
   packet_header_t *packet;
-  boolean done = false;
+  bool done = false;
 
   if (!server || strchr(name, '/')) return false; // If it contains path info, reject
 

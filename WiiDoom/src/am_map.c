@@ -248,7 +248,7 @@ mpoint_t *markpoints = NULL;    // where the points are
 int markpointnum = 0; // next point to be assigned (also number of points now)
 int markpointnum_max = 0;       // killough 2/22/98
 
-static boolean stopped = true;
+static bool stopped = true;
 
 int joyWait = 0;
 
@@ -595,7 +595,7 @@ static void AM_maxOutWindowScale(void)
 //
 // Passed an input event, returns true if its handled
 //
-boolean AM_Responder
+bool AM_Responder
 ( event_t*  ev )
 {
   int rc;
@@ -935,7 +935,7 @@ void AM_Ticker (void)
 // clipping on them in the lines frame coordinates.
 // Returns true if any part of line was not clipped
 //
-static boolean AM_clipMline
+static bool AM_clipMline
 ( mline_t*  ml,
   fline_t*  fl )
 {

@@ -91,8 +91,8 @@ typedef struct
 typedef struct
 {
   int iSectorID; // proff 04/05/2000: needed for OpenGL and used in debugmode by the HUD to draw sectornum
-  boolean no_toptextures;
-  boolean no_bottomtextures;
+  bool no_toptextures;
+  bool no_bottomtextures;
   fixed_t floorheight;
   fixed_t ceilingheight;
   int nexttag,firsttag;  // killough 1/30/98: improves searches for tags.
@@ -240,7 +240,7 @@ typedef struct msecnode_s
   struct msecnode_s *m_tnext;  // next msecnode_t for this thing
   struct msecnode_s *m_sprev;  // prev msecnode_t for this sector
   struct msecnode_s *m_snext;  // next msecnode_t for this sector
-  boolean visited; // killough 4/4/98, 4/7/98: used in search algorithms
+  bool visited; // killough 4/4/98, 4/7/98: used in search algorithms
 } msecnode_t;
 
 //
@@ -257,7 +257,7 @@ typedef struct
   int iSegID; // proff 11/05/2000: needed for OpenGL
   // figgi -- needed for glnodes
   float     length;
-  boolean   miniseg;
+  bool   miniseg;
 
 
   // Sector references.
@@ -344,7 +344,7 @@ typedef struct
 typedef struct vissprite_s
 {
   mobj_t *thing;
-  boolean flip;
+  bool flip;
   int x1, x2;
   fixed_t gx, gy;              // for line side calculation
   fixed_t gz, gzt;             // global bottom / top for silhouette clipping
@@ -361,7 +361,7 @@ typedef struct vissprite_s
   // killough 3/27/98: height sector for underwater/fake ceiling support
   int heightsec;
 
-  boolean isplayersprite;
+  bool isplayersprite;
 } vissprite_t;
 
 //
@@ -385,7 +385,7 @@ typedef struct
   // If false use 0 for any position.
   // Note: as eight entries are available,
   //  we might as well insert the same name eight times.
-  boolean rotate;
+  bool rotate;
 
   // Lump to use for view angles 0-7.
   short lump[8];

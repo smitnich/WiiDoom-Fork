@@ -51,7 +51,7 @@ extern int skytexturemid;
 
 // e6y
 // It is necessary for fixing the no-sky problem in the third episode of the Requiem
-extern boolean isskytexture;
+extern bool isskytexture;
 
 /* Called whenever the view size changes. */
 void R_InitSkyMap(void);

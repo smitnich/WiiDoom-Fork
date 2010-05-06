@@ -76,7 +76,7 @@ typedef enum
 
 typedef struct {
   byte *data;          // pointer to the screen content
-  boolean not_on_heap; // if set, no malloc or free is preformed and
+  bool not_on_heap; // if set, no malloc or free is preformed and
                        // data never set to NULL. Used i.e. with SDL doublebuffer.
   int width;           // the width of the surface
   int height;          // the height of the surface, used when mallocing
