@@ -1715,7 +1715,7 @@ void WADPicker()
 		selectedPWADs[selectedPWADIndex] = -1;
 		
 	SDL_Surface *screen;
-	screen = SDL_SetVideoMode(640, 480, 32, SDL_DOUBLEBUF | SDL_FULLSCREEN);
+	screen = SDL_SetVideoMode(640, 480, 32, SDL_DOUBLEBUF);
 	
 	// Load font
 	TTF_Init();
