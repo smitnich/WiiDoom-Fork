@@ -1,4 +1,12 @@
-#Sun Sep 07 13:38:45 EDT 2008
+#Tue May 11 10:49:37 PDT 2010
 eclipse.preferences.version=1
+indexer/filesToParseUpFront=
+indexer/indexAllFiles=true
+indexer/indexUnusedHeadersWithDefaultLang=true
 indexer/indexerId=org.eclipse.cdt.core.fastIndexer
+indexer/skipImplicitReferences=false
+indexer/skipMacroReferences=false
+indexer/skipReferences=false
+indexer/skipTypeReferences=false
+indexer/useHeuristicIncludeResolution=true
 indexerId=org.eclipse.cdt.core.fastIndexer
