@@ -4167,6 +4167,12 @@ bool M_Responder (event_t* ev) {
         joywait = I_GetTime() + 10;
       }
 
+    if ((data->btns_h & WPAD_BUTTON_HOME) && (joywait < I_GetTime()))
+      {
+        ch = key_escape;                         // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+
     if ((data->exp.nunchuk.js.pos.y > (data->exp.nunchuk.js.center.y + 50)) && (joywait < I_GetTime()))
       {
         ch = key_menu_up;

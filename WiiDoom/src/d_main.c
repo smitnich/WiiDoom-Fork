@@ -2028,7 +2028,7 @@ void wii_init()
 
   // Init the wiimotes
 //  WPAD_Disconnect(0);
-  PAD_Init();
+  //PAD_Init();
   WPAD_Init();
   WPAD_SetDataFormat(0, WPAD_FMT_BTNS_ACC_IR);
   WPAD_SetVRes(WPAD_CHAN_ALL, SCREENWIDTH, SCREENHEIGHT);

@@ -69,10 +69,11 @@ static void I_EndJoystick(void)
 
 void I_PollJoystick(void)
 {
+  WPAD_ScanPads();
   WPADData *data = WPAD_Data(0);
   ir_t ir;
   WPAD_IR(0, &ir);
-  int nun_x, nun_y, center, min, max, btn_a, btn_b, btn_c, btn_z, btn_1, btn_2, btn_l, btn_r, btn_d, btn_u, btn_p, btn_m;
+  int nun_x, nun_y, center, min, max, btn_a, btn_b, btn_c, btn_z, btn_1, btn_2, btn_l, btn_r, btn_d, btn_u, btn_p, btn_m, btn_h;
   event_t ev;
   Sint16 axis_x, axis_y;
 
@@ -119,6 +120,7 @@ void I_PollJoystick(void)
   btn_u = 0;
   btn_p = 0;
   btn_m = 0;
+  btn_h = 0;
 
   if (data->btns_h & WPAD_BUTTON_A)
     btn_a = 1;
@@ -144,6 +146,8 @@ void I_PollJoystick(void)
     btn_p = 1;
   if (data->btns_h & WPAD_BUTTON_MINUS)
     btn_m = 1;
+  if (data->btns_h & WPAD_BUTTON_HOME)
+    btn_h = 1;
 
   ev.type = ev_joystick;
   ev.data1 =
@@ -158,7 +162,8 @@ void I_PollJoystick(void)
     ((btn_r)<<8) |
     ((btn_u)<<9) |
     ((btn_p)<<10) |
-    ((btn_m)<<11);
+    ((btn_m)<<11) |
+    ((btn_h)<<12);
   ev.data2 = axis_x; // nunchuk x axis
   ev.data3 = axis_y; // nunchuk y axis
 

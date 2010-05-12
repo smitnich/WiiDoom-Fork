@@ -831,6 +831,7 @@ bool G_Responder (event_t* ev)
       joybuttons[9] = (ev->data1 & 512) > 0;
       joybuttons[10] = (ev->data1 & 1024) > 0;
       joybuttons[11] = (ev->data1 & 2048) > 0;
+      joybuttons[12] = (ev->data1 & 4096) > 0;
       joyxmove = ev->data2;
       joyymove = ev->data3;
       joyirx = ev->data4;

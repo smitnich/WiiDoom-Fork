@@ -104,7 +104,7 @@
 <buildTargets>
 <target name="clean" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 <buildCommand>make</buildCommand>
-<buildArguments></buildArguments>
+<buildArguments/>
 <buildTarget>clean</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>true</useDefaultCommand>
@@ -112,15 +112,15 @@
 </target>
 <target name="build" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 <buildCommand>make</buildCommand>
-<buildArguments></buildArguments>
-<buildTarget></buildTarget>
+<buildArguments/>
+<buildTarget/>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>true</useDefaultCommand>
 <runAllBuilders>true</runAllBuilders>
 </target>
 <target name="run" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 <buildCommand>make</buildCommand>
-<buildArguments></buildArguments>
+<buildArguments/>
 <buildTarget>run</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>true</useDefaultCommand>
@@ -129,11 +129,12 @@
 </buildTargets>
 </storageModule>
 <storageModule moduleId="org.eclipse.cdt.core.pathentry">
-<pathentry kind="src" path=""/>
-<pathentry kind="out" path="dist"/>
 <pathentry include="/Applications/devkitpro/devkitPPC/powerpc-eabi/include" kind="inc" path="" system="true"/>
 <pathentry include="/Applications/devkitpro/libogc/include" kind="inc" path="" system="true"/>
 <pathentry include="/Applications/devkitpro/portlibs/ppc/include" kind="inc" path="" system="true"/>
+<pathentry kind="mac" name="HAVE_CONFIG_H" path="" value="1"/>
+<pathentry kind="src" path=""/>
+<pathentry kind="out" path="dist"/>
 </storageModule>
 </cconfiguration>
 </storageModule>
