@@ -75,7 +75,7 @@ Funkamatic
 
 
 -- Version 0.4.2 --
-  [FIXED]  Recompiled with devkitPro r18 and latest version of SDL-wii
+  [FIXED]  Recompiled with devkitPro r21 and latest version of SDL-wii
   
 -- Version 0.4.1 --
   [FIXED]   Fixed crash when loading the shareware wad
