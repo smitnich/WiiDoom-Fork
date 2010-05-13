@@ -3,7 +3,7 @@
     <name>WiiDoom</name>
     <coder>lnuxguy and David Hudson</coder>
     <version>0.4.2</version>
-    <release_date>20081119010000</release_date>
+    <release_date>20100513010000</release_date>
     <short_description>DOOM for the Wii</short_description>
     <long_description>
 	WiiDoom is a DOOM port based on PrBoom. 
