@@ -338,16 +338,20 @@ int lprintf(OutputLevels pri, const char *s, ...)
 #endif
   va_end(v);
 
+  FILE * fp = fopen("sd:/prboom/output.txt", "a");
+
   if (lvl&cons_output_mask)               /* mask output as specified */
   {
-    r=fprintf(stdout,"%s",msg);
+    //r=fprintf(stdout,"%s",msg);
+	  r=fprintf(fp,"%s",msg);
 #ifdef _WIN32
     I_ConPrintString(msg);
 #endif
   }
   if (!isatty(1) && lvl&cons_error_mask)  /* if stdout redirected     */
-    r=fprintf(stderr,"%s",msg);           /* select output at console */
-
+    //r=fprintf(stderr,"%s",msg);           /* select output at console */
+	  r=fprintf(fp,"%s",msg);
+  fclose(fp);
   return r;
 }
 

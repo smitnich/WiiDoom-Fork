@@ -1172,6 +1172,8 @@ static void D_DoomMainSetup(void)
 {
   int p,slot;
 
+  remove("sd:/prboom/output.txt");
+
   L_SetupConsoleMasks();
 
   setbuf(stdout,NULL);
@@ -1988,8 +1990,10 @@ void WADPicker()
  	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
  	SDL_Flip(screen);
  
- 	if (strncmp(foundIwads[selectedIWAD], "doom1", 5) == 0)
-		return;
+ 	//if (strncmp(foundIwads[selectedIWAD], "doom1", 5) == 0)
+	//	return;
+ 	//if (strncmp(foundIwads[selectedIWAD], "doom2", 5) == 0)
+	//	return;
 		
   SDL_FreeSurface(sCursor);
   SDL_FreeSurface (logo);
