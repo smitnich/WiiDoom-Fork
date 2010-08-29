@@ -235,16 +235,35 @@ int I_Filelength(int handle)
 
 // cph - V.Aguilar (5/30/99) suggested return ~/.lxdoom/, creating
 //  if non-existant
-static const char prboom_dir[] = {"sd:/prboom"}; // Mead rem extra slash 8/21/03
+//static const char prboom_dir[] = {"sd:/prboom"}; // Mead rem extra slash 8/21/03
 
 const char *I_DoomExeDir(void)
 {
   static char *base;
   if (!base)        // cache multiple requests
     {
-      base = malloc(strlen(prboom_dir) + 1);
-
-      strcat(base, prboom_dir);
+  //Determine SD or USB
+  FILE * fp2;
+  bool sd = false;
+  bool usb = false;
+  fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
+  if(fp2)
+  sd = true;
+  if(!fp2){
+  fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
+  }
+  if(fp2 && !sd)
+  usb = true;
+  
+      if(sd)
+      base = malloc(strlen("sd:/apps/wiidoom/data") + 1);
+	  if(usb)
+	  base = malloc(strlen("usb:/apps/wiidoom/data") + 1);
+	  
+      if(sd)
+      strcat(base, "sd:/apps/wiidoom/data");
+	  if(usb)
+	  strcat(base, "usb:/apps/wiidoom/data");
 
       //mkdir(base, S_IRUSR | S_IWUSR | S_IXUSR); // Make sure it exists
     }
@@ -281,8 +300,29 @@ bool HasTrailingSlash(const char* dn)
 char* I_FindFile(const char* wfname, const char* ext)
 {
   //size_t  pl = strlen(wfname) + strlen(ext) + 4;
+  
+    	//Determine SD or USB
+    FILE * fp2;
+    bool sd = false;
+	bool usb = false;
+    fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
+    if(fp2)
+    sd = true;
+    if(!fp2){
+    fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
+    }
+    if(fp2 && !sd)
+    usb = true;
+	
+	if(fp2);
+	fclose(fp2);
 
-	char *p = "sd:/prboom/";
+	char *p;
+	if(sd)
+	p = "sd:/apps/wiidoom/data/";
+	if(usb)
+	p = "usb:/apps/wiidoom/data/";
+	
 	char *f;
 	f = malloc(strlen(p) + strlen(wfname) + 4);
 	sprintf(f, "%s%s", p, wfname);

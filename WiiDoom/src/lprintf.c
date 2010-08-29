@@ -337,8 +337,29 @@ int lprintf(OutputLevels pri, const char *s, ...)
   vsprintf(msg,s,v);
 #endif
   va_end(v);
+  
+  //Determine SD or USB
+  FILE * fp2;
+  bool sd = false;
+  bool usb = false;
+  fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
+  if(fp2)
+  sd = true;
+  if(!fp2){
+  fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
+  }
+  if(fp2 && !sd)
+  usb = true;
+	
+  if(fp2);
+  fclose(fp2);
 
-  FILE * fp = fopen("sd:/prboom/output.txt", "a");
+  FILE * fp;
+
+  if(sd)
+  fp = fopen("sd:/apps/wiidoom/data/output.txt", "a");
+  if(usb)
+  fp = fopen("usb:/apps/wiidoom/data/output.txt", "a");
 
   if (lvl&cons_output_mask)               /* mask output as specified */
   {

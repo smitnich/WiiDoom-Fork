@@ -599,7 +599,26 @@ void I_InitMusic(void)
 #ifdef HAVE_MIXER
   if (!music_tmp) {
 #ifndef _WIN32
-    music_tmp = strdup("sd:/prboom/prboom-music-XXXXXX");
+	//Determine SD or USB
+    FILE * fp2;
+    bool sd = false;
+	bool usb = false;
+    fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
+    if(fp2)
+    sd = true;
+    if(!fp2){
+    fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
+    }
+    if(fp2 && !sd)
+    usb = true;
+	
+	if(fp2);
+	fclose(fp2);
+	
+	if(sd)
+    music_tmp = strdup("sd:/apps/wiidoom/data/prboom-music-XXXXXX");
+	if(usb)
+	music_tmp = strdup("usb:/apps/wiidoom/data/prboom-music-XXXXXX");
     {
       int fd = mkstemp(music_tmp);
       if (fd<0) {

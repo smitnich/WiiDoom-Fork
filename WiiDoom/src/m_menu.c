@@ -4131,7 +4131,7 @@ bool M_Responder (event_t* ev) {
   // homebrew channel. I don't know why this is so for the meantime I'm polling the wii remote directly.
 
   WPADData *data = WPAD_Data(0);
-
+    
     if ((data->btns_h & WPAD_BUTTON_UP) && (joywait < I_GetTime()))
       {
         ch = key_menu_up;                                // phares 3/7/98
@@ -4173,7 +4173,77 @@ bool M_Responder (event_t* ev) {
         ch = key_escape;                         // phares 3/7/98
         joywait = I_GetTime() + 10;
       }
+	
+	//Classic Controls
+	if(data->exp.type == WPAD_EXP_CLASSIC){
+	    if ((data->btns_h & WPAD_CLASSIC_BUTTON_UP) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_up;                                // phares 3/7/98
+        joywait = I_GetTime() + 5;
+      }
 
+    if ((data->btns_h & WPAD_CLASSIC_BUTTON_DOWN) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_down;                              // phares 3/7/98
+        joywait = I_GetTime() + 5;
+      }
+
+    if ((data->btns_h & WPAD_CLASSIC_BUTTON_LEFT) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_left;                              // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+
+    if ((data->btns_h & WPAD_CLASSIC_BUTTON_RIGHT) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_right;                             // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+
+    if ((data->btns_h & WPAD_CLASSIC_BUTTON_A) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_enter;                             // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+
+    if ((data->btns_h & WPAD_CLASSIC_BUTTON_B) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_backspace;                         // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+
+    if ((data->btns_h & WPAD_CLASSIC_BUTTON_HOME) && (joywait < I_GetTime()))
+      {
+        ch = key_escape;                         // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+	  
+	if ((data->exp.classic.ljs.pos.y > (data->exp.classic.ljs.center.y + 50)) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_up;
+        joywait = I_GetTime() + 5;
+      }
+    else if ((data->exp.classic.ljs.pos.y < (data->exp.classic.ljs.center.y - 50)) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_down;
+        joywait = I_GetTime() + 5;
+      }
+
+    if ((data->exp.classic.ljs.pos.x > (data->exp.classic.ljs.center.x + 50)) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_right;
+        joywait = I_GetTime() + 5;
+      }
+    else if ((data->exp.classic.ljs.pos.x < (data->exp.classic.ljs.center.x - 50)) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_left;
+        joywait = I_GetTime() + 5;
+      }
+	
+	}//End Classic Controls
+    
+	//Nunchuk Controls
+	if(data->exp.type == WPAD_EXP_NUNCHUK){
     if ((data->exp.nunchuk.js.pos.y > (data->exp.nunchuk.js.center.y + 50)) && (joywait < I_GetTime()))
       {
         ch = key_menu_up;
@@ -4195,6 +4265,81 @@ bool M_Responder (event_t* ev) {
         ch = key_menu_left;
         joywait = I_GetTime() + 5;
       }
+	 }
+	 //End Nunchuk controls
+	
+    //GC Controls 
+	if(data->exp.type!=WPAD_EXP_NUNCHUK && data->exp.type!=WPAD_EXP_CLASSIC){
+	
+	s32 pad_stickx = PAD_StickX(0);
+    s32 pad_sticky = PAD_StickY(0);
+		
+    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_UP) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_up;                                // phares 3/7/98
+        joywait = I_GetTime() + 5;
+      }
+
+    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_DOWN) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_down;                              // phares 3/7/98
+        joywait = I_GetTime() + 5;
+      }
+
+    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_LEFT) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_left;                              // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+
+    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_RIGHT) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_right;                             // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+
+    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_A) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_enter;                             // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+
+    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_B) && (joywait < I_GetTime()))
+      {
+        ch = key_menu_backspace;                         // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+
+    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_START) && (joywait < I_GetTime()))
+      {
+        ch = key_escape;                         // phares 3/7/98
+        joywait = I_GetTime() + 10;
+      }
+	  
+	if(pad_sticky > 20  && (joywait < I_GetTime()))
+      {
+        ch = key_menu_up;
+        joywait = I_GetTime() + 5;
+      }
+    else if(pad_sticky < -20 && (joywait < I_GetTime()))
+      {
+        ch = key_menu_down;
+        joywait = I_GetTime() + 5;
+      }
+
+    if(pad_stickx > 20 && (joywait < I_GetTime()))
+      {
+        ch = key_menu_right;
+        joywait = I_GetTime() + 5;
+      }
+    if(pad_stickx < -20 && (joywait < I_GetTime()))
+      {
+        ch = key_menu_left;
+        joywait = I_GetTime() + 5;
+      }
+
+	}
+	//End GC Controls
 
   if ((ev->type == ev_joystick) && (joywait < I_GetTime()))  {
 

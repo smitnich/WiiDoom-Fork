@@ -808,8 +808,24 @@ static void IdentifyVersion (void)
 
   // set save path to -save parm or current dir
 
-   // SWC - use sd:/prboom directory for saves
-   char* p = "sd:/prboom";
+  //Determine SD or USB
+  FILE * fp2;
+  bool sd = false;
+  bool usb = false;
+  fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
+  if(fp2)
+  sd = true;
+  if(!fp2){
+  fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
+  }
+  if(fp2 && !sd)
+  usb = true;
+  
+  char* p;
+  if(sd)
+  p="sd:/apps/wiidoom/data";
+  if(usb)
+  p="usb:/apps/wiidoom/data";
    if (p != NULL)
      if (strlen(p) > PATH_MAX-12) p = NULL;
        strcpy(basesavegame,(p == NULL) ? I_DoomExeDir() : p);
@@ -1171,8 +1187,22 @@ static void L_SetupConsoleMasks(void) {
 static void D_DoomMainSetup(void)
 {
   int p,slot;
-
-  remove("sd:/prboom/output.txt");
+ 
+  FILE * fp2;  
+  bool checkup = false;
+  fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
+  if(fp2){
+  checkup = true;
+  remove("sd:/apps/wiidoom/data/output.txt");
+  }
+  if(!fp2){
+  fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
+  }
+  if(fp2 && !checkup)
+  remove("usb:/apps/wiidoom/data/output.txt");
+  
+  if(fp2)
+  fclose(fp2);
 
   L_SetupConsoleMasks();
 
@@ -1719,16 +1749,45 @@ void WADPicker()
 	SDL_Surface *screen;
 	screen = SDL_SetVideoMode(640, 480, 16, SDL_DOUBLEBUF);
 	
+	//Determine SD or USB
+    FILE * fp2;
+    bool sd = false;
+	bool usb = false;
+    fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
+    if(fp2)
+    sd = true;
+    if(!fp2){
+    fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
+    }
+    if(fp2 && !sd)
+    usb = true;
+	
+	if(fp2);
+	fclose(fp2);
+
 	// Load font
 	TTF_Init();
-	TTF_Font *doomfnt24 = TTF_OpenFont( "sd:/prboom/fonts/DooM.ttf", 24 );
-	TTF_Font *doomfnt18 = TTF_OpenFont( "sd:/prboom/fonts/DooM.ttf", 18 );
+	TTF_Font *doomfnt24;
+	TTF_Font *doomfnt18;
+	if(sd){
+	doomfnt24 = TTF_OpenFont( "sd:/apps/wiidoom/data/fonts/DooM.ttf", 24 );
+	doomfnt18 = TTF_OpenFont( "sd:/apps/wiidoom/data/fonts/DooM.ttf", 18 );
+	}
+	if(usb){
+	doomfnt24 = TTF_OpenFont( "usb:/apps/wiidoom/data/fonts/DooM.ttf", 24 );
+	doomfnt18 = TTF_OpenFont( "usb:/apps/wiidoom/data/fonts/DooM.ttf", 18 );
+	}
 	SDL_Color clrFg = {0,0,255};
 	SDL_Color clrFgSelected = {255,0,0};
 	SDL_Color clrStartText = {255,255,255};
 	
 	// Load logo
-	SDL_Surface *logo = IMG_Load("sd:/prboom/images/doom.bmp");
+	SDL_Surface *logo;
+	if(sd)
+	logo = IMG_Load("sd:/apps/wiidoom/data/images/doom.bmp");
+	if(usb)
+	logo = IMG_Load("usb:/apps/wiidoom/data/images/doom.bmp");
+	
  	SDL_Rect rlogo = {LOGOX, LOGOY, 0, 0}; 
   
   // Start button
@@ -1777,8 +1836,11 @@ void WADPicker()
 	int numPWADSFound = 0;
 	struct stat st;
 	char filename[MAXPATHLEN]; // always guaranteed to be enough to hold a filename
-	DIR_ITER* dir;		
-	dir = diropen ("sd:/prboom/pwads");
+	DIR_ITER* dir;
+    if(sd)		
+	dir = diropen ("sd:/apps/wiidoom/data/pwads");
+	if(usb)
+	dir = diropen ("usb:/apps/wiidoom/data/pwads");
 	if (dir != NULL) {
 		// Get a count of the files
 		while (dirnext(dir, filename, &st) == 0) {
@@ -1812,6 +1874,8 @@ void WADPicker()
   while (!done)
   {  		
   	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
+	
+	PAD_ScanPads();
   	
   	// Get Wiimote data
   	WPAD_ScanPads();
@@ -1969,14 +2033,24 @@ void WADPicker()
   }
 
   // Set IWAD
-  selectedIWADFile = malloc(strlen("sd:/prboom/") + strlen(foundIwads[selectedIWAD])+4);
-	sprintf(selectedIWADFile, "%s%s.wad", "sd:/prboom/", foundIwads[selectedIWAD]);
+  if(sd){
+  selectedIWADFile = malloc(strlen("sd:/apps/wiidoom/data/") + strlen(foundIwads[selectedIWAD])+4);
+	sprintf(selectedIWADFile, "%s%s.wad", "sd:/apps/wiidoom/data/", foundIwads[selectedIWAD]);
+  }
+  if(usb){
+  selectedIWADFile = malloc(strlen("usb:/apps/wiidoom/data/") + strlen(foundIwads[selectedIWAD])+4);
+	sprintf(selectedIWADFile, "%s%s.wad", "usb:/apps/wiidoom/data/", foundIwads[selectedIWAD]);
+  }
 	
 	// Load PWADs
 	for (selectedPWADIndex = 0; selectedPWADIndex < MAX_PWADS; selectedPWADIndex++)
 		if (selectedPWADs[selectedPWADIndex] != -1)
 		{
-  		char *p = "sd:/prboom/pwads/";
+		char *p;
+		if(sd)
+  		p = "sd:/apps/wiidoom/data/pwads/";
+		if(usb)
+		p = "usb:/apps/wiidoom/data/pwads/";
 			char *f;
 			f = malloc(strlen(p) + strlen(foundPwads[selectedPWADs[selectedPWADIndex]]) + 4);
 			sprintf(f, "%s%s.wad", p, foundPwads[selectedPWADs[selectedPWADIndex]]);
@@ -2029,10 +2103,10 @@ void wii_init()
 
   // Init fat subsystem
   fatInitDefault();
+  
+  PAD_Init();
 
   // Init the wiimotes
-//  WPAD_Disconnect(0);
-  //PAD_Init();
   WPAD_Init();
   WPAD_SetDataFormat(0, WPAD_FMT_BTNS_ACC_IR);
   WPAD_SetVRes(WPAD_CHAN_ALL, SCREENWIDTH, SCREENHEIGHT);
