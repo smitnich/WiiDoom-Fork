@@ -1800,7 +1800,7 @@ void WADPicker()
 	SDL_Surface *pwadHeader = TTF_RenderText_Solid(doomfnt18, "PWAD (Optional)" , clrStartText);
 	  
   // Create cursor surface
-  SDL_Surface *sCursor = TTF_RenderText_Solid(doomfnt24, ".", clrFg);  
+  SDL_Surface *sCursor = TTF_RenderText_Solid(doomfnt24, ".", clrStartText);  
   
   
   // Create text surface
@@ -1871,19 +1871,38 @@ void WADPicker()
 	}
 	
 	bool done = false;  
+	
+  int ax = 320; 
+  int ay = 240;
+  
   while (!done)
   {  		
   	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
 	
 	PAD_ScanPads();
+	s32 pad_stickx = PAD_StickX(0);
+    s32 pad_sticky = PAD_StickY(0);
   	
   	// Get Wiimote data
   	WPAD_ScanPads();
   	u32 wpaddown = WPAD_ButtonsDown(0);
   	ir_t ir;
-		WPAD_IR(0, &ir);
-		int ax = ir.ax;
-		int ay = ir.ay;
+	
+	WPAD_IR(0, &ir);
+	if(ir.ax > 0 && ir.ax < 640)
+	ax = ir.ax;
+	if(ir.ay > 0 && ir.ay < 480)
+	ay = ir.ay;
+	
+	if (pad_stickx < -20) //Left
+		ax -= 2;
+	else if (pad_stickx > 20) //Right
+		ax += 2;
+
+	if (pad_sticky > 20)//Up
+		ay -= 2;
+	else if (pad_sticky < -20)//Down
+		ay += 2;
 		
 	  // Display Logo
   	SDL_BlitSurface (logo, NULL, screen, &rlogo);
@@ -1957,16 +1976,16 @@ void WADPicker()
   	}
   	
   	// Draw IR cursor
-  	SDL_Rect rcDest = {ir.ax,ir.ay, 0,0};
+  	SDL_Rect rcDest = {ax,ay, 0,0};
 		SDL_BlitSurface(sCursor,NULL,screen,&rcDest );
 		
 		// Check for IR position on IWAD menu
   	CHAR_YPOS = IWADCHARY;
   	for (i=0; i<numIWADSFound; i++)
   	{    
-	  	if ((ir.ax > IWADBOXX) && (ir.ax < (IWADBOXX + IWADBOXWIDTH)))
-				if ((ir.ay > CHAR_YPOS-(IWADCHARSPACING/2)) && (ir.ay < (CHAR_YPOS + (IWADCHARSPACING/2))))
-					if (wpaddown & WPAD_BUTTON_A)
+	  	if ((ax > IWADBOXX) && (ax < (IWADBOXX + IWADBOXWIDTH)))
+				if ((ay > CHAR_YPOS-(IWADCHARSPACING/2)) && (ay < (CHAR_YPOS + (IWADCHARSPACING/2))))
+					if (wpaddown & WPAD_BUTTON_A || PAD_ButtonsDown(0)&PAD_BUTTON_A)
 						selectedIWAD = i;
 			  CHAR_YPOS += IWADCHARSPACING;
   	}		
@@ -1981,7 +2000,7 @@ void WADPicker()
 	  		if ((ax > PWADBOXX) && (ax < (PWADBOXX + PWADBOXWIDTH)))
 				  if ((ay > CHAR_YPOS-(PWADCHARSPACING/2)) && (ay < (CHAR_YPOS + (PWADCHARSPACING/2))))
 					{	
-						if (wpaddown & WPAD_BUTTON_A)
+						if (wpaddown & WPAD_BUTTON_A || PAD_ButtonsDown(0)&PAD_BUTTON_A)
 						{
 							if (SDL_GetTicks() > joyWait)
 							{
@@ -2011,19 +2030,19 @@ void WADPicker()
 					CHAR_YPOS += PWADCHARSPACING;
 	  }
 
-		if (wpaddown & WPAD_BUTTON_B) exit(0);
+		if (wpaddown & WPAD_BUTTON_B || PAD_ButtonsDown(0)&PAD_TRIGGER_Z) exit(0);
 		if ((ax > STARTX) && (ax < STARTX+STARTWIDTH) && (ay >= STARTY-STARTHEIGHT) 
 				&& (selectedIWAD != -1)
-				&& (wpaddown & WPAD_BUTTON_A))
+				&& (wpaddown & WPAD_BUTTON_A || PAD_ButtonsDown(0)&PAD_BUTTON_A))
 			done = true;
-		if ((wpaddown & WPAD_BUTTON_LEFT) && (SDL_GetTicks() > joyWait) && (PWADSTARTNUM > 0)) 
+		if ((wpaddown & WPAD_BUTTON_LEFT || PAD_ButtonsDown(0)&PAD_BUTTON_LEFT) && (SDL_GetTicks() > joyWait) && (PWADSTARTNUM > 0)) 
 		{
 			PWADSTARTNUM -= PWADMAXPAGE;
 			if (PWADSTARTNUM < 0)
 				PWADSTARTNUM = 0;
 			joyWait = SDL_GetTicks() + 10;
 		}
-		if ((wpaddown & WPAD_BUTTON_RIGHT) && (SDL_GetTicks() > joyWait) && (PWADSTARTNUM + PWADMAXPAGE < numPWADSFound))
+		if ((wpaddown & WPAD_BUTTON_RIGHT || PAD_ButtonsDown(0)&PAD_BUTTON_RIGHT) && (SDL_GetTicks() > joyWait) && (PWADSTARTNUM + PWADMAXPAGE < numPWADSFound))
   	{
   		PWADSTARTNUM += PWADMAXPAGE;
   		joyWait = SDL_GetTicks() + 10;

@@ -228,13 +228,13 @@ void I_PollJoystick(void)
   if (data->btns_h & WPAD_CLASSIC_BUTTON_FULL_R)
     btn_b = 1;
   //Map
-  if (data->btns_h & WPAD_CLASSIC_BUTTON_ZL)
+  if (data->btns_h & WPAD_CLASSIC_BUTTON_PLUS)
     btn_c = 1;
   //Run
   if (data->btns_h & WPAD_CLASSIC_BUTTON_FULL_L)
     btn_z = 1;
   //Automap follow
-  if (data->btns_h & WPAD_CLASSIC_BUTTON_ZR)
+  if (data->btns_h & WPAD_CLASSIC_BUTTON_MINUS)
     btn_1 = 1;
   //No idea ....
   if (data->btns_h & WPAD_BUTTON_2)
@@ -252,10 +252,10 @@ void I_PollJoystick(void)
   if (data->btns_h & WPAD_CLASSIC_BUTTON_UP)
     btn_u = 1;
   //Map zoom in
-  if (data->btns_h & WPAD_CLASSIC_BUTTON_PLUS)
+  if (data->btns_h & WPAD_CLASSIC_BUTTON_ZR)
     btn_p = 1;
   //Map Zoom Out
-  if (data->btns_h & WPAD_CLASSIC_BUTTON_MINUS)
+  if (data->btns_h & WPAD_CLASSIC_BUTTON_ZL)
     btn_m = 1;
   //Escape
   if (data->btns_h & WPAD_CLASSIC_BUTTON_HOME)
