@@ -954,7 +954,7 @@ void M_LoadDefaults (void)
   if(sd)
   defaultfile = "sd:/apps/wiidoom/data/prboom.cfg";
   if(usb)
-  defaultfile = "sd:/apps/wiidoom/data/prboom.cfg";
+  defaultfile = "usb:/apps/wiidoom/data/prboom.cfg";
   
 
 /*
