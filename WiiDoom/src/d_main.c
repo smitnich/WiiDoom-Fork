@@ -2123,6 +2123,13 @@ void wii_init()
   // Init fat subsystem
   fatInitDefault();
   
+  //Sanity check -- return to HBC if WADs not found (otherwise we crash)
+  FILE* fp = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
+  if(!fp)
+  fp = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
+  if(!fp)
+  exit(0);
+  
   PAD_Init();
 
   // Init the wiimotes
