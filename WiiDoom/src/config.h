@@ -44,7 +44,7 @@
 #define HAVE_LIBPNG 1
 
 /* Define if you have the SDL mixer library -lSDL_mixer */
-/*#define HAVE_LIBSDL_MIXER 0*/
+#define HAVE_LIBSDL_MIXER 1
 
 /* Define if you have the SDL net library -lSDL_net */
 /*#define HAVE_LIBSDL_NET 0*/

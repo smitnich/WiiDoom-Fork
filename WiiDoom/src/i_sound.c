@@ -573,7 +573,7 @@ void I_InitSound(void)
 #ifndef HAVE_OWN_MUSIC
 
 #ifdef HAVE_MIXER
-#include "SDL_mixer.h"
+#include "SDL/SDL_mixer.h"
 #include "mmus2mid.h"
 
 static Mix_Music *music[2] = { NULL, NULL };
@@ -693,12 +693,19 @@ void I_UnRegisterSong(int handle)
 #endif
 }
 
+/* ============================================
+I_RegisterSong
+MrPeanut:  Fixed so it works without multiple file pointers opened on
+music_tmp.  The original configuration was preventing music_tmp from
+being written to (our actual midi file that we need to process)
+===============================================*/
+
 int I_RegisterSong(const void *data, size_t len)
 {
 #ifdef HAVE_MIXER
   MIDI *mididata;
   FILE *midfile;
-
+  
   if ( len < 32 )
     return 0; // the data should at least as big as the MUS header
   if ( music_tmp == NULL )
@@ -709,23 +716,26 @@ int I_RegisterSong(const void *data, size_t len)
     return 0;
   }
   /* Convert MUS chunk to MIDI? */
-  if ( memcmp(data, "MUS", 3) == 0 )
+  if ( memcmp(data, "MUS", 3) != 0 ) // mrp: it's a regular midi format file, let's just write it to disk and be done with it
   {
-    UBYTE *mid;
-    int midlen;
-
-    mididata = malloc(sizeof(MIDI));
-    mmus2mid(data, mididata, 89, 0);
-    MIDIToMidi(mididata,&mid,&midlen);
-    M_WriteFile(music_tmp,mid,midlen);
-    free(mid);
-    free_mididata(mididata);
-    free(mididata);
-  } else {
-    fwrite(data, len, 1, midfile);
+	  fwrite(data, len, 1, midfile);
+	  fclose(midfile);
   }
-  fclose(midfile);
+  
+  else
+  {
+	  UBYTE *mid;
+	  int midlen;
 
+      mididata = malloc(sizeof(MIDI));
+      mmus2mid(data, mididata, 89, 0); 
+	  MIDIToMidi(mididata,&mid,&midlen);
+      M_WriteFile(music_tmp,mid,midlen);
+	  free(mid);
+	  free_mididata(mididata);
+	  free(mididata);
+  }
+  
   music[0] = Mix_LoadMUS(music_tmp);
   if ( music[0] == NULL ) {
     lprintf(LO_ERROR,"Couldn't load MIDI from %s: %s\n", music_tmp, Mix_GetError());

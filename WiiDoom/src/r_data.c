@@ -457,7 +457,7 @@ int tran_filter_pct = 66;       // filter percent
 
 void R_InitTranMap(int progress)
 {
-  int lump = W_CheckNumForName("TRANMAP");
+	int lump = W_CheckNumForName("TRANMAP");
 
   // If a tranlucency filter map lump is present, use it
 
@@ -468,21 +468,23 @@ void R_InitTranMap(int progress)
       const byte *playpal = W_CacheLumpName("PLAYPAL");
       byte       *my_tranmap;
 
-      char fname[PATH_MAX+1];
       struct {
         unsigned char pct;
         unsigned char playpal[256];
       } cache;
-      FILE *cachefp = fopen(strcat(strcpy(fname, I_DoomExeDir()), "/tranmap.dat"),"rb");
-
-      main_tranmap = my_tranmap = Z_Malloc(256*256, PU_STATIC, 0);  // killough 4/11/98
+      
+	  FILE *cachefp = fopen("tranmap.dat", "rb"); // MrP: doom was crashing on this line when the demo was loaded from the menu.
+	  // I simplified it without having the engine check where the doom.exe(.elf)(.dol) file is since the default working directory
+	  // is always the directory that the executable is in.
+	  
+	  main_tranmap = my_tranmap = Z_Malloc(256*256, PU_STATIC, 0);  // killough 4/11/98
 
       // Use cached translucency filter if it's available
 
-      if (!cachefp ||
-          fread(&cache, 1, sizeof cache, cachefp) != sizeof cache ||
+      if (!cachefp  ||
+          fread(&cache, 1, sizeof(cache), cachefp) != sizeof(cache) ||
           cache.pct != tran_filter_pct ||
-          memcmp(cache.playpal, playpal, sizeof cache.playpal) ||
+          memcmp(cache.playpal, playpal, sizeof(cache.playpal)) ||
           fread(my_tranmap, 256, 256, cachefp) != 256 ) // killough 4/11/98
         {
           long pal[3][256], tot[256], pal_w1[3][256];
@@ -492,7 +494,7 @@ void R_InitTranMap(int progress)
           if (progress)
             lprintf(LO_INFO, "Tranmap build [        ]\x08\x08\x08\x08\x08\x08\x08\x08\x08");
 
-          // First, convert playpal into long int type, and transpose array,
+		  // First, convert playpal into long int type, and transpose array,
           // for fast inner-loop calculations. Precompute tot array.
 
           {
@@ -542,7 +544,7 @@ void R_InitTranMap(int progress)
                   }
               }
           }
-          if ((cachefp = fopen(fname,"wb")) != NULL) // write out the cached translucency map
+          if ((cachefp = fopen("tranmap.dat","wb")) != NULL) // write out the cached translucency map
             {
               cache.pct = tran_filter_pct;
               memcpy(cache.playpal, playpal, 256);
@@ -557,7 +559,7 @@ void R_InitTranMap(int progress)
         fclose(cachefp);
 
       W_UnlockLumpName("PLAYPAL");
-    }
+  }
 }
 
 //
