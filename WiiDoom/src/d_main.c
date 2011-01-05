@@ -94,6 +94,7 @@
 #include <ogcsys.h>
 #include <gccore.h>
 #include <sys/dir.h>
+#include <sdcard/wiisd_io.h>
 #include <fat.h>
 
 Mtx GXmodelView2D;
@@ -1753,17 +1754,20 @@ void WADPicker()
     FILE * fp2;
     bool sd = false;
 	bool usb = false;
-    fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
+    fp2 = fopen("sd:/apps/wiidoom/data/prboom.cfg", "rb");
     if(fp2)
     sd = true;
     if(!fp2){
-    fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
+    fp2 = fopen("usb:/apps/wiidoom/data/prboom.cfg", "rb");
     }
     if(fp2 && !sd)
     usb = true;
 	
 	if(fp2);
 	fclose(fp2);
+	
+	if(!sd && !usb)
+    exit(0);
 
 	// Load font
 	TTF_Init();
@@ -2116,19 +2120,39 @@ void D_DoomMain(void)
 
 void wii_init()
 {
+     
   int res;
   u32 type;
   bool found = false;
 
-  // Init fat subsystem
-  fatInitDefault();
+  // Init SD(HC)
+  fatUnmount("sd:/");
+  __io_wiisd.shutdown();
+  fatMountSimple("sd", &__io_wiisd);
   
-  //Sanity check -- return to HBC if WADs not found (otherwise we crash)
-  FILE* fp = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
-  if(!fp)
-  fp = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
-  if(!fp)
-  exit(0);
+  //Init USB
+  fatUnmount("usb:/");
+  bool isMounted = fatMountSimple("usb", &__io_usbstorage);
+  if(!isMounted)
+  {		
+      fatUnmount("usb:/");
+      fatMountSimple("usb", &__io_usbstorage);
+
+      bool isInserted = __io_usbstorage.isInserted();
+
+      if (isInserted)
+      {
+          int retry = 10;		
+		
+		  while (retry)
+		  {
+   	          isMounted = fatMountSimple("usb", &__io_usbstorage);
+			  if (isMounted) break;
+			  sleep(1);
+			  retry--;
+		  }
+      }
+  }
   
   PAD_Init();
 
@@ -2137,26 +2161,6 @@ void wii_init()
   WPAD_SetDataFormat(0, WPAD_FMT_BTNS_ACC_IR);
   WPAD_SetVRes(WPAD_CHAN_ALL, SCREENWIDTH, SCREENHEIGHT);
 
-  while (found == false)
-  {
-    WPAD_ReadPending(WPAD_CHAN_ALL, 0);
-    res = WPAD_Probe(0, &type);
-    switch(res) {
-	case WPAD_ERR_NO_CONTROLLER:
-//		printf("  Wiimote not connected\n");
-		break;
-	case WPAD_ERR_NOT_READY:
-//		printf("  Wiimote not ready\n");
-		break;
-	case WPAD_ERR_NONE:
-//		printf("  Wiimote ready\n");
-		found = true;
-		break;
-	default:
-//		printf("  Unknown Wimote state %d\n",res);
-		break;
-    }
-  }
 }
 
 //

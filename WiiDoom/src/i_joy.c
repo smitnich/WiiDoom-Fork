@@ -288,9 +288,9 @@ void I_PollJoystick(void)
   max = data->exp.classic.rjs.max.x;
 
   if (nun_x < center - ((center - min) * 0.1f)) //Left
-    axis_x = (1.0f * center - nun_x) / (center - min) * -110.0f;
+    axis_x = (1.0f * center - nun_x) / (center - min) * -130.0f;
   else if (nun_x > center + ((max - center) * 0.1f)) //Right
-    axis_x = (1.0f * nun_x - center) / (max - center) * 110.0f;
+    axis_x = (1.0f * nun_x - center) / (max - center) * 130.0f;
   else //No stick X movement
     axis_x = 0;
 
@@ -299,9 +299,9 @@ void I_PollJoystick(void)
   max = data->exp.classic.rjs.max.y;
 
   if (nun_y < center - ((center - min) * 0.1f))//Up
-    axis_y = (1.0f * center - nun_y) / (center - min) * -110.0f;
+    axis_y = (1.0f * center - nun_y) / (center - min) * -130.0f;
   else if (nun_y > center + ((max - center) * 0.1f))//Down
-    axis_y = (1.0f * nun_y - center) / (max - center) * 110.0f;
+    axis_y = (1.0f * nun_y - center) / (max - center) * 130.0f;
   else//No stick Y movement
     axis_y = 0;
     
