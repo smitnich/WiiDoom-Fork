@@ -47,7 +47,7 @@
 #include "sounds.h"
 #include "dstrings.h"
 #include "r_draw.h"
-
+#include "r_defs.h"
 //
 // STATUS BAR DATA
 //
@@ -334,7 +334,7 @@ static st_percent_t w_health;
 static st_binicon_t  w_armsbg;
 
 // weapon ownership widgets
-static st_multicon_t w_arms[6];
+static st_multicon_char_t w_arms[6];
 
 // face status widget
 static st_multicon_t w_faces;
@@ -797,18 +797,16 @@ static void ST_drawWidgets(bool refresh)
 
   STlib_updateBinIcon(&w_armsbg, refresh);
 
-/*
-  for (i=0;i<6;i++)
-    STlib_updateMultIcon(&w_arms[i], refresh);
 
-// TODO REENABLE AND FIX THIS
-  STlib_updateMultIcon(&w_faces, refresh);
+	for (i=0;i<6;i++)
+	{
+		STlib_updateMultIconChar(&w_arms[i], refresh);
+	}
 
-  for (i=0;i<3;i++)
-    STlib_updateMultIcon(&w_keyboxes[i], refresh);
-*/
-
-  STlib_updateNum(&w_frags, CR_DEFAULT, refresh);
+	STlib_updateMultIcon(&w_faces, refresh);
+	for (i=0;i<3;i++)
+		STlib_updateMultIcon(&w_keyboxes[i], refresh);
+	STlib_updateNum(&w_frags, CR_DEFAULT, refresh);
 }
 
 static void ST_doRefresh(void)
@@ -999,10 +997,11 @@ static void ST_createWidgets(void)
   // weapons owned
   for(i=0;i<6;i++)
     {
-      STlib_initMultIcon(&w_arms[i],
+      STlib_initMultIconChar(&w_arms[i],
                          ST_ARMSX+(i%3)*ST_ARMSXSPACE,
                          ST_ARMSY+(i/3)*ST_ARMSYSPACE,
-                         arms[i], (int *) &plyr->weaponowned[i+1],
+                         arms[i],
+						 (char *) &plyr->weaponowned[i+1],
                          &st_armson);
     }
 

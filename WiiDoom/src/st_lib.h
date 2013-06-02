@@ -113,6 +113,32 @@ typedef struct
 
 } st_multicon_t;
 
+typedef struct
+{
+  // center-justified location of icons
+  int     x;
+  int     y;
+
+  // last icon number
+  int     oldinum;
+
+  // pointer to current icon
+  char*    inum;
+
+  // pointer to bool stating
+  //  whether to update icon
+  bool*    on;
+
+  // list of icons
+  const patchnum_t*   p;
+
+  // user data
+  int     data;
+
+} st_multicon_char_t;
+
+//Multiple icon boolean widget
+
 // Binary Icon widget
 
 typedef struct

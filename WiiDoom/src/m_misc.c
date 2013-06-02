@@ -935,26 +935,7 @@ void M_LoadDefaults (void)
 
 
   // check for a custom default file
- //Determine SD or USB
-  FILE * fp2;
-  bool sd = false;
-  bool usb = false;
-  fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
-  if(fp2)
-  sd = true;
-  if(!fp2){
-  fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
-  }
-  if(fp2 && !sd)
-  usb = true;
-	
-  if(fp2);
-  fclose(fp2);
-  
-  if(sd)
-  defaultfile = "sd:/apps/wiidoom/data/prboom.cfg";
-  if(usb)
-  defaultfile = "usb:/apps/wiidoom/data/prboom.cfg";
+  defaultfile = "/data/prboom.cfg";
   
 
 /*

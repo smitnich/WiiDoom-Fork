@@ -61,7 +61,8 @@ int cons_output_mask = -1;        /* all output enabled */
  * We still have to be careful here, this function can be called after exit
  */
 #define MAX_MESSAGE_SIZE 2048
-
+extern bool sd;
+extern bool usb;
 #ifdef _WIN32
 // Variables for the console
 HWND con_hWnd=0;
@@ -328,7 +329,7 @@ int lprintf(OutputLevels pri, const char *s, ...)
   int r=0;
   char msg[MAX_MESSAGE_SIZE];
   int lvl=pri;
-
+  FILE * fp = NULL;
   va_list v;
   va_start(v,s);
 #ifdef HAVE_VSNPRINTF
@@ -337,30 +338,10 @@ int lprintf(OutputLevels pri, const char *s, ...)
   vsprintf(msg,s,v);
 #endif
   va_end(v);
-  
-  //Determine SD or USB
-  FILE * fp2;
-  bool sd = false;
-  bool usb = false;
-  fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
-  if(fp2)
-  sd = true;
-  if(!fp2){
-  fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
-  }
-  if(fp2 && !sd)
-  usb = true;
-	
-  if(fp2);
-  fclose(fp2);
-
-  FILE * fp;
-
   if(sd)
   fp = fopen("sd:/apps/wiidoom/data/output.txt", "a");
   if(usb)
   fp = fopen("usb:/apps/wiidoom/data/output.txt", "a");
-
   if (lvl&cons_output_mask)               /* mask output as specified */
   {
     //r=fprintf(stdout,"%s",msg);
@@ -369,9 +350,9 @@ int lprintf(OutputLevels pri, const char *s, ...)
     I_ConPrintString(msg);
 #endif
   }
-  if (!isatty(1) && lvl&cons_error_mask)  /* if stdout redirected     */
+  //if (!isatty(1) && lvl&cons_error_mask)  /* if stdout redirected     */
     //r=fprintf(stderr,"%s",msg);           /* select output at console */
-	  r=fprintf(fp,"%s",msg);
+	//r=fprintf(fp,"%s",msg);
   fclose(fp);
   return r;
 }

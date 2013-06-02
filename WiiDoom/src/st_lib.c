@@ -39,10 +39,20 @@
 #include "st_lib.h"
 #include "r_main.h"
 #include "lprintf.h"
+#define ST_NUMPAINFACES         5
+#define ST_NUMSTRAIGHTFACES     3
+#define ST_NUMTURNFACES         2
+#define ST_NUMSPECIALFACES      3
 
+#define ST_FACESTRIDE \
+          (ST_NUMSTRAIGHTFACES+ST_NUMTURNFACES+ST_NUMSPECIALFACES)
+
+#define ST_NUMEXTRAFACES        2
+
+#define ST_NUMFACES \
+          (ST_FACESTRIDE*ST_NUMPAINFACES+ST_NUMEXTRAFACES)
 int sts_always_red;      //jff 2/18/98 control to disable status color changes
 int sts_pct_always_gray; // killough 2/21/98: always gray %'s? bug or feature?
-
 //
 // STlib_init()
 //
@@ -262,6 +272,23 @@ void STlib_initMultIcon
   i->p  = il;
 }
 
+void STlib_initMultIconChar
+( st_multicon_char_t* i,
+  int x,
+  int y,
+  const patchnum_t* il,
+  char* inum,
+  bool* on )
+{
+  i->x  = x;
+  i->y  = y;
+  i->oldinum  = -1;
+  i->inum = inum;
+  i->on = on;
+  i->p  = il;
+}
+
+
 //
 // STlib_updateMultIcon()
 //
@@ -299,12 +326,45 @@ void STlib_updateMultIcon
     }
     if (*mi->inum != -1)  // killough 2/16/98: redraw only if != -1
     {
-// TODO kill this block -- CRASH HERE - FIX AND REENABLE THIS
-/*
-printf("STlib_updateMultIcon - calling V_DrawNumPatch...\n");
-sleep(2);
+
       V_DrawNumPatch(mi->x, mi->y, FG, mi->p[*mi->inum].lumpnum, CR_DEFAULT, VPT_STRETCH);
-*/
+
+    }
+    mi->oldinum = *mi->inum;
+  }
+
+}
+
+void STlib_updateMultIconChar
+( st_multicon_char_t*  mi,
+  bool   refresh )
+{
+  int w;
+  int h;
+  int x;
+  int y;
+
+  if (*mi->on && (mi->oldinum != *mi->inum || refresh))
+  {
+    if (mi->oldinum != -1)
+    {
+      x = mi->x - mi->p[mi->oldinum].leftoffset;
+      y = mi->y - mi->p[mi->oldinum].topoffset;
+      w = mi->p[mi->oldinum].width;
+      h = mi->p[mi->oldinum].height;
+
+#ifdef RANGECHECK
+      if (y - ST_Y < 0)
+        I_Error("STlib_updateMultIcon: y - ST_Y < 0");
+#endif
+
+      V_CopyRect(x, y-ST_Y, BG, w, h, x, y, FG, VPT_STRETCH);
+    }
+    if (*mi->inum != -1)  // killough 2/16/98: redraw only if != -1
+    {
+
+      V_DrawNumPatch(mi->x, mi->y, FG, mi->p[*mi->inum].lumpnum, CR_DEFAULT, VPT_STRETCH);
+
     }
     mi->oldinum = *mi->inum;
   }

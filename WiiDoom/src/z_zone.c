@@ -457,7 +457,6 @@ void (Z_Free)(void *p
              )
 {
   memblock_t *block = (memblock_t *)((char *) p - HEADER_SIZE);
-
 #ifdef INSTRUMENTED
 #ifdef CHECKHEAP
   Z_CheckHeap();

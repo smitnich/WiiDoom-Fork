@@ -86,6 +86,7 @@ extern int     usemouse;        // config file var
 static bool grabMouse;       // internal var
 static int mouse_currently_grabbed;
 
+extern int chosenController;
 /////////////////////////////////////////////////////////////////////////////////
 // Keyboard handling
 
@@ -176,40 +177,43 @@ static void I_GetEvent(SDL_Event *Event)
   event_t event;
 
   switch (Event->type) {
-//  case SDL_KEYDOWN:
-//    event.type = ev_keydown;
-//    event.data1 = I_TranslateKey(&Event->key.keysym);
-//    D_PostEvent(&event);
-//    break;
+	case SDL_KEYDOWN:
+	if (chosenController == -1)
+		chosenController = 2;
+	if (chosenController != 2)
+		break;
+    event.type = ev_keydown;
+    event.data1 = I_TranslateKey(&Event->key.keysym);
+    D_PostEvent(&event);
+    break;
 
-//  case SDL_KEYUP:
-//  {
-//    event.type = ev_keyup;
-//    event.data1 = I_TranslateKey(&Event->key.keysym);
-//    D_PostEvent(&event);
-//  }
-//  break;
-//
-//  case SDL_MOUSEBUTTONDOWN:
-//  case SDL_MOUSEBUTTONUP:
-//  if (mouse_currently_grabbed)
-//  {
-//    event.type = ev_mouse;
-//    event.data1 = I_SDLtoDoomMouseState(SDL_GetMouseState(NULL, NULL));
-//    event.data2 = event.data3 = 0;
-//    D_PostEvent(&event);
-//  }
-//  break;
-//
-//  case SDL_MOUSEMOTION:
-//  if (mouse_currently_grabbed) {
-//    event.type = ev_mouse;
-//    event.data1 = I_SDLtoDoomMouseState(Event->motion.state);
-//    event.data2 = Event->motion.xrel << 5;
-//    event.data3 = -Event->motion.yrel << 5;
-//    D_PostEvent(&event);
-//  }
-//  break;
+  case SDL_KEYUP:
+ 	if (chosenController != 2)
+		break;
+    event.type = ev_keyup;
+    event.data1 = I_TranslateKey(&Event->key.keysym);
+    D_PostEvent(&event);
+	break;
+  case SDL_MOUSEBUTTONDOWN:
+  case SDL_MOUSEBUTTONUP:
+  if (MOUSE_IsConnected())
+  {
+    event.type = ev_mouse;
+    event.data1 = I_SDLtoDoomMouseState(SDL_GetMouseState(NULL, NULL));
+    event.data2 = event.data3 = 0;
+    D_PostEvent(&event);
+  }
+  break;
+
+  case SDL_MOUSEMOTION:
+  if (MOUSE_IsConnected()) {
+    event.type = ev_mouse;
+    event.data1 = I_SDLtoDoomMouseState(Event->motion.state);
+    event.data2 = Event->motion.xrel << 5;
+    event.data3 = -Event->motion.yrel << 5;
+    D_PostEvent(&event);
+  }
+  break;
 
 
   case SDL_QUIT:
@@ -228,20 +232,15 @@ static void I_GetEvent(SDL_Event *Event)
 
 void I_StartTic (void)
 {
-	/*
   SDL_Event Event;
-  {
     int should_be_grabbed = grabMouse &&
       !(paused || (gamestate != GS_LEVEL) || demoplayback);
 
-    if (mouse_currently_grabbed != should_be_grabbed)
-      SDL_WM_GrabInput((mouse_currently_grabbed = should_be_grabbed)
-          ? SDL_GRAB_ON : SDL_GRAB_OFF);
+  while ( SDL_PollEvent(&Event) )
+  {
+    I_GetEvent(&Event);
   }
 
-  while ( SDL_PollEvent(&Event) )
-    I_GetEvent(&Event);
-*/
   I_PollJoystick();
 }
 

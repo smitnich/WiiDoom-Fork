@@ -90,7 +90,7 @@
 static unsigned int start_displaytime;
 static unsigned int displaytime;
 static bool InDisplay = false;
-
+extern char path[];
 bool I_StartDisplay(void)
 {
   if (InDisplay)
@@ -243,28 +243,7 @@ const char *I_DoomExeDir(void)
   if (!base)        // cache multiple requests
     {
   //Determine SD or USB
-  FILE * fp2;
-  bool sd = false;
-  bool usb = false;
-  fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
-  if(fp2)
-  sd = true;
-  if(!fp2){
-  fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
-  }
-  if(fp2 && !sd)
-  usb = true;
-  
-      if(sd)
-      base = malloc(strlen("sd:/apps/wiidoom/data") + 1);
-	  if(usb)
-	  base = malloc(strlen("usb:/apps/wiidoom/data") + 1);
-	  
-      if(sd)
-      strcat(base, "sd:/apps/wiidoom/data");
-	  if(usb)
-	  strcat(base, "usb:/apps/wiidoom/data");
-
+	base = "/data";
       //mkdir(base, S_IRUSR | S_IWUSR | S_IXUSR); // Make sure it exists
     }
   return base;

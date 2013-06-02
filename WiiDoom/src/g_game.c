@@ -492,18 +492,24 @@ void G_BuildTiccmd(ticcmd_t* cmd)
   if (!(automapmode & am_active))
   {
 	  if (joybuttons[6])
-          {
-            for (weaponcycle=8; weaponcycle>0; weaponcycle--)
-            {
-              if (weaponenum[weaponcycle] == players[consoleplayer].readyweapon) break;
-            }
-            for (weaponoffset=8; weaponoffset>1; weaponoffset--)
-            {
+      {
+        for (weaponcycle=8; weaponcycle>0; weaponcycle--)
+        {
+            if (weaponenum[weaponcycle] == players[consoleplayer].readyweapon) break;
+        }
+        for (weaponoffset=8; weaponoffset>1; weaponoffset--)
+        {
               if (availweapons[(weaponcycle + weaponoffset) % 9]) break; // keep value positive so modulus works correctly
-            }
+        }
             newweapon = weaponenum[(weaponcycle + weaponoffset) % 9];
-          }
-
+      }
+	  if (joybuttons[7])
+		{
+			if (availweapons[wp_chainsaw])
+			newweapon = weaponenum[wp_chainsaw%9];
+			else
+			newweapon = weaponenum[wp_fist%9];
+		}
 	  if (joybuttons[8])
           {
             for (weaponcycle=8; weaponcycle>0; weaponcycle--)
@@ -516,7 +522,14 @@ void G_BuildTiccmd(ticcmd_t* cmd)
             }
             newweapon = weaponenum[(weaponcycle + weaponoffset) % 9];
           }
-
+	  if (joybuttons[9])
+	  {
+			for (weaponcycle = 8; weaponcycle > 0; weaponcycle--)
+			{
+				if (availweapons[(weaponcycle) % 9]) break;
+			}
+			newweapon = weaponenum[(weaponcycle%9)];
+	  }
 	  if (newweapon != wp_nochange)
 	    {
 	      cmd->buttons |= BT_CHANGE;
@@ -1646,10 +1659,10 @@ void G_DoLoadGame(void)
   int savegame_compatibility = -1;
 
   G_SaveGameName(name,sizeof(name),savegameslot, demoplayback);
-
   gameaction = ga_nothing;
 
   length = M_ReadFile(name, &savebuffer);
+	lprintf(LO_DEBUG,"\r\nGMReadFile");
   if (length<=0)
     I_Error("Couldn't read file %s: %s", name, "(Unknown Error)");
   save_p = savebuffer + SAVESTRINGSIZE;
@@ -1682,7 +1695,6 @@ void G_DoLoadGame(void)
     uint_64_t checksum = 0;
 
     checksum = G_Signature();
-
     if (memcmp(&checksum, save_p, sizeof checksum)) {
       if (!forced_loadgame) {
         char *msg = malloc(strlen(save_p + sizeof checksum) + 128);
@@ -1705,7 +1717,6 @@ void G_DoLoadGame(void)
   if (savegame_compatibility < prboom_6_compatibility)
     compatibility_level = map_old_comp_levels[compatibility_level];
   save_p++;
-
   gameskill = *save_p++;
   gameepisode = *save_p++;
   gamemap = *save_p++;
@@ -1713,7 +1724,6 @@ void G_DoLoadGame(void)
   for (i=0 ; i<MAXPLAYERS ; i++)
     playeringame[i] = *save_p++;
   save_p += MIN_MAXPLAYERS-MAXPLAYERS;         // killough 2/28/98
-
   idmusnum = *save_p++;           // jff 3/17/98 restore idmus music
   if (idmusnum==255) idmusnum=-1; // jff 3/18/98 account for unsigned byte
 
@@ -1721,10 +1731,8 @@ void G_DoLoadGame(void)
    * killough 11/98: move down to here
    */
   save_p = (char*)G_ReadOptions(save_p);
-
   // load a base level
   G_InitNew (gameskill, gameepisode, gamemap);
-
   /* get the times - killough 11/98: save entire word */
   memcpy(&leveltime, save_p, sizeof leveltime);
   save_p += sizeof leveltime;
@@ -1735,7 +1743,6 @@ void G_DoLoadGame(void)
     save_p += sizeof totalleveltimes;
   }
   else totalleveltimes = 0;
-
   // killough 11/98: load revenant tracer state
   basetic = gametic - *save_p++;
 
@@ -1749,13 +1756,14 @@ void G_DoLoadGame(void)
   P_UnArchiveMap ();    // killough 1/22/98: load automap information
   P_MapEnd();
   R_SmoothPlaying_Reset(NULL); // e6y
-
   if (*save_p != 0xe6)
     I_Error ("G_DoLoadGame: Bad savegame");
 
   // done
-  Z_Free (savebuffer);
-
+  //TODO: Figure out if this is a memory leak or not
+  //Leaving Z_Free in with libogc > 1.08 causes a crash
+  //on loading a saved game
+  //Z_Free (savebuffer);
   if (setsizeneeded)
     R_ExecuteSetViewSize ();
 

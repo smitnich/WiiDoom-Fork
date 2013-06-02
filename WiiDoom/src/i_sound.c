@@ -68,6 +68,9 @@
 
 #include "d_main.h"
 
+
+extern bool sd;
+extern bool usb;
 // The number of internal mixing channels,
 //  the samples calculated for each mixing step,
 //  the size of the 16bit, 2 hardware channel (stereo)
@@ -127,7 +130,6 @@ int   vol_lookup[128*256];
  * stopchan
  * Stops a sound, unlocks the data
  */
-
 static void stopchan(int i)
 {
   if (channelinfo[i].data) /* cph - prevent excess unlocks */
@@ -599,26 +601,10 @@ void I_InitMusic(void)
 #ifdef HAVE_MIXER
   if (!music_tmp) {
 #ifndef _WIN32
-	//Determine SD or USB
-    FILE * fp2;
-    bool sd = false;
-	bool usb = false;
-    fp2 = fopen("sd:/apps/wiidoom/data/prboom.wad", "rb");
-    if(fp2)
-    sd = true;
-    if(!fp2){
-    fp2 = fopen("usb:/apps/wiidoom/data/prboom.wad", "rb");
-    }
-    if(fp2 && !sd)
-    usb = true;
-	
-	if(fp2);
-	fclose(fp2);
-	
 	if(sd)
-    music_tmp = strdup("sd:/apps/wiidoom/data/prboom-music-XXXXXX");
+    music_tmp = strdup("sd:/apps/wiidoom/data/music/prboom-music-XXXXXX");
 	if(usb)
-	music_tmp = strdup("usb:/apps/wiidoom/data/prboom-music-XXXXXX");
+	music_tmp = strdup("usb:/apps/wiidoom/data/music/prboom-music-XXXXXX");
     {
       int fd = mkstemp(music_tmp);
       if (fd<0) {
@@ -719,7 +705,7 @@ int I_RegisterSong(const void *data, size_t len)
   if ( memcmp(data, "MUS", 3) != 0 ) // mrp: it's a regular midi format file, let's just write it to disk and be done with it
   {
 	  fwrite(data, len, 1, midfile);
-	  fclose(midfile);
+	  fclose(midfile); 
   }
   
   else
@@ -737,10 +723,13 @@ int I_RegisterSong(const void *data, size_t len)
   }
   
   music[0] = Mix_LoadMUS(music_tmp);
+
   if ( music[0] == NULL ) {
     lprintf(LO_ERROR,"Couldn't load MIDI from %s: %s\n", music_tmp, Mix_GetError());
   }
+
 #endif
+
   return (0);
 }
 

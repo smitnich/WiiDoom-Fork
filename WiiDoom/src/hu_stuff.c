@@ -497,7 +497,6 @@ void HU_Start(void)
     HU_FONTSTART,
     CR_GRAY
   );
-
   // create the hud graphic keys widget
   // display of key graphics possessed
   // lower left of screen
@@ -595,7 +594,6 @@ void HU_Start(void)
     HU_FONTSTART,
     hudcolor_xyco
   );
-
   // initialize the automaps coordinate widget
   //jff 3/3/98 split coordstr widget into 3 parts
   if (map_point_coordinates)
@@ -738,7 +736,6 @@ void HU_Drawer(void)
   char healthstr[80];//jff
   char armorstr[80]; //jff
   int i,doit;
-
   plr = &players[displayplayer];         // killough 3/7/98
   // draw the automap widgets if automap is displayed
   if (automapmode & am_active)

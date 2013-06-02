@@ -614,8 +614,9 @@ int S_AdjustSoundParams(mobj_t *listener, mobj_t *source,
   angle >>= ANGLETOFINESHIFT;
 
   // stereo separation
-  *sep = 128 - (FixedMul(S_STEREO_SWING,finesine[angle])>>FRACBITS);
-
+  //Ugly Wii Fix for backwards panning, undo this if SDL Mixer is fixed
+  //*sep = 128 - (FixedMul(S_STEREO_SWING,finesine[angle])>>FRACBITS);
+  *sep = 128 + (FixedMul(S_STEREO_SWING,finesine[angle])>>FRACBITS);
   // volume calculation
   if (approx_dist < S_CLOSE_DIST)
     *vol = snd_SfxVolume*8;

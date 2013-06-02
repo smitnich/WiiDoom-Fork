@@ -75,7 +75,7 @@
 
 int realtic_clock_rate = 100;
 static int_64_t I_GetTime_Scale = 1<<24;
-
+extern char path[];
 static int I_GetTime_Scaled(void)
 {
   return (int)( (int_64_t) I_GetTime_RealTime() * I_GetTime_Scale >> 24);
@@ -349,7 +349,6 @@ int main(int argc, char **argv)
 {
   GXRModeObj *rmode = NULL;
   void *xfb = NULL;
-
   myargc = argc;
   myargv = argv;
 

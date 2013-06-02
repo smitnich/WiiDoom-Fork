@@ -132,8 +132,10 @@ typedef struct player_s
 
   // Is wp_nochange if not changing.
   weapontype_t        pendingweapon;
-
-  bool             weaponowned[NUMWEAPONS];
+	//Can change bool to int so that the weapons widget will work properly
+	//without modifications
+  //int             weaponowned[NUMWEAPONS];
+  bool 				weaponowned[NUMWEAPONS];
   int                 ammo[NUMAMMO];
   int                 maxammo[NUMAMMO];
 

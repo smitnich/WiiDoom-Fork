@@ -58,6 +58,13 @@ int joydown;
 
 int usejoystick;
 
+int controlNum = 0;
+int chosenController = -1;
+u16 GCButtonsDown;
+int pad_stickx;
+int pad_sticky;
+int pad_substickx;
+int pad_substicky;
 #ifdef HAVE_SDL_JOYSTICKGETAXIS
 static SDL_Joystick *joystick;
 #endif
@@ -75,6 +82,8 @@ void I_PollJoystick(void)
   ir_t ir;
   WPAD_IR(0, &ir);
   int nun_x, nun_y, center, min, max, btn_a, btn_b, btn_c, btn_z, btn_1, btn_2, btn_l, btn_r, btn_d, btn_u, btn_p, btn_m, btn_h;
+  int btn_lastwep, firstwep;
+  int i;
   event_t ev;
   Sint16 axis_x, axis_y;
   
@@ -92,8 +101,24 @@ void I_PollJoystick(void)
   btn_m = 0;
   btn_h = 0;
 
-  //Wiimote + Nunchuk controls
-  if(data->exp.type==WPAD_EXP_NUNCHUK){
+  if (chosenController == -1)
+  {
+	if (data->btns_h & WPAD_BUTTON_HOME)
+		chosenController = 0;
+	else if (data->btns_h & WPAD_CLASSIC_BUTTON_HOME && data->exp.type == WPAD_EXP_CLASSIC)
+		chosenController = 0;
+	else for (i = 0; i < 4; i++)
+	{
+		if (PAD_ButtonsHeld(i) & PAD_BUTTON_START)
+		{
+			chosenController = 1;
+			controlNum = i;
+		}
+	}
+	return;
+  }
+   //Wiimote + Nunchuk controls
+  if(chosenController == 0 && data->exp.type == WPAD_EXP_NUNCHUK){
   nun_x = data->exp.nunchuk.js.pos.x;
   nun_y = data->exp.nunchuk.js.pos.y;
 
@@ -153,20 +178,6 @@ void I_PollJoystick(void)
     btn_h = 1;
 
   ev.type = ev_joystick;
-  ev.data1 =
-    ((btn_b)<<0) |
-    ((btn_c)<<1) |
-    ((btn_z)<<2) |
-    ((btn_a)<<3) |
-    ((btn_1)<<4) |
-    ((btn_2)<<5) |
-    ((btn_l)<<6) |
-    ((btn_d)<<7) |
-    ((btn_r)<<8) |
-    ((btn_u)<<9) |
-    ((btn_p)<<10) |
-    ((btn_m)<<11) |
-    ((btn_h)<<12);
   ev.data2 = axis_x; 
   ev.data3 = axis_y;
 
@@ -188,7 +199,7 @@ void I_PollJoystick(void)
   //End Wiimote + Nunchuk controls
   
   //Classic Controller
-  if(data->exp.type==WPAD_EXP_CLASSIC){
+  else if (chosenController == 0 && data->exp.type == WPAD_EXP_CLASSIC){
   
   nun_x = data->exp.classic.ljs.pos.x;
   nun_y = data->exp.classic.ljs.pos.y;
@@ -198,9 +209,9 @@ void I_PollJoystick(void)
   max = data->exp.classic.ljs.max.x;
 
   if (nun_x < center - ((center - min) * 0.1f)) //Left
-    axis_x = (1.0f * center - nun_x) / (center - min) * -50.0f;
+    axis_x = (1.0f * center - nun_x) / (center - min) * -100.0f;
   else if (nun_x > center + ((max - center) * 0.1f)) //Right
-    axis_x = (1.0f * nun_x - center) / (max - center) * 50.0f;
+    axis_x = (1.0f * nun_x - center) / (max - center) * 100.0f;
   else //No stick X movement
     axis_x = 0;
 
@@ -209,9 +220,9 @@ void I_PollJoystick(void)
   max = data->exp.classic.ljs.max.y;
 
   if (nun_y < center - ((center - min) * 0.1f))//Up
-    axis_y = (1.0f * center - nun_y) / (center - min) * -50.0f;
+    axis_y = (1.0f * center - nun_y) / (center - min) * -100.0f;
   else if (nun_y > center + ((max - center) * 0.1f))//Down
-    axis_y = (1.0f * nun_y - center) / (max - center) * 50.0f;
+    axis_y = (1.0f * nun_y - center) / (max - center) * 100.0f;
   else//No stick Y movement
     axis_y = 0;
 
@@ -232,7 +243,9 @@ void I_PollJoystick(void)
     btn_c = 1;
   //Run
   if (data->btns_h & WPAD_CLASSIC_BUTTON_FULL_L)
+  {
     btn_z = 1;
+  }
   //Automap follow
   if (data->btns_h & WPAD_CLASSIC_BUTTON_MINUS)
     btn_1 = 1;
@@ -260,22 +273,7 @@ void I_PollJoystick(void)
   //Escape
   if (data->btns_h & WPAD_CLASSIC_BUTTON_HOME)
     btn_h = 1;
-
   ev.type = ev_joystick;
-  ev.data1 =
-    ((btn_b)<<0) |
-    ((btn_c)<<1) |
-    ((btn_z)<<2) |
-    ((btn_a)<<3) |
-    ((btn_1)<<4) |
-    ((btn_2)<<5) |
-    ((btn_l)<<6) |
-    ((btn_d)<<7) |
-    ((btn_r)<<8) |
-    ((btn_u)<<9) |
-    ((btn_p)<<10) |
-    ((btn_m)<<11) |
-    ((btn_h)<<12);
   ev.data2 = axis_x; 
   ev.data3 = axis_y;
 
@@ -288,9 +286,9 @@ void I_PollJoystick(void)
   max = data->exp.classic.rjs.max.x;
 
   if (nun_x < center - ((center - min) * 0.1f)) //Left
-    axis_x = (1.0f * center - nun_x) / (center - min) * -130.0f;
+    axis_x = (1.0f * center - nun_x) / (float) (center - min) * -330.0f;
   else if (nun_x > center + ((max - center) * 0.1f)) //Right
-    axis_x = (1.0f * nun_x - center) / (max - center) * 130.0f;
+    axis_x = (1.0f * nun_x - center) / (float) (max - center) * 330.0f;
   else //No stick X movement
     axis_x = 0;
 
@@ -304,7 +302,7 @@ void I_PollJoystick(void)
     axis_y = (1.0f * nun_y - center) / (max - center) * 130.0f;
   else//No stick Y movement
     axis_y = 0;
-    
+	
   ev.data4 = axis_x;
   ev.data5 = axis_y;
   
@@ -312,74 +310,87 @@ void I_PollJoystick(void)
   //End Classic Controller
   
   //Gamecube controller
-  if(data->exp.type!=WPAD_EXP_NUNCHUK && data->exp.type!=WPAD_EXP_CLASSIC){
-  
-  s32 pad_stickx = PAD_StickX(0);
-  s32 pad_sticky = PAD_StickY(0);
-  s32 pad_substickx = PAD_SubStickX(0);
-  s32 pad_substicky = PAD_SubStickY(0);
-
-  if (pad_stickx < -20) //Left
-    axis_x = -25.0f;
-  else if (pad_stickx > 20) //Right
-    axis_x = 25.0f;
+  else if(chosenController == 1){
+  GCButtonsDown = PAD_ButtonsHeld(controlNum);
+  pad_stickx = PAD_StickX(controlNum);
+  pad_sticky = PAD_StickY(controlNum);
+  pad_substickx = PAD_SubStickX(controlNum);
+  pad_substicky = PAD_SubStickY(controlNum);
+  if (abs(pad_stickx) > 10) //Left
+    axis_x = pad_stickx*2;
   else //No stick X movement
     axis_x = 0;
 
-  if (pad_sticky < -20)//Up
-    axis_y = -25.0f;
-  else if (pad_sticky > 20)//Down
-    axis_y = 25.0f;
-  else//No stick Y movement
+  if (abs(pad_sticky) > 10)//Up
+    axis_y = pad_sticky*2;
+  else
     axis_y = 0;
-
+  if (pad_sticky > 128*0.75)
+	btn_z = 1;
   // doom_printf("\n\n\n  axis_x: %d\n  axis_y: %d", axis_x, axis_y);
 
   // For some strange reason, the home button is detected as a keypress and mapped to the esc key.
   // I suspect it's SDL-Port at work here but since it's not a dealbreaker, I'm not terribly
   // interested in tracking it down. It does pretty much what I would have it do anyway.
-
-  //Use/Open/Select
-  if (PAD_ButtonsHeld(0) & PAD_BUTTON_B)
-    btn_a = 1;
-  //Fire
-  if (PAD_ButtonsHeld(0) & PAD_BUTTON_A)
-    btn_b = 1;
-  //Map
-  if (PAD_ButtonsHeld(0) & PAD_TRIGGER_Z)
-    btn_c = 1;
-  //Run
-  if (PAD_ButtonsHeld(0) & PAD_TRIGGER_L)
-    btn_z = 1;
   //Automap follow
-  if (PAD_ButtonsHeld(0) & PAD_TRIGGER_R)
+  if (GCButtonsDown & PAD_BUTTON_B)
     btn_1 = 1;
-  //No idea ....
-  //if (data->btns_h & WPAD_BUTTON_2)
-    //btn_2 = 1;
+  //Use/Open/Select
+  if (GCButtonsDown & PAD_BUTTON_A)
+  {
+    btn_a = 1;
+  }
+  //Map
+  if (GCButtonsDown & PAD_TRIGGER_Z)
+  {
+    btn_c = 1;
+  }
+  //Run
+  /*if (PAD_ButtonsHeld(0) & PAD_TRIGGER_R)
+    btn_z = 1;*/
+  //Automap follow
+  if (GCButtonsDown & PAD_TRIGGER_R)
+    btn_b = 1;
   //Left Weapon Cycle / Pan Map
-  if (PAD_ButtonsHeld(0) & PAD_BUTTON_LEFT)
+  if (GCButtonsDown & PAD_BUTTON_LEFT)
     btn_l = 1;
   //Pan map
-  if (PAD_ButtonsHeld(0) & PAD_BUTTON_DOWN)
+  if (GCButtonsDown & PAD_BUTTON_DOWN)
     btn_d = 1;
   //Right Weapon Cycle / Pan Map
-  if (PAD_ButtonsHeld(0) & PAD_BUTTON_RIGHT)
+  if (GCButtonsDown & PAD_BUTTON_RIGHT)
     btn_r = 1;
   //Pan Map
-  if (PAD_ButtonsHeld(0) & PAD_BUTTON_UP)
+  if (GCButtonsDown & PAD_BUTTON_UP)
     btn_u = 1;
   //Map zoom in
-  if (PAD_ButtonsHeld(0) & PAD_BUTTON_X)
+  if (GCButtonsDown & PAD_BUTTON_X)
     btn_p = 1;
   //Map Zoom Out
-  if (PAD_ButtonsHeld(0) & PAD_BUTTON_Y)
+  if (GCButtonsDown & PAD_BUTTON_Y)
     btn_m = 1;
   //Escape
-  if (PAD_ButtonsHeld(0) & PAD_BUTTON_START)
+  if (GCButtonsDown & PAD_BUTTON_START)
     btn_h = 1;
 
   ev.type = ev_joystick;
+  ev.data2 = axis_x; 
+  ev.data3 = axis_y;
+
+   if (abs(pad_substickx) > 20) //Left
+    axis_x = pad_substickx*2;
+	else
+    axis_x = 0;
+
+  if (abs(pad_substicky) > 20)//Up
+    axis_y = pad_substicky*2;
+  else//No stick Y movement
+    axis_y = 0;
+    
+  ev.data4 = axis_x;
+  ev.data5 = axis_y;
+  
+  }
   ev.data1 =
     ((btn_b)<<0) |
     ((btn_c)<<1) |
@@ -394,27 +405,6 @@ void I_PollJoystick(void)
     ((btn_p)<<10) |
     ((btn_m)<<11) |
     ((btn_h)<<12);
-  ev.data2 = axis_x; 
-  ev.data3 = axis_y;
-
-   if (pad_substickx < -20) //Left
-    axis_x = -110.0f;
-  else if (pad_substickx > 20) //Right
-    axis_x = 110.0f;
-  else //No stick X movement
-    axis_x = 0;
-
-  if (pad_substicky < -20)//Up
-    axis_y = -110.0f;
-  else if (pad_substicky > 20)//Down
-    axis_y = 110.0f;
-  else//No stick Y movement
-    axis_y = 0;
-    
-  ev.data4 = axis_x;
-  ev.data5 = axis_y;
-  
-  }
   //End gamecube controller
 
   D_PostEvent(&ev);

@@ -105,7 +105,9 @@ int     messageLastMenuActive;
 bool messageNeedsInput; // timed message = no input from user
 
 void (*messageRoutine)(int response);
-
+extern u16 GCButtonsDown;
+extern int pad_stickx;
+extern int pad_sticky;
 #define SAVESTRINGSIZE  24
 
 /* killough 8/15/98: when changes are allowed to sync-critical variables */
@@ -815,6 +817,7 @@ void M_LoadGame (int choice)
     }
 
   M_SetupNextMenu(&LoadDef);
+  M_ReadSaveStrings();
   M_ReadSaveStrings();
 }
 
@@ -4109,7 +4112,8 @@ static int M_IndexInChoices(const char *str, const char **choices) {
 // Examines incoming keystrokes and button pushes and determines some
 // action based on the state of the system.
 //
-
+extern int chosenController;
+extern int controlNum;
 bool M_Responder (event_t* ev) {
   int    ch;
   int    i;
@@ -4131,7 +4135,8 @@ bool M_Responder (event_t* ev) {
   // homebrew channel. I don't know why this is so for the meantime I'm polling the wii remote directly.
 
   WPADData *data = WPAD_Data(0);
-    
+    if (chosenController == 0)
+	{
     if ((data->btns_h & WPAD_BUTTON_UP) && (joywait < I_GetTime()))
       {
         ch = key_menu_up;                                // phares 3/7/98
@@ -4173,9 +4178,9 @@ bool M_Responder (event_t* ev) {
         ch = key_escape;                         // phares 3/7/98
         joywait = I_GetTime() + 10;
       }
-	
+	}
 	//Classic Controls
-	if(data->exp.type == WPAD_EXP_CLASSIC){
+	if(chosenController == 0 && data->exp.type == WPAD_EXP_CLASSIC){
 	    if ((data->btns_h & WPAD_CLASSIC_BUTTON_UP) && (joywait < I_GetTime()))
       {
         ch = key_menu_up;                                // phares 3/7/98
@@ -4243,7 +4248,7 @@ bool M_Responder (event_t* ev) {
 	}//End Classic Controls
     
 	//Nunchuk Controls
-	if(data->exp.type == WPAD_EXP_NUNCHUK){
+	if(chosenController == 0 && data->exp.type == WPAD_EXP_NUNCHUK){
     if ((data->exp.nunchuk.js.pos.y > (data->exp.nunchuk.js.center.y + 50)) && (joywait < I_GetTime()))
       {
         ch = key_menu_up;
@@ -4269,48 +4274,44 @@ bool M_Responder (event_t* ev) {
 	 //End Nunchuk controls
 	
     //GC Controls 
-	if(data->exp.type!=WPAD_EXP_NUNCHUK && data->exp.type!=WPAD_EXP_CLASSIC){
-	
-	s32 pad_stickx = PAD_StickX(0);
-    s32 pad_sticky = PAD_StickY(0);
-		
-    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_UP) && (joywait < I_GetTime()))
+	if(chosenController == 1){		
+    if ((GCButtonsDown & PAD_BUTTON_UP) && (joywait < I_GetTime()))
       {
         ch = key_menu_up;                                // phares 3/7/98
         joywait = I_GetTime() + 5;
       }
 
-    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_DOWN) && (joywait < I_GetTime()))
+    if ((GCButtonsDown & PAD_BUTTON_DOWN) && (joywait < I_GetTime()))
       {
         ch = key_menu_down;                              // phares 3/7/98
         joywait = I_GetTime() + 5;
       }
 
-    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_LEFT) && (joywait < I_GetTime()))
+    if ((GCButtonsDown & PAD_BUTTON_LEFT) && (joywait < I_GetTime()))
       {
         ch = key_menu_left;                              // phares 3/7/98
         joywait = I_GetTime() + 10;
       }
 
-    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_RIGHT) && (joywait < I_GetTime()))
+    if ((GCButtonsDown & PAD_BUTTON_RIGHT) && (joywait < I_GetTime()))
       {
         ch = key_menu_right;                             // phares 3/7/98
         joywait = I_GetTime() + 10;
       }
 
-    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_A) && (joywait < I_GetTime()))
+    if ((GCButtonsDown & PAD_BUTTON_A) && (joywait < I_GetTime()))
       {
         ch = key_menu_enter;                             // phares 3/7/98
         joywait = I_GetTime() + 10;
       }
 
-    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_B) && (joywait < I_GetTime()))
+    if ((GCButtonsDown & PAD_BUTTON_B) && (joywait < I_GetTime()))
       {
         ch = key_menu_backspace;                         // phares 3/7/98
         joywait = I_GetTime() + 10;
       }
 
-    if ((PAD_ButtonsHeld(0) & PAD_BUTTON_START) && (joywait < I_GetTime()))
+    if ((GCButtonsDown & PAD_BUTTON_START) && (joywait < I_GetTime()))
       {
         ch = key_escape;                         // phares 3/7/98
         joywait = I_GetTime() + 10;
@@ -4340,7 +4341,6 @@ bool M_Responder (event_t* ev) {
 
 	}
 	//End GC Controls
-
   if ((ev->type == ev_joystick) && (joywait < I_GetTime()))  {
 
     // phares 4/4/98:
@@ -4354,7 +4354,8 @@ bool M_Responder (event_t* ev) {
       }
       if (ev->data1&4) {
         ch = 0; // meaningless, just to get you past the check for -1
-        joywait = I_GetTime() + 5;
+        joywait = I_GetTime() + 5;	
+		shiftdown = true;
       }
       if (ev->data1&16) {
         ch = 0; // meaningless, just to get you past the check for -1
