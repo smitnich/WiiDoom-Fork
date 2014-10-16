@@ -503,13 +503,6 @@ void G_BuildTiccmd(ticcmd_t* cmd)
         }
             newweapon = weaponenum[(weaponcycle + weaponoffset) % 9];
       }
-	  if (joybuttons[7])
-		{
-			if (availweapons[wp_chainsaw])
-			newweapon = weaponenum[wp_chainsaw%9];
-			else
-			newweapon = weaponenum[wp_fist%9];
-		}
 	  if (joybuttons[8])
           {
             for (weaponcycle=8; weaponcycle>0; weaponcycle--)
