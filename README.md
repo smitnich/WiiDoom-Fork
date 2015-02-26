@@ -10,7 +10,7 @@ Now supports the following input methods:<ul>
 <li>USB Keyboard</li>
 <li>USB Mouse</li>
 <li>Classic controller</li>
-
+</ul>
 Music
 
 Music can be played, but an SD card is required to do so. (External hard drives will not work due to seek time causing massive slowdown in game). In order to do so, extract the contents of this folder to your SD card<br>
